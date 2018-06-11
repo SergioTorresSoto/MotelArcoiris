@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\UserType;
+use App\tipoProducto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class UserTypeController extends Controller
+class TipoProductoController extends Controller
 {
-    /**
+      /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,10 +16,10 @@ class UserTypeController extends Controller
     public function index()
     {
 
-        $users_type = UserType::orderBy('id','ASC')->paginate(5);
+        $tipo_producto = tipoProducto::orderBy('id','ASC')->paginate(5);
         
         
-        return view('usertype.index')->with('users_type', $users_type);
+        return view('tipoproducto.index')->with('tipo_producto', $tipo_producto);
     }
 
     /**
@@ -29,7 +29,7 @@ class UserTypeController extends Controller
      */
     public function create()
     {
-        return view('usertype.create');
+        return view('tipoproducto.create');
     }
 
     /**
@@ -40,11 +40,11 @@ class UserTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $users_type = new usertype($request->all());
+        $tipo_producto = new tipoProducto($request->all());
         
-        $users_type->save();
-        Session::flash('message_success', "Se ha registrado el tipo $users_type->type Exitosamente!");
-            return redirect(route('userstype.index'));
+        $tipo_producto->save();
+        Session::flash('message_success', "Se ha registrado el tipo $tipo_producto->tipo Exitosamente!");
+            return redirect(route('tipoproducto.index'));
     }
 
     /**
@@ -53,7 +53,7 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function show(UserType $userType)
+    public function show($tipo_producto)
     {
         
     }
@@ -64,10 +64,10 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function edit($userType)
+    public function edit($tipo_producto)
     {
-        $users_type = userType::find($userType);
-        return view('usertype.edit')->with('users_type', $users_type);
+        $tipo_producto = tipoProducto::find($tipo_producto);
+        return view('tipoproducto.edit')->with('tipo_producto', $tipo_producto);
     }
 
     /**
@@ -77,12 +77,12 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $userType)
+    public function update(Request $request,$tipo_producto)
     {
-        $users_type = userType::find($userType);
-        $users_type->type = $request->type;
-        $users_type->save();
-        return redirect()->route('userstype.index');
+        $tipo_producto = tipoProducto::find($tipo_producto);
+        $tipo_producto->tipo = $request->tipo;
+        $tipo_producto->save();
+        return redirect()->route('tipoproducto.index');
     }
 
     /**
@@ -91,11 +91,11 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function destroy($userType)
+    public function destroy($tipo_producto)
     {
-        $users_type = userType::find($userType);
-        $users_type->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $users_type->type Exitosamente!");
-        return redirect(route('userstype.index'));
+        $tipo_producto = tipoProducto::find($tipo_producto);
+        $tipo_producto->delete();    
+        Session::flash('message_danger', "Se ha eliminado el usuario $tipo_producto->tipo Exitosamente!");
+        return redirect(route('tipoproducto.index'));
     }
 }

@@ -24,6 +24,13 @@ Route::resource('userstype','UserTypeController');
 		'as' => 'userstype.destroy'
 	]);
 
+Route::resource('tipoproducto','TipoProductoController');
+
+  Route::get('tipoproducto/{id}/destroy', [
+		'uses' => 'TipoProductoController@destroy',
+		'as' => 'tipoproducto.destroy'
+	]);  
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

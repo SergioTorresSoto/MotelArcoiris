@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\tipoProducto;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
