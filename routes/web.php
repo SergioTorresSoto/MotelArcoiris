@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('users','UserController');
+
+Route::resource('userstype','UserTypeController');
+
+  Route::get('userstype/{id}/destroy', [
+		'uses' => 'UserTypeController@destroy',
+		'as' => 'userstype.destroy'
+	]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

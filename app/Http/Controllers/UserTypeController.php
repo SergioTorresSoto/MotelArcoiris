@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\UserType;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 
 class UserTypeController extends Controller
 {
@@ -43,8 +43,8 @@ class UserTypeController extends Controller
         $users_type = new usertype($request->all());
         
         $users_type->save();
-        Session::flash('message_success', "Se ha registrado el tipo $usertype->type_name Exitosamente!");
-            return redirect(route('usertype.index'));
+        Session::flash('message_success', "Se ha registrado el tipo $users_type->type Exitosamente!");
+            return redirect(route('userstype.index'));
     }
 
     /**
@@ -64,9 +64,9 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserType $userType)
+    public function edit($userType)
     {
-        $users_type = userType::find($id);
+        $users_type = userType::find($userType);
         return view('usertype.edit')->with('users_type', $users_type);
     }
 
@@ -77,12 +77,12 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserType $userType)
+    public function update(Request $request, $userType)
     {
-        $users_type = userType::find($id);
+        $users_type = userType::find($userType);
         $users_type->type = $request->type;
         $users_type->save();
-        return redirect()->route('usertype.index');
+        return redirect()->route('userstype.index');
     }
 
     /**
@@ -91,11 +91,11 @@ class UserTypeController extends Controller
      * @param  \App\UserType  $userType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserType $userType)
+    public function destroy($userType)
     {
-        $users_type = userType::find($id);
+        $users_type = userType::find($userType);
         $users_type->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $usertype->name_type Exitosamente!");
-        return redirect(route('usertype.index'));
+        Session::flash('message_danger', "Se ha eliminado el usuario $users_type->type Exitosamente!");
+        return redirect(route('userstype.index'));
     }
 }
