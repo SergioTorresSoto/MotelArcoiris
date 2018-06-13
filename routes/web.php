@@ -17,6 +17,11 @@ Route::get('/', function () {
 
 Route::resource('users','UserController');
 
+	Route::get('users/{id}/destroy', [
+			'uses' => 'UserController@destroy',
+			'as' => 'users.destroy'
+		]);
+
 Route::resource('userstype','UserTypeController');
 
   Route::get('userstype/{id}/destroy', [

@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <div class="row">
-        
             <div class="panel panel-default">
                 <div class="panel-heading">Tipo Usuario</div>
                 	<div class="panel-body">
@@ -11,7 +10,7 @@
 
 	                	<div align="right">
 						
-							<a href="{{ route('userstype.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
+							<a href="{{ route('userstype.create') }}" class="btn btn-info">Agregar Tipo Usuario</a>
 					
 						</div>
 						
@@ -38,11 +37,9 @@
 							</tbody>
 						</table>
 
-                 
 	                </div>
 	            </div>
 	        </div>
-	    
 	</div>
 </div>
 

@@ -16,7 +16,7 @@
 
 						 		{!! Form::label('type', 'Nombre de Tipo', ['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-									{!! Form::text('type', $users_type->type, ['class' => 'form-control', 'placeholder' => ' tipo', 'required']) !!}
+									{!! Form::text('type', $users_type->type, ['class' => 'form-control', 'required']) !!}
 
 								</div>
 							</div>	
