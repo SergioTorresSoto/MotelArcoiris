@@ -34,7 +34,14 @@ Route::resource('tipoproducto','TipoProductoController');
   Route::get('tipoproducto/{id}/destroy', [
 		'uses' => 'TipoProductoController@destroy',
 		'as' => 'tipoproducto.destroy'
-	]);  
+	]);
+
+Route::resource('productos','ProductoController');
+
+  Route::get('productos/{id}/destroy', [
+		'uses' => 'ProductoController@destroy',
+		'as' => 'productos.destroy'
+	]);  	  
 
 Auth::routes();
 
