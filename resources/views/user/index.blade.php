@@ -4,16 +4,16 @@
 <div class="container">
     <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">Usuarios</div>
+                <div class="panel-heading">Usuarios
+                	<div align="right">
+						
+							<a href="{{ route('users.create') }}" class="btn btn-info" align="right">Agregar Usuario</a>
+					
+					</div>
+                </div>
+
                 	<div class="panel-body">
 
-
-	                	<div align="right">
-						
-							<a href="{{ route('users.create') }}" class="btn btn-info">Agregar Usuario</a>
-					
-						</div>
-						
 						<table class="table table-striped">
 							<thead>
 							<tr>

@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function userType(){
         return $this->belongsTo('App\userType');
     }
+
+    public function controlHorario(){
+        return $this->hasMany('App\controlHorario');
+    }
 }
