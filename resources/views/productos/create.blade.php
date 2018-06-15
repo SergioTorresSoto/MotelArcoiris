@@ -12,7 +12,7 @@
                 <div class="panel-heading">Crear Producto</div>
                 	<div class="panel-body">
 
-                		{!! Form::open(['route' => 'productos.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
+                		{!! Form::open(['route' => 'productos.store','method' => 'POST', 'class' => 'form-horizontal','enctype' => "multipart/form-data"]) !!}
 	                	
 	                		<div class="form-group">
 	                			{!! Form::label('nombre', 'Nombre',['class' => 'col-md-4 control-label']) !!}
@@ -31,7 +31,7 @@
 							<div class="form-group">
 	                			{!! Form::label('imagen', 'Imagen',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::text('imagen', null, ['class' => 'form-control', 'placeholder' => 'examinar...', 'required']) !!}
+						 			{!! Form::File('imagen', null, ['class' => 'form-control', 'placeholder' => 'examinar...', 'required']) !!}
 								</div>
 							</div>
 

@@ -18,7 +18,7 @@ class CreateProductosTable extends Migration
             $table->integer('id_tipo_producto')->unsigned();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->string('imagen');
+            $table->string('imagen')->default('productos/default.jpg');
             $table->integer('stock');
             $table->timestamps();
 

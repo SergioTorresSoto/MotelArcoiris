@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Tipo Usuario</div>
+                <div class="panel-heading">Productos</div>
                 	<div class="panel-body">
-						{!! Form::open(['route' => ['productos.update', $productos], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
+						{!! Form::open(['route' => ['productos.update', $productos,'files'=>true],'method' => 'PUT', 'class' => 'form-horizontal','enctype' => "multipart/form-data"]) !!}
 							<div class="form-group">
 
 
@@ -31,7 +31,9 @@
 							<div class="form-group">
 	                			{!! Form::label('imagen', 'Imagen',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::text('imagen', $productos->imagen, ['class' => 'form-control', 'required']) !!}
+
+						 		<img width="100px" src="{{Storage::url($productos->imagen)}}" >
+						 			{!! Form::file('imagen',null, ['class' => 'form-control', 'required']) !!}
 								</div>
 							</div>
 

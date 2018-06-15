@@ -18,7 +18,7 @@
 							<thead>
 							<tr>
 								<th>ID</th>
-								<th>tipo_producto</th>
+								<th>Tipo de Producto</th>
 								<th>Nombre</th>
 								<th>Descripcion</th>
 								<th>imagen</th>
@@ -30,10 +30,10 @@
 								@foreach($productos as $prod)
 									<tr>
 										<td>{{ $prod->id }}</td>
-										<td>{{ $prod->id_tipo_producto }}</td>
+										<td>{{ $prod->tipo }}</td>
 										<td>{{ $prod->nombre }}</td>
 										<td>{{ $prod->descripcion }}</td>
-										<td>{{ $prod->imagen }}</td>
+										<td><img width="100px" src=" {{Storage::url($prod->imagen) }}"></td>
 										<td>{{ $prod->stock }}</td>
 								
 								

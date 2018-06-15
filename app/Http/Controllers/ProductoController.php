@@ -40,7 +40,8 @@ class ProductoController extends Controller
         $lista_tipo= DB::table('tipos_productos')
                      ->orderBy('id')
                      ->pluck('tipo','id');
-                     
+        
+
         return view('productos.create')->with('lista_tipo',$lista_tipo);
     }
 
@@ -53,7 +54,12 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $productos = new Producto($request->all());
-       
+
+        if($request->hasFile('imagen')){
+    	
+
+    	$producto->imagen = $request->file('imagen')->store('public/productos');
+        }
        
         
         $productos->save();
@@ -99,17 +105,25 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $producto = Producto::find($id);
+        
+        if($request->hasFile('imagen')){
+    	
+
+    	dd($producto->imagen = $request->file('imagen')->store('public/productos'));
+        }
         
         $producto->nombre = $request->nombre;
         $producto->descripcion= $request->descripcion;
         $producto->stock = $request->stock;
-        $producto->imagen = $request->imagen;
         $producto->id_tipo_producto = $request->id_tipo_producto;
+        
         $producto->save();
    
-        Session::flash('message_success', "Se ha modificado el usuario $producto->nombre Exitosamente!");
+        
         return redirect(route('productos.index'));
+        Session::flash('message_success', "Se ha modificado el usuario $producto->nombre Exitosamente!");
     }
 
     /**
