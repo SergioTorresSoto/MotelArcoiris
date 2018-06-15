@@ -3,6 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
+    		@if(Session::has('message'))
+			   <div class="alert alert-success alert-dismissible" role="alert">
+			      <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
+			         {{ Session::get('message') }}	
+			    </div>
+			@endif
             <div class="panel panel-default">
                 <div class="panel-heading">Productos</div>
                 	<div class="panel-body">

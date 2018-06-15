@@ -12,11 +12,11 @@
                 	<div class="panel-body">
 						{!! Form::open(['route' => ['controlhorario.update', $control], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 							<div class="form-group">
-								
+
 
 						 		{!! Form::label('hora_entrada', 'Hora Entrada', ['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-									{!! Form::text('hora_entrada', $control->hora_entrada, ['class' => 'form-control', 'required']) !!}
+									{!! Form::time('hora_entrada', $control->hora_entrada, ['class' => 'form-control', 'required']) !!}
 
 								</div>
 							</div>
@@ -24,14 +24,18 @@
 							<div class="form-group">
 	                			{!! Form::label('hora_salida', 'Hora Salida',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::text('hora_salida', $control->hora_salida, ['class' => 'form-control', 'required']) !!}
+						 			{!! Form::time('hora_salida', $control->hora_salida, ['class' => 'form-control', 'required']) !!}
+						 			
 								</div>
 							</div>
 
 							<div class="form-group">
-	                			{!! Form::label('fecha', 'Fecha',['class' => 'col-md-4 control-label']) !!}
+	                			{!! Form::label('fechal', 'Fecha',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::text('fecha', $control->fecha, ['class' => 'form-control', 'required']) !!}
+						 			
+
+									{!! Form::text('fecha', $control->fecha, array('id' => 'datepicker','class' => 'form-control', 'required')) !!}
+
 								</div>
 							</div>
 
@@ -60,3 +64,4 @@
 	</div>
 </div>
 @endsection	
+

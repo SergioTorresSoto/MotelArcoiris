@@ -42,8 +42,9 @@ class UserTypeController extends Controller
     {
         $users_type = new usertype($request->all());
         
-        $users_type->save();
-        Session::flash('message_success', "Se ha registrado el tipo $users_type->type Exitosamente!");
+        $var = $users_type->save();
+        
+        Session::flash('message', "Se ha registrado el tipo $users_type->type Exitosamente!");
             return redirect(route('userstype.index'));
     }
 
@@ -82,6 +83,7 @@ class UserTypeController extends Controller
         $users_type = userType::find($userType);
         $users_type->type = $request->type;
         $users_type->save();
+        Session::flash('message', "Se ha modificado el usuario $users_type->type Exitosamente!");
         return redirect()->route('userstype.index');
     }
 
@@ -94,8 +96,9 @@ class UserTypeController extends Controller
     public function destroy($userType)
     {
         $users_type = userType::find($userType);
-        $users_type->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $users_type->type Exitosamente!");
+        $var = $users_type->delete();  
+
+        Session::flash('message', "Se ha eliminado el usuario $users_type->type Exitosamente!");
         return redirect(route('userstype.index'));
     }
 }

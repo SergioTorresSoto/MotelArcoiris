@@ -73,6 +73,7 @@ class ControlHorarioController extends Controller
                     DB::table('control_horario')
                             ->where('id', $lista->id)
                             ->update(['hora_salida' => $hora_salida]);
+                    Session::flash('message', "Se ha registrado la hora de salida Exitosamente!");
                 }
 
             }
@@ -86,7 +87,9 @@ class ControlHorarioController extends Controller
             $control['fecha'] = $horaYfecha->format('Y-m-d');            
             $control_horario = new controlHorario($control);              
             $control_horario->save();
+            Session::flash('message', "Se ha registrado la hora de entrada Exitosamente!");
         }
+
     return redirect(route('controlhorario.index'));
         
        
@@ -159,7 +162,7 @@ class ControlHorarioController extends Controller
         }
         
         $control->save();
-    //  Session::flash('message_success', "Se ha modificado el usuario $users->nombre Exitosamente!");
+        Session::flash('message', "Se ha modificado el usuario $control->rut Exitosamente!");
         return redirect(route('controlhorario.index'));   
     }
 
@@ -174,7 +177,7 @@ class ControlHorarioController extends Controller
         $control_horario = controlHorario::find($id);
 
         $control_horario->delete();    
-    //    Session::flash('message_danger', "Se ha eliminado el usuario $users->nombre Exitosamente!");
+        Session::flash('message', "Se ha eliminado el usuario $control_horario->rut Exitosamente!");
         return redirect(route('controlhorario.index'));
     }
 }

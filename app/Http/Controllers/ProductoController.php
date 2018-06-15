@@ -58,12 +58,12 @@ class ProductoController extends Controller
         if($request->hasFile('imagen')){
     	
 
-    	$producto->imagen = $request->file('imagen')->store('public/productos');
+    	$productos->imagen = $request->file('imagen')->store('public/productos');
         }
        
         
         $productos->save();
-        Session::flash('message_success', "Se ha registrado el usuario $productos->nombre Exitosamente!");
+        Session::flash('message', "Se ha registrado el producto $productos->nombre Exitosamente!");
          return redirect(route('productos.index'));
     }
 
@@ -121,9 +121,9 @@ class ProductoController extends Controller
         
         $producto->save();
    
-        
+        Session::flash('message', "Se ha modificado el usuario $producto->nombre Exitosamente!");
         return redirect(route('productos.index'));
-        Session::flash('message_success', "Se ha modificado el usuario $producto->nombre Exitosamente!");
+        
     }
 
     /**
@@ -137,7 +137,7 @@ class ProductoController extends Controller
         $producto = Producto::find($id);
 
         $producto->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $producto->nombre Exitosamente!");
+        Session::flash('message', "Se ha eliminado el usuario $producto->nombre Exitosamente!");
         return redirect(route('productos.index'));
     }
 }

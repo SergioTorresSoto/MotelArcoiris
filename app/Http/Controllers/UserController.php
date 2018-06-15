@@ -59,7 +59,7 @@ class UserController extends Controller
        
         
         $users->save();
-        Session::flash('message_success', "Se ha registrado el usuario $users->nombre Exitosamente!");
+         Session::flash('message', 'El usuario se creo exitosamente.');
          return redirect(route('users.index'));
     }
 
@@ -121,7 +121,7 @@ class UserController extends Controller
         $users->id_type = $request->id_type;
         $users->save();
         
-        Session::flash('message_success', "Se ha modificado el usuario $users->nombre Exitosamente!");
+        Session::flash('message', "Se ha modificado el usuario $users->nombre Exitosamente!");
         return redirect(route('users.index'));
     }
 
@@ -136,7 +136,7 @@ class UserController extends Controller
         $users = User::find($id);
 
         $users->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $users->nombre Exitosamente!");
+        Session::flash('message', "Se ha eliminado el usuario $users->nombre Exitosamente!");
         return redirect(route('users.index'));
     }
 }
