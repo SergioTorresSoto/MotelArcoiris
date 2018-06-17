@@ -2,6 +2,11 @@
 
 @section('title', 'Editar Tipo ' . $control->rut)
 
+@section('style')
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -22,6 +27,16 @@
 							</div>
 
 							<div class="form-group">
+	                			{!! Form::label('fecha_entrada', 'Fecha',['class' => 'col-md-4 control-label']) !!}
+						 		<div class="col-md-6">
+						 			
+
+									{!! Form::text('fecha_entrada', $control->fecha_entrada, array('id' => 'datepicker_entrada','class' => 'form-control', 'required')) !!}
+
+								</div>
+							</div>
+
+							<div class="form-group">
 	                			{!! Form::label('hora_salida', 'Hora Salida',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
 						 			{!! Form::time('hora_salida', $control->hora_salida, ['class' => 'form-control', 'required']) !!}
@@ -30,11 +45,11 @@
 							</div>
 
 							<div class="form-group">
-	                			{!! Form::label('fechal', 'Fecha',['class' => 'col-md-4 control-label']) !!}
+	                			{!! Form::label('fecha_salida', 'Fecha',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
 						 			
 
-									{!! Form::text('fecha', $control->fecha, array('id' => 'datepicker','class' => 'form-control', 'required')) !!}
+									{!! Form::text('fecha_salida', $control->fecha_salida, array('id' => 'datepicker_salida','class' => 'form-control', 'required')) !!}
 
 								</div>
 							</div>
@@ -64,4 +79,14 @@
 	</div>
 </div>
 @endsection	
+
+@section('script')
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	  <script>
+	  $(function() {
+	    $( "#datepicker_salida" ).datepicker({ dateFormat: 'yy-mm-dd ' });
+	    $( "#datepicker_entrada" ).datepicker({ dateFormat: 'yy-mm-dd ' });
+	  });
+    </script>
+@endsection
 

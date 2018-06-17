@@ -11,12 +11,28 @@
 			@endif
             <div class="panel panel-default">
                 <div class="panel-heading">Usuarios
-                	<div align="right">
-						
-							<a href="{{ route('users.create') }}" class="btn btn-info" align="right">Agregar Usuario</a>
-					
-					</div>
+                	<div class="btn-group pull-right">
+				        <a href="{{ route('users.create') }}" class="btn btn-info btn-sm">Agregar Usuario</a>
+				     </div>
+                	
+                		
                 </div>
+                <div class = container>
+                	
+							
+	                {!! Form::open(['route' => 'users.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+							<div class = "form-group">
+								{!! Form::text('nombre', null ,['class' => 'form-control','placeholder'=>'Nombre Usuario']) !!}
+								{!! Form::select('type', $users->lista_tipo ,null, ['class' => 'form-control', 'placeholder' => 'Tipo']) !!}
+							</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+					{!! Form::close() !!}
+					
+				</div>
 
                 	<div class="panel-body">
 
@@ -54,7 +70,9 @@
 								@endforeach
 							</tbody>
 						</table>
-
+						<div style="text-align: center;">
+							{{ $users->links() }}
+						</div>
 	                </div>
 	            </div>
 	        </div>

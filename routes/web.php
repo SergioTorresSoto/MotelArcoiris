@@ -36,6 +36,8 @@ Route::resource('controlhorario','ControlHorarioController');
 		'as' => 'controlhorario.destroy'
 	]);
 
+ 
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [

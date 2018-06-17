@@ -17,13 +17,13 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $producto = Producto::orderBy('id','ASC')->paginate(5);
+        
 
         $producto =  DB::table('productos')
                   ->join('tipos_productos', 'tipos_productos.id', '=', 'productos.id_tipo_producto' )
                   ->select('productos.*','tipos_productos.tipo')
                   ->orderBy('productos.id','ASC')
-                  ->get();
+                  ->paginate(5);
 
         
         

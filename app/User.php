@@ -34,4 +34,19 @@ class User extends Authenticatable
     public function controlHorario(){
         return $this->hasMany('App\controlHorario');
     }
+
+    public function scopeType($query, $type){
+        
+        if($type !="" || isset($type[$type])){
+            return $query->where('id_type', $type);
+        }
+
+    }
+    public function scopeNombre($query, $nombre){
+        
+        if(trim($nombre)!=""){
+            return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
 }

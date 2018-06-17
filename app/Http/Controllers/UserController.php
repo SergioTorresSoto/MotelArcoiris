@@ -16,17 +16,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id','ASC')->paginate(5);
-
-        $users =  DB::table('users')
-                  ->join('users_type', 'users_type.id', '=', 'users.id_type' )
+        
+                  
+                  
+        $users= User::nombre($request->get('nombre'))
+                ->type($request->get('type'))
+                  ->join('users_type', 'users_type.id', '=', 'users.id_type' )            
                   ->select('users.*','users_type.type')
                   ->orderBy('users.id','ASC')
-                  ->get();
+                  ->paginate(5);
 
-        
+        $users->lista_tipo= DB::table('users_type')
+                     ->orderBy('id')
+                     ->pluck('type','id');
         
         return view('user.index')->with('users', $users);
     }

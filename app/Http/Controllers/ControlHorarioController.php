@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\controlHorario;
 use App\User;
+use Calendar;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Session;
@@ -19,16 +20,37 @@ class ControlHorarioController extends Controller
      */
     public function index()
     {
-       
         $control =  DB::table('control_horario')
                   ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
                   ->select('control_horario.*','users.nombre')
                   ->orderBy('control_horario.id','ASC')
-                  ->get();
+                  ->paginate(5);
 
+        // calendario
+        $events = [];
+        if($control->count()) {
+            foreach ($control as $key => $value) {
+
+                $events[] = Calendar::event(
+                    $value->nombre,
+                    false,
+                    new \DateTime($value->fecha_entrada. $value->hora_entrada),
+                    new \DateTime($value->fecha_salida. $value->hora_salida),
+                    null,
+                    // Add color and link on event
+                    [
+                        'color' => '#f05050',
+                        'url' => 'pass here url and any route',
+                    ]
+                );
+            }
+        }
+        $calendar = Calendar::addEvents($events);
+
+        $control->calendar = $calendar;
         
         
-        return view('controlhorario.index')->with('control', $control);
+        return view('controlhorario.index', compact('calendar'))->with('control', $control);
     }
 
     /**
@@ -70,9 +92,11 @@ class ControlHorarioController extends Controller
                     $aux=1;
                     $horaYfecha = new \DateTime();
                     $hora_salida = $horaYfecha->format('H:i:s');
+                    $fecha_salida = $horaYfecha->format('Y-m-d');
+
                     DB::table('control_horario')
                             ->where('id', $lista->id)
-                            ->update(['hora_salida' => $hora_salida]);
+                            ->update(['hora_salida' => $hora_salida ,'fecha_salida' => $fecha_salida]);
                     Session::flash('message', "Se ha registrado la hora de salida Exitosamente!");
                 }
 
@@ -84,7 +108,7 @@ class ControlHorarioController extends Controller
             $control['id_user'] = $id;
             $horaYfecha = new \DateTime();
             $control['hora_entrada'] = $horaYfecha->format('H:i:s');           
-            $control['fecha'] = $horaYfecha->format('Y-m-d');            
+            $control['fecha_entrada'] = $horaYfecha->format('Y-m-d');            
             $control_horario = new controlHorario($control);              
             $control_horario->save();
             Session::flash('message', "Se ha registrado la hora de entrada Exitosamente!");
@@ -150,7 +174,8 @@ class ControlHorarioController extends Controller
         
         $control->hora_entrada = $request->hora_entrada;
         $control->hora_salida = $request->hora_salida;
-        $control->fecha = $request->fecha;
+        $control->fecha_entrada = $request->fecha_entrada;
+        $control->fecha_salida = $request->fecha_salida;
 
         $lista_users = DB::table('users')
                         ->orderBy('users.id','ASC')

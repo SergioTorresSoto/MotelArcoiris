@@ -1,8 +1,9 @@
-
-
-
-
 @extends('layouts.app')
+
+@section('style')
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+@endsection
 
 @section('content')
 <div class="container">
@@ -34,6 +35,7 @@
 								<th>Nombre</th>
 								
 								<th>Entrada</th>
+								<th>Fecha</th>
 								<th>Salida</th>
 								<th>Fecha</th>
 								<th>Acción</th>
@@ -46,8 +48,9 @@
 										<td>{{ $type->rut }}</td>
 										<td>{{ $type->nombre }}</td>
 										<td>{{ $type->hora_entrada }}</td>
+										<td>{{ $type->fecha_entrada }}</td>
 										<td>{{ $type->hora_salida }}</td>
-										<td>{{ $type->fecha }}</td>
+										<td>{{ $type->fecha_salida }}</td>
 								
 										<td>
 											<a href="{{ route('controlhorario.edit', $type->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
@@ -57,11 +60,34 @@
 								@endforeach
 							</tbody>
 						</table>
-
+						<div style="text-align: center;">
+							{{ $control->links() }}
+						</div>
 	                </div>
 	            </div>
 	        </div>
 	</div>
 </div>
 
+<div class="container" >
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Full Calendar Example</div>
+
+                <div class="panel-body">
+                    
+                    {!! $calendar->calendar() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
+{!! $calendar->script() !!}
 @endsection

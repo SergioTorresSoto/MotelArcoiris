@@ -32,6 +32,9 @@
 				@endforeach
 			</tbody>
 		</table>
+		<div style="text-align: center;">
+			{{ $tipo_producto->links() }}
+		</div>
 </div>
 
 @endsection

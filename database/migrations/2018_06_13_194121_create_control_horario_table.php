@@ -18,7 +18,8 @@ class CreateControlHorarioTable extends Migration
             $table->integer('id_user')->unsigned();
             $table->time('hora_entrada');
             $table->time('hora_salida')->nullable();
-            $table->date('fecha');
+            $table->date('fecha_entrada');
+            $table->date('fecha_salida')->nullable();
             $table->string('rut');
             $table->timestamps();
 

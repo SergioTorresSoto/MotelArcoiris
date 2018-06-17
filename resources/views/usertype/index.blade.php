@@ -46,7 +46,9 @@
 								@endforeach
 							</tbody>
 						</table>
-
+						<div style="text-align: center;">
+							{{ $users_type->links() }}
+						</div>
 	                </div>
 	            </div>
 	        </div>

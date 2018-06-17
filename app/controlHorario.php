@@ -8,7 +8,7 @@ class controlHorario extends Model
 {
     protected $table ="control_horario";
 
-    protected $fillable=['id_user', 'hora_entrada', 'hora_salida', 'fecha', 'rut'];
+    protected $fillable=['id_user', 'hora_entrada', 'hora_salida', 'fecha_entrada', 'fecha_salida', 'rut'];
 
        public function user(){
        	return $this->belongsTo('App\User');
