@@ -22,7 +22,7 @@ class UserController extends Controller
                   
                   
         $users= User::nombre($request->get('nombre'))
-                ->type($request->get('type'))
+                  ->type($request->get('type'))
                   ->join('users_type', 'users_type.id', '=', 'users.id_type' )            
                   ->select('users.*','users_type.type')
                   ->orderBy('users.id','ASC')

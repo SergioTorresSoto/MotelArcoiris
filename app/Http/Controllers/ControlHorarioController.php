@@ -39,13 +39,15 @@ class ControlHorarioController extends Controller
                     null,
                     // Add color and link on event
                     [
-                        'color' => '#f05050',
-                        'url' => 'pass here url and any route',
+                        'color' => '#800',
+                        'url' => route('controlhorario.edit', $value->id) ,
                     ]
-                );
+                )
+                ;
             }
         }
-        $calendar = Calendar::addEvents($events);
+        $calendar = Calendar::addEvents($events)
+                            ->setOptions(['firstDay' => 1]);
 
         $control->calendar = $calendar;
         

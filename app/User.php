@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany('App\controlHorario');
     }
 
+    public function jornada(){
+        return $this->belongsToMany('App\Jornada','users_jornadas','id_user','id_jornada')
+            ->withPivot('fecha_entrada','fecha_salida');
+    }
+
     public function scopeType($query, $type){
         
         if($type !="" || isset($type[$type])){

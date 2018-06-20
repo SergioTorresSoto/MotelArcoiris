@@ -78,6 +78,7 @@
                 <div class="panel-body">
                     
                     {!! $calendar->calendar() !!}
+                    {!! $calendar->script() !!}
                 </div>
             </div>
         </div>
