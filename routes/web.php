@@ -50,7 +50,20 @@ Route::resource('productos','ProductoController');
   Route::get('productos/{id}/destroy', [
 		'uses' => 'ProductoController@destroy',
 		'as' => 'productos.destroy'
-	]);  	  
+	]);
+
+Route::resource('tipoinsumo','TipoInsumoController');
+
+  Route::get('tipoinsumo/{id}/destroy', [
+		'uses' => 'TipoInsumoController@destroy',
+		'as' => 'tipoinsumo.destroy'
+	]);
+Route::resource('insumos','InsumoController');
+
+  Route::get('insumos/{id}/destroy', [
+		'uses' => 'InsumoController@destroy',
+		'as' => 'insumos.destroy'
+	]);	  	  
 
 Auth::routes();
 
