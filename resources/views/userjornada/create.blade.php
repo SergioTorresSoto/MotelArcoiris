@@ -33,7 +33,7 @@
 							<div class="form-group">
 	                			{!! Form::label('jornada', 'Jornada',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::select('id_jornada', $jornadas->pluck('id','id'), null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
+						 			{!! Form::select('id_jornada', $jornadas, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
 
 								</div>
 							</div>
@@ -78,4 +78,6 @@
 	    $( "#datepicker_entrada" ).datepicker({ dateFormat: 'yy-mm-dd ' });
 	  });
     </script>
+
+   
 @endsection

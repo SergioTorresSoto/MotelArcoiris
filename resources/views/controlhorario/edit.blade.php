@@ -60,7 +60,7 @@
 							<div class="form-group">
 	                			{!! Form::label('rut', 'Rut',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::select('rut', $control->lista_users ,null, ['class' => 'form-control', 'required']) !!}
+						 			{!! Form::select('rut', $control->lista_users ,$control->id_user, ['class' => 'form-control', 'required']) !!}
 
 								</div>
 							</div>

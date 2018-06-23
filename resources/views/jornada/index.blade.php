@@ -40,7 +40,7 @@
 										<td>{{ $type->id }}</td>
 										<td>{{ $type->hora_entrada }}</td>
 										<td>{{ $type->hora_salida }}</td>
-										<td>{{ $type->duracion }}</td>
+										<td>{{ $type->duracion_hora }} {{ $type->duracion_minuto }}</td>
 										<td>
 											<a href="{{ route('jornadas.edit', $type->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
 											<a href="{{ route('jornadas.destroy', $type->id) }}" onclick="return confirm('¿Está seguro de eliminar al usuario seleccionado?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>

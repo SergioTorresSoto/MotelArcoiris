@@ -26,19 +26,31 @@
 							</div>
 
 							<div class="form-group">
-	                			{!! Form::label('hora_salida', 'Hora Salida',['class' => 'col-md-4 control-label']) !!}
-						 		<div class="col-md-6">
-						 			{!! Form::time('hora_salida', $jornadas->hora_salida, ['class' => 'form-control', 'required']) !!}
-						 			
-								</div>
-							</div>
 
-							<div class="form-group">
-	                			{!! Form::label('duracion', 'Duracion',['class' => 'col-md-4 control-label']) !!}
-						 		<div class="col-md-6">
-						 			{!! Form::text('duracion', $jornadas->duracion , ['class' => 'form-control', 'required']) !!}
+					 			{!! Form::label('duracion', 'Duracion hora',['class' => 'col-md-4 control-label']) !!}
+					 		
+
+						 		<div class="col-md-2">
+									{!! Form::select('duracion_hora', array('6 hours' => '6', '12 hours' => '12'), $jornadas->duracion_hora,['class' => 'form-control', 'placeholder' => '']) !!}
 
 								</div>
+								<div class="col-md-1">
+									{!! Form::label('hora_entrada', 'Hrs', ['class' => 'col-md-3 control-label']) !!}
+
+								</div>
+								<div class="col-md-2">
+									{!! Form::select('duracion_minuto',
+									array('15 minutes' => '15',
+									 	  '30 minutes' => '30',
+									 	  '45 minutes'=> '45',
+									 	  ), $jornadas->duracion_minuto, ['class' => 'form-control', 'placeholder' => '']) !!}
+
+								</div>
+								<div class="col-md-1">
+									{!! Form::label('hora_entrada', 'Min', ['class' => 'col-md-3 control-label']) !!}
+
+								</div>
+
 							</div>
 
 							<div class="form-group">

@@ -20,7 +20,7 @@ class UserJornadaController extends Controller
         
         $horarios = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
                     ->join('users', 'users.id', '=', 'users_jornadas.id_user')
-                    ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion')
+                    ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
                     ->get();
 
         
@@ -44,10 +44,10 @@ class UserJornadaController extends Controller
                      ->get();
 
         $jornadas = DB::table('jornadas')
-                        ->select('jornadas.*')
+                        ->select(DB::raw("id,CONCAT(hora_entrada,' / ',hora_salida,' / ',duracion_hora) as horario"))
                         ->orderBy('id')
-                        ->get();
-                  
+                        ->pluck('horario','id');
+       
         return view('userjornada.create')->with('users',$users)->with('jornadas',$jornadas);
     }
 
@@ -63,8 +63,9 @@ class UserJornadaController extends Controller
 
         $horarios = new userJornada($request->all());
         $fecha = new \DateTime($request->fecha_entrada.$jornada->hora_entrada);
-        
-        $fecha->modify($jornada->duracion);
+
+        $duracion = $request->duracion_hora.' '.$request->duracion_minuto;
+        $fecha->modify($duracion);
         $fecha->format('d-m-Y H:i:s');
         $fecha = date_format($fecha, 'Y-m-d');
         
@@ -93,7 +94,25 @@ class UserJornadaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $userjornada = userJornada::join('jornadas', 'users_jornadas.id_jornada','=', 'jornadas.id'  )
+                    ->join('users', 'users.id', '=', 'users_jornadas.id_user')
+                    ->select('users_jornadas.*','users.rut',DB::raw("CONCAT(jornadas.hora_entrada,' / ',jornadas.hora_salida,' / ',jornadas.duracion_hora) as horario"))
+                  
+                    ->find($id);
+               
+        $users = DB::table('users')
+                             ->select('users.*')
+                             ->orderBy('id')
+                             ->pluck('rut','id');
+
+        $jornadas = DB::table('jornadas')
+                        ->select(DB::raw("id,CONCAT(hora_entrada,' / ',hora_salida,' / ',duracion_hora) as horario"))
+                        ->orderBy('id')
+                        ->pluck('horario','id');
+
+
+
+        return view('userjornada.edit')->with('userjornada', $userjornada)->with('users', $users)->with('jornadas', $jornadas);
     }
 
     /**
@@ -105,7 +124,24 @@ class UserJornadaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+         $userjornada = userJornada::find($id);
+         $userjornada->id_user = $request->id_user;
+         $userjornada->id_jornada = $request->id_jornada;
+         $userjornada->fecha_entrada = $request->fecha_entrada;
+         
+         $jornada = Jornada::find($userjornada->id_jornada);
+         $fecha = new \DateTime($request->fecha_entrada.$jornada->hora_entrada);
+         $duracion = $request->duracion_hora.' '.$request->duracion_minuto;
+         $fecha->modify($duracion);
+         $fecha->format('d-m-Y H:i:s');
+         $fecha = date_format($fecha, 'Y-m-d');
+         $userjornada->fecha_salida = $fecha;
+         
+         
+         $userjornada->save();
+         Session::flash('message', "Se ha modificado Exitosamente!");
+        return redirect()->route('usersjornadas.index');
     }
 
     /**
@@ -116,6 +152,12 @@ class UserJornadaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $userjornada = userJornada::find($id);
+        $userjornada->delete();  
+
+        Session::flash('message', "Se ha eliminado Exitosamente!");
+        return redirect(route('usersjornadas.index'));
     }
+
+   
 }

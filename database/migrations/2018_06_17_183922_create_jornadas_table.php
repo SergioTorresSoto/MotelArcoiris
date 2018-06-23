@@ -17,7 +17,8 @@ class CreateJornadasTable extends Migration
             $table->increments('id');
             $table->time('hora_entrada');
             $table->time('hora_salida')->nullable();
-            $table->string('duracion');
+            $table->string('duracion_hora')->nullable();
+            $table->string('duracion_minuto')->nullable();
             $table->timestamps();
         });
     }

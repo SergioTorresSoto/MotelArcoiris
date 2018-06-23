@@ -36,6 +36,7 @@ Route::resource('controlhorario','ControlHorarioController');
 		'as' => 'controlhorario.destroy'
 	]);
 
+
  Route::resource('jornadas','JornadaController'); 
 
  	Route::get('jornadas/{id}/destroy', [
@@ -45,7 +46,10 @@ Route::resource('controlhorario','ControlHorarioController');
 
 Route::resource('usersjornadas','UserJornadaController'); 
 
- 
+ 	Route::get('usersjornadas/{id}/destroy', [
+		'uses' => 'userJornadaController@destroy',
+		'as' => 'usersjornadas.destroy'
+	]);
 
 Route::resource('tipoproducto','TipoProductoController');
 

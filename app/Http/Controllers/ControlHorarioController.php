@@ -81,6 +81,7 @@ class ControlHorarioController extends Controller
         $control = $request->all();
 
         $lista_control = DB::table('control_horario')
+                        ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
                         ->orderBy('control_horario.id','ASC')
                         ->get();
         

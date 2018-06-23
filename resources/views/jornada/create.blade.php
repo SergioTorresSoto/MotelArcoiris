@@ -33,7 +33,7 @@
 					 		
 
 						 		<div class="col-md-2">
-									{!! Form::select('duracion_horas', array('6 hours' => '6', '12 hours' => '12'), null,['class' => 'form-control', 'placeholder' => '']) !!}
+									{!! Form::select('duracion_hora', array('6 hours' => '6', '12 hours' => '12'), null,['class' => 'form-control', 'placeholder' => '']) !!}
 
 								</div>
 								<div class="col-md-1">
@@ -41,7 +41,7 @@
 
 								</div>
 								<div class="col-md-2">
-									{!! Form::select('duracion_minutos',
+									{!! Form::select('duracion_minuto',
 									array('15 minutes' => '15',
 									 	  '30 minutes' => '30',
 									 	  '45 minutes'=> '45',

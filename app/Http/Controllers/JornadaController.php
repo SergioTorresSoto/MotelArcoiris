@@ -40,9 +40,9 @@ class JornadaController extends Controller
     public function store(Request $request)
     {
         
-        $duracion = $request->duracion_horas.' '.$request->duracion_minutos;
+        $duracion = $request->duracion_hora.' '.$request->duracion_minuto;
         $jornadas = new Jornada($request->all());
-        $jornadas->duracion = $duracion;
+       
         
         //fecha random
         $fecha = new \DateTime($jornadas->hora_entrada);
@@ -92,9 +92,17 @@ class JornadaController extends Controller
     {
         $jornadas = Jornada::find($id);
         $jornadas->hora_entrada = $request->hora_entrada;
-        $jornadas->hora_salida = $request->hora_salida;
-        $jornadas->duracion = $request->duracion;
         
+        $jornadas->duracion_hora = $request->duracion_hora;
+        $jornadas->duracion_minuto = $request->duracion_minuto;
+        
+        $duracion = $request->duracion_hora.' '.$request->duracion_minuto;
+        $fecha = new \DateTime($jornadas->hora_entrada);
+     
+        $fecha->modify($duracion); 
+        $fecha->format('d-m-Y H:i:s');
+        $hora = date_format($fecha, 'H:i:s');
+        $jornadas->hora_salida = $hora;
         
         $jornadas->save();
         Session::flash('message', "Se ha modificado la jornada Exitosamente!");

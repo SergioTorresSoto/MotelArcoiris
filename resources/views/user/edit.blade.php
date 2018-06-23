@@ -60,7 +60,7 @@
 							<div class="form-group">
 	                			{!! Form::label('id_type', 'Tipo de Usuario',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
-						 			{!! Form::select('id_type', $users->lista_tipo ,null, ['class' => 'form-control', 'required']) !!}
+						 			{!! Form::select('id_type', $users->lista_tipo ,$users->id_type, ['class' => 'form-control', 'required']) !!}
 
 								</div>
 							</div>
