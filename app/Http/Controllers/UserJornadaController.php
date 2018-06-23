@@ -64,7 +64,7 @@ class UserJornadaController extends Controller
         $horarios = new userJornada($request->all());
         $fecha = new \DateTime($request->fecha_entrada.$jornada->hora_entrada);
 
-        $duracion = $request->duracion_hora.' '.$request->duracion_minuto;
+        $duracion = $jornada->duracion_hora.' '.$jornada->duracion_minuto;
         $fecha->modify($duracion);
         $fecha->format('d-m-Y H:i:s');
         $fecha = date_format($fecha, 'Y-m-d');

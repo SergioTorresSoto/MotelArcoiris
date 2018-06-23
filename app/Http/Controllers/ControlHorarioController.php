@@ -82,6 +82,7 @@ class ControlHorarioController extends Controller
 
         $lista_control = DB::table('control_horario')
                         ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
+                        ->select('control_horario.*','users.nombre')
                         ->orderBy('control_horario.id','ASC')
                         ->get();
         
@@ -98,7 +99,7 @@ class ControlHorarioController extends Controller
                     $fecha_salida = $horaYfecha->format('Y-m-d');
 
                     DB::table('control_horario')
-                            ->where('id', $lista->id)
+                            ->where('control_horario.id', $lista->id)
                             ->update(['hora_salida' => $hora_salida ,'fecha_salida' => $fecha_salida]);
                     Session::flash('message', "Se ha registrado la hora de salida Exitosamente!");
                 }

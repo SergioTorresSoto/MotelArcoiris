@@ -43,5 +43,20 @@ class UserSeeder extends Seeder
 
 
         ]);
+             DB::table('users')->insert([
+            'id_type' => '2',
+            'nombre' => 'Masiel',
+            'apellido' => 'Torres',
+            'rut' => '11.111.111-1',
+            'telefono' => '76538290',
+            'email' => 'masiel@gmail.com',
+            'username' => 'masiel',
+            'password' => bcrypt('1234')
+
+
+
+
+
+        ]);
     }
 }

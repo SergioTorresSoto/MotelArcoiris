@@ -51,6 +51,13 @@ Route::resource('usersjornadas','UserJornadaController');
 		'as' => 'usersjornadas.destroy'
 	]);
 
+Route::resource('proveedores','ProveedorController'); 
+
+	Route::get('proveedores/{id}/destroy', [
+		'uses' => 'ProveedorController@destroy',
+		'as' => 'proveedores.destroy'
+	]);
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [
