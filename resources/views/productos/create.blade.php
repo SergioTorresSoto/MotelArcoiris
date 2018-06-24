@@ -43,6 +43,13 @@
 							</div>
 
 							<div class="form-group">
+	                			{!! Form::label('precio', 'Precio',['class' => 'col-md-4 control-label']) !!}
+						 		<div class="col-md-6">
+						 			{!! Form::text('precio', null, ['class' => 'form-control', 'placeholder' => 'valor...', 'required']) !!}
+								</div>
+							</div>
+
+							<div class="form-group">
 	                			{!! Form::label('id_tipo_producto', 'Tipo de Producto',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
 						 			{!! Form::select('id_tipo_producto', $lista_tipo, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}

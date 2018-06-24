@@ -44,8 +44,14 @@
 								</div>
 							</div>
 
-							
+								<div class="form-group">
+	                			{!! Form::label('precio', 'Precio',['class' => 'col-md-4 control-label']) !!}
+						 		<div class="col-md-6">
+						 			{!! Form::text('precio', $productos->precio, ['class' => 'form-control', 'placeholder' => 'valor...', 'required']) !!}
+								</div>
+							</div>
 
+							
 							
 							<div class="form-group">
 	                			{!! Form::label('id_tipo_producto', 'Tipo de Producto',['class' => 'col-md-4 control-label']) !!}

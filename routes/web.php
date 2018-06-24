@@ -83,7 +83,29 @@ Route::resource('insumos','InsumoController');
   Route::get('insumos/{id}/destroy', [
 		'uses' => 'InsumoController@destroy',
 		'as' => 'insumos.destroy'
-	]);	  	  
+	]);
+
+route::resource('tipohabitacion','TipoHabitacionController');
+
+Route::get('tipohabitacion/{id}/destroy', [
+		'uses' => 'TipoHabitacionController@destroy',
+		'as' => 'tipohabitacion.destroy'
+	]);
+
+ Route::resource('estadohabitacion','EstadoHabitacionController');
+
+ Route::get('estadohabitacion/{id}/destroy', [
+		'uses' => 'EstadoHabitacionController@destroy',
+		'as' => 'estadohabitacion.destroy'
+	]);
+
+Route::resource('habitaciones','HabitacionController');
+
+Route::get('habitaciones/{id}/destroy', [
+	'uses' => 'HabitacionController@destroy',
+	'as' => 'habitaciones.destroy'
+	]);
+
 
 Auth::routes();
 

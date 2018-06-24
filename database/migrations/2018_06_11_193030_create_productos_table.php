@@ -19,11 +19,13 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('imagen')->default('productos/default.jpg');
+            $table->integer('precio');
             $table->integer('stock');
             $table->timestamps();
 
             $table->foreign('id_tipo_producto')->references('id')->on('tipos_productos')->onDelete('cascade');
-        });    }
+        });    
+    }
 
     /**
      * Reverse the migrations.

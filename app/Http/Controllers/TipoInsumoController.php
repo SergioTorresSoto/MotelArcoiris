@@ -90,7 +90,7 @@ class TipoInsumoController extends Controller
     {
         $tipo_insumo = TipoInsumo::find($tipo_insumo);
         $tipo_insumo->delete();    
-        Session::flash('message_danger', "Se ha eliminado el usuario $tipo_insumo->tipo Exitosamente!");
+        Session::flash('message_danger', "Se ha eliminado el tipo $tipo_insumo->tipo Exitosamente!");
         return redirect(route('tipoinsumo.index'));
     }
 }

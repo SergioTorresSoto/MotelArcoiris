@@ -91,6 +91,7 @@ class ProductoController extends Controller
         $producto->lista_tipo= DB::table('tipos_productos')
                      ->orderBy('id')
                      ->pluck('tipo','id');
+      
                      
 
         return view('productos.edit')->with('productos', $producto);
@@ -111,13 +112,16 @@ class ProductoController extends Controller
         if($request->hasFile('imagen')){
     	
 
-    	dd($producto->imagen = $request->file('imagen')->store('public/productos'));
+    	$producto->imagen = $request->file('imagen')->store('public/productos');
         }
         
         $producto->nombre = $request->nombre;
         $producto->descripcion= $request->descripcion;
+        $producto->precio = $request->precio;
         $producto->stock = $request->stock;
         $producto->id_tipo_producto = $request->id_tipo_producto;
+
+
         
         $producto->save();
    

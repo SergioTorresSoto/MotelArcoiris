@@ -29,6 +29,7 @@
 								<th>Descripcion</th>
 								<th>imagen</th>
 								<th>Stock</th>
+								<th>Precio</th>
 								
 							
 							</thead>
@@ -41,6 +42,7 @@
 										<td>{{ $prod->descripcion }}</td>
 										<td><img width="100px" src=" {{Storage::url($prod->imagen) }}"></td>
 										<td>{{ $prod->stock }}</td>
+										<td>{{ $prod->precio}}</td>
 								
 								
 										<td>
