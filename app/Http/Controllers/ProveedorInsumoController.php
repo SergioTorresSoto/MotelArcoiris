@@ -50,8 +50,6 @@ class ProveedorInsumoController extends Controller
     public function store(Request $request)
     {
         $cont=0;
-        
-    
         $id = $request->get('id_insumo');
         $marca = $request->get('marca');
         $cantidad = $request->get('cantidad');

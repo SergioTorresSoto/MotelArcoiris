@@ -17,13 +17,18 @@ class CreateProveedoresInsumosTable extends Migration
             $table->increments('id');
             $table->integer('id_proveedor')->unsigned();
             $table->integer('id_insumo')->unsigned();
-            $table->string('tipo_comprobante');
-            $table->integer('total');
-            $table->dateTime('fecha_compra')->nullable();
+            $table->integer('id_detalle_compra')->unsigned();
+            $table->string('marca');
+            $table->integer('contenido');
+            $table->integer('cantidad');
+            $table->integer('precio_unitario');
+            $table->integer('precio_total');
+            
+            
             $table->timestamps();
-
             $table->foreign('id_proveedor')->references('id')->on('proveedores')->onDelete('cascade');
             $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete('cascade');
+            $table->foreign('id_detalle_compra')->references('id')->on('detalles_compras')->onDelete('cascade');
         });
 
 
@@ -37,7 +42,7 @@ class CreateProveedoresInsumosTable extends Migration
 
     
     }
-
+    
     /**
      * Reverse the migrations.
      *
