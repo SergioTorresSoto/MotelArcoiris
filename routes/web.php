@@ -58,6 +58,8 @@ Route::resource('proveedores','ProveedorController');
 		'as' => 'proveedores.destroy'
 	]);
 
+Route::resource('proveedoresinsumos','ProveedorInsumoController'); 
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [

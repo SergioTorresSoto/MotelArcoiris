@@ -22,3 +22,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Insumo::class, function (Faker\Generator $faker) {
+ 
+    return [
+        'id_tipo_insumo'    => $faker->randomElement($array = array('1', '2', '3')),
+        'nombre'            => $faker->name,
+        'descripcion'       =>$faker->title, 
+        'observacion'		=> $faker->paragraph,
+        'stock'				=>$faker->numberBetween($min = 1, $max = 150),
+    ];
+});

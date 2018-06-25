@@ -18,7 +18,7 @@ class CreateInsumosTable extends Migration
             $table->integer('id_tipo_insumo')->unsigned();
             $table->string('nombre');
             $table->string('descripcion');
-            $table->string('observacion');
+            $table->text('observacion');
             $table->integer('stock');
             $table->timestamps();
 
