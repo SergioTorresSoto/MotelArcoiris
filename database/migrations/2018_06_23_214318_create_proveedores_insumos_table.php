@@ -17,17 +17,25 @@ class CreateProveedoresInsumosTable extends Migration
             $table->increments('id');
             $table->integer('id_proveedor')->unsigned();
             $table->integer('id_insumo')->unsigned();
-            $table->string('marca');
-            $table->integer('cantidad');
-            $table->integer('precio_unitario');
-            $table->integer('precio_total');
             $table->string('tipo_comprobante');
+            $table->integer('total');
             $table->dateTime('fecha_compra')->nullable();
             $table->timestamps();
 
             $table->foreign('id_proveedor')->references('id')->on('proveedores')->onDelete('cascade');
             $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete('cascade');
         });
+
+
+        /*DB::unprepared('
+        CREATE TRIGGER actualizar_stock_insumo AFTER INSERT ON proveedores_insumos FOR EACH ROW
+            BEGIN
+                UPDATE insumos SET stock = stock + NEW.cantidad
+                WHERE insumos.id = NEW.id_insumo;
+            END
+        ');*/
+
+    
     }
 
     /**
@@ -38,5 +46,6 @@ class CreateProveedoresInsumosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('proveedores_insumos');
+        
     }
 }

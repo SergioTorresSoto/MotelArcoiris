@@ -8,7 +8,7 @@ class proveedorInsumo extends Model
 {
      protected $table ="proveedores_insumos";
 
-    protected $fillable=['id_proveedor', 'id_insumo', 'marca','cantidad', 'precio_unitario','tipo_comprobante','precio_total', 'fecha_compra'];
+    protected $fillable=['id_proveedor', 'id_insumo','tipo_comprobante','total', 'fecha_compra'];
     
        public function insumo(){
        		return $this->belongsTo('App\Insumo');

@@ -5,96 +5,81 @@
 @section('content')
 
 
-<div class="container">
+<div class = "container">
     <div class="row">
         <div class="col-md-11 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Compra de Insumo</div>
                 	<div class="panel-body">
 
+	                	{!! Form::open(['route' => 'proveedoresinsumos.store','method' => 'POST', 'class' => 'form']) !!}
+	                		<div class= "row">
+		                		<div  class="col-sm-7">
+			                		<div class="form-group">
+			                			{!! Form::label('Proveedor', 'Proveedor') !!}
+								 		
+								 		{!! Form::select('id_proveedor', $proveedores, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
 
-	                	{!! Form::open(['route' => 'proveedoresinsumos.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
-	                		<div  class="col-sm-4">
-		                		<div class="form-group">
-		                			{!! Form::label('Proveedor', 'Proveedor') !!}
-							 		
-							 		{!! Form::select('id_proveedor', $proveedores, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
+									</div>
+								</div>
 
+							
+								<div class="col-md-4">
+									<div class="form-group">
+							 			{!! Form::label('Comprobante', 'Tipo Comprobante') !!}
+							 			
+							 			{!! Form::select('tipo_comprobante', array('Boleta' => 'Boleta', 'Factura' => 'Factura'), null,['class' => 'form-control', 'placeholder' => 'Seleccione una opcion...']) !!}
+
+									</div>
 								</div>
 							</div>
-
-							<div class="col-md-1">
-							</div>
-							<div class="col-md-4">
-
-								<div class="form-group">
-
-						 			{!! Form::label('Comprobante', 'Tipo Comprobante') !!}
-						 		
-
-							 		
-										{!! Form::select('tipo_comprobante', array('Boleta' => 'Boleta', 'Factura' => 'Factura'), null,['class' => 'form-control', 'placeholder' => 'Seleccione una opcion...']) !!}
-
-								</div>
-							</div>
-						
-						
+							
 							<div class="row">
-								<div class="panel panel-default">
+								<div class="panel panel-primary col-sm-10 col-md-offset-1">
 									<div class="panel-body">
-										<div class="col-sm-12">
+										<div class="col-sm-3">
 											<div class="form-group">
-					                			{!! Form::label('id_insumo', 'Insumo',['class' => 'col-md-4 control-label']) !!}
-										 		<div class="col-md-6">
-										 			{!! Form::select('id_insumo', $insumos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione un insumo...', 'required']) !!}
+					                			{!! Form::label('id_insumo', 'Insumo',['class' => 'control-label']) !!}
+										 		
+										 		{!! Form::select('id_insumo', $insumos, null, ['class' => 'form-control', 'placeholder' => 'Seleccione un insumo...', 'required']) !!}
 
-												</div>
 											</div>
 										</div>
 
-										<div class="col-sm-12">
+										<div class="col-sm-3">
 											<div class="form-group">
 
-									 			{!! Form::label('marca', 'Marca',['class' => 'col-md-4 control-label']) !!}
-									 		
+									 			{!! Form::label('marca', 'Marca',['class' => 'control-label']) !!}
+									 			{!! Form::text('marca', null, ['class' => 'form-control', 'placeholder' => 'Rinso']) !!}
 
-										 		<div class="col-md-6">
-													{!! Form::text('marca', null, ['class' => 'form-control', 'placeholder' => 'Rinso']) !!}
-
-												</div>
 											</div>
 										</div>
-										<div class="col-sm-12">
+										<div class="col-sm-2">
 											<div class="form-group">
 
-									 			{!! Form::label('cantidad', 'Cantidad',['class' => 'col-md-4 control-label']) !!}
-									 		
+									 			{!! Form::label('cantidad', 'Cantidad',['class' => 'control-label']) !!}
+									 			{!! Form::number('cantidad', null, ['class' => 'form-control', 'placeholder' => '20']) !!}
 
-										 		<div class="col-md-6">
-													{!! Form::number('cantidad', null, ['class' => 'form-control', 'placeholder' => '20']) !!}
-
-												</div>
 											</div>
 										</div>
-										<div class="col-sm-12">
+										<div class="col-sm-2">
 											<div class="form-group">
 
-									 			{!! Form::label('precio_unitario', 'Precio',['class' => 'col-md-4 control-label']) !!}
-									 		
-
-										 		<div class="col-md-6">
-													{!! Form::number('precio_unitario', null, ['class' => 'form-control', 'placeholder' => '1000']) !!}
-
-												</div>
-
-												 <button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
+									 			{!! Form::label('precio_unitario', 'Precio',['class' => 'control-label']) !!}
+									 			{!! Form::number('precio_unitario', null, ['class' => 'form-control', 'placeholder' => '1000']) !!}
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="form-group">	
+												{!! Form::label('Opcion', '',['class' => 'control-label']) !!}
+												<button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
 											</div>
 										</div>
 
 										<div class="col-sm-12 ">
 											<table id="detalles" class="table table-striped">
-												<thead>
-													<th>Opciones</th>
+												<thead style="background-color: #A9D0F5">
+													<th>Eliminar</th>
 													<th>Insumo</th>
 													<th>Marca</th>
 													<th>Cantidad</th>
@@ -116,21 +101,19 @@
 										</div>
 									</div>
 								</div>
-
-								
-
-								<div class="form-group" id="guardar">
-		                            <div class="col-md-8 col-md-offset-4">
+							</div>
+							
+							<div class="form-group" id="guardar">
+		                            <div class="col-md-8 col-md-offset-10">
 		                            	<input value="{{ csrf_token() }}" name="_token" type="hidden"></input>
-		                                {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
+		                                {!! Form::submit('Registrar', ['class' => 'btn btn-primary desactivar']) !!}
 		                            </div>
 		                        </div>
 		                    </div>
 						{!! Form::close() !!}
-
-                 	</div>
-                </div>
-            </div>
+					</div>
+				</div>
+			</div>
         </div>
     </div>
 </div>
@@ -149,7 +132,7 @@
 		var cont=0;
 		total=0;
 		subtotal=[];
-		$("#guardar").hide();
+		$('.desactivar').attr("disabled", true);
 
 		function agregar(){
 			id_insumo = $("#id_insumo").val();
@@ -157,6 +140,7 @@
 			marca = $("#marca").val();
 			cantidad = $("#cantidad").val();
 			precio_unitario = $("#precio_unitario").val();
+
 			if(id_insumo!="" && marca!="" && cantidad!="" && precio_unitario!=""){
 				subtotal[cont] = (cantidad*precio_unitario);
 				total = total+subtotal[cont];
@@ -178,16 +162,16 @@
 		  	$("#marca").val("");
 		  	$("#cantidad").val("");
 		  	$("#precio_unitario").val("");
-		  }
+		}
 
 	    function evaluar(){
 		  	if(total>0){
-		  		$("#guardar").show();
+		  		$('.desactivar').attr("disabled", false);
 		  	}else{
-		  		$("#guardar").hide();
+		  		$('.desactivar').attr("disabled", true);
 		  	}
 
-		  }
+		}
 		function eliminar(index){
 			total=total-subtotal[index];
 			$("#total").html("S/," + total);
