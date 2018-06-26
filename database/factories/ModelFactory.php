@@ -33,3 +33,16 @@ $factory->define(App\Insumo::class, function (Faker\Generator $faker) {
         'stock'				=>$faker->numberBetween($min = 1, $max = 150),
     ];
 });
+
+
+$factory->define(App\Producto::class, function (Faker\Generator $faker) {
+ 
+    return [
+        'id_tipo_producto'    => $faker->randomElement($array = array('1', '2', '3','4')),
+        'nombre'              => $faker->name,
+        'descripcion'         => $faker->title, 
+        'stock'               => $faker->numberBetween($min = 1, $max = 150),
+        'precio'              => $faker->numberBetween($min = 1000, $max = 100000),
+        
+    ];
+});

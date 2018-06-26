@@ -60,10 +60,17 @@ Route::resource('proveedores','ProveedorController');
 
 Route::resource('proveedoresinsumos','ProveedorInsumoController'); 
 
+
 	Route::get('proveedoresinsumos/{id}/destroy', [
 		'uses' => 'ProveedorInsumoController@destroy',
 		'as' => 'proveedoresinsumos.destroy'
 	]);
+Route::resource('proveedoresproductos','ProveedorProductoController');
+	Route::get('proveedoresproductos/{id}/destroy', [
+		'uses' => 'ProveedorProductoController@destroy',
+		'as' => 'proveedoresproductos.destroy'
+	]);
+
 
 Route::resource('tipoproducto','TipoProductoController');
 
