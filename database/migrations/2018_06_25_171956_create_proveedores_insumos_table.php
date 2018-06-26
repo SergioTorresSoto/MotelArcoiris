@@ -17,9 +17,9 @@ class CreateProveedoresInsumosTable extends Migration
             $table->increments('id');
             $table->integer('id_proveedor')->unsigned();
             $table->integer('id_insumo')->unsigned();
-            $table->integer('id_detalle_compra')->unsigned();
+            $table->integer('id_detalle_compra')->nullable();
             $table->string('marca');
-            $table->integer('contenido');
+            $table->string('contenido');
             $table->integer('cantidad');
             $table->integer('precio_unitario');
             $table->integer('precio_total');
@@ -28,7 +28,7 @@ class CreateProveedoresInsumosTable extends Migration
             $table->timestamps();
             $table->foreign('id_proveedor')->references('id')->on('proveedores')->onDelete('cascade');
             $table->foreign('id_insumo')->references('id')->on('insumos')->onDelete('cascade');
-            $table->foreign('id_detalle_compra')->references('id')->on('detalles_compras')->onDelete('cascade');
+           
         });
 
 

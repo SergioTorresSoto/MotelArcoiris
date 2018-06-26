@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\proveedorInsumo;
 use App\Proveedor;
 use App\Insumo;
+use App\DetalleCompra;
 use Illuminate\Support\Facades\Session;
 use DB;
 class ProveedorInsumoController extends Controller
@@ -17,11 +18,14 @@ class ProveedorInsumoController extends Controller
      */
     public function index()
     {
-        $proveedoresinsumos = proveedorInsumo::join('proveedores','proveedores.id' ,'=', 'proveedores_insumos.id_proveedor')
-                                               ->join('insumos','insumos.id','=','proveedores_insumos.id_insumo')
-                                               ->select('proveedores_insumos.*','insumos.nombre','proveedores.nombre AS nombre_proveedor')
-                                               ->paginate(5);
-
+        $proveedoresinsumos = DB::Table('proveedores_insumos')
+                    ->join('proveedores','proveedores.id' ,'=', 'proveedores_insumos.id_proveedor')
+                    ->join('detalles_compras','detalles_compras.id','=','proveedores_insumos.id_detalle_compra')
+                    ->select('proveedores.nombre','detalles_compras.*')
+                    ->orderBy('proveedores_insumos.id' ,'ASC')
+                    ->distinct() 
+                    ->paginate(5, ['detalles_compras.id']);
+       
         return view('proveedoresinsumos.index')->with('proveedoresinsumos', $proveedoresinsumos);
     }
 
@@ -50,26 +54,46 @@ class ProveedorInsumoController extends Controller
     public function store(Request $request)
     {
         $cont=0;
+        $suma=0;
         $id = $request->get('id_insumo');
         $marca = $request->get('marca');
         $cantidad = $request->get('cantidad');
         $precio_unitario = $request->get('precio_unitario');
+        $contenido = $request->get('contenido');
+
+        $compra = new DetalleCompra;
+        $compra->tipo_comprobante = $request->get('tipo_comprobante');
+        
+        $aux=0;
+
+        while ($aux<count($request->get('id_insumo'))) {
+            $mult = $cantidad[$aux]*$precio_unitario[$aux];
+            $suma = $suma+$mult;
+            $aux++;
+        }
+        $compra->total = $suma;
+        $compra->save();
 
         while ($cont<count($request->get('id_insumo'))) {
 
             $proveedorinsumo = new proveedorInsumo;
             $proveedorinsumo->id_proveedor= $request->get('id_proveedor');
-            $proveedorinsumo->tipo_comprobante= $request->get('tipo_comprobante');
-
             $proveedorinsumo->id_insumo=$id[$cont];
+
+            $proveedorinsumo->id_detalle_compra = $compra->id;
             $proveedorinsumo->marca=$marca[$cont];
+            $proveedorinsumo->contenido=$contenido[$cont];
             $proveedorinsumo->cantidad=$cantidad[$cont];
             $proveedorinsumo->precio_unitario=$precio_unitario[$cont];
             $proveedorinsumo->precio_total=$cantidad[$cont]*$precio_unitario[$cont];
-            
+
             $proveedorinsumo->save();
             $cont=$cont+1;
         }
+
+       
+
+
         Session::flash('message', "Se ha registrado Exitosamente!");
             return redirect(route('proveedoresinsumos.index'));
     }
@@ -82,7 +106,14 @@ class ProveedorInsumoController extends Controller
      */
     public function show($id)
     {
-        //
+        $insumos = proveedorInsumo::join('proveedores','proveedores.id' ,'=', 'proveedores_insumos.id_proveedor')
+                                ->join('detalles_compras','detalles_compras.id','=','proveedores_insumos.id_detalle_compra')
+                                ->join('insumos','insumos.id','=','proveedores_insumos.id_insumo')
+                                ->select('proveedores.nombre AS nombreproveedor','proveedores.direccion','detalles_compras.*','proveedores_insumos.*','insumos.*')
+                                ->where('id_detalle_compra','=',$id)
+                                ->get();
+                        
+        return view('proveedoresinsumos.show')->with('insumos',$insumos);
     }
 
     /**
@@ -116,6 +147,10 @@ class ProveedorInsumoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $detalle = DetalleCompra::find($id);
+        $detalle->delete();  
+
+        Session::flash('message', "Se ha eliminado la compra Exitosamente!");
+        return redirect(route('proveedoresinsumos.index'));
     }
 }

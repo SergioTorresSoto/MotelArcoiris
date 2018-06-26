@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetalleCompra extends Model
 {
-    protected $table ="detalle_compra";
+    protected $table ="detalles_compras";
 
     protected $fillable=['tipo_comprobante','total'];
 }

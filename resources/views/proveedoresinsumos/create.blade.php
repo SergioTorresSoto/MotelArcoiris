@@ -7,7 +7,7 @@
 
 <div class = "container">
     <div class="row">
-        <div class="col-md-11 col-md-offset-2">
+        <div class="col-md-11 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Compra de Insumo</div>
                 	<div class="panel-body">
@@ -35,9 +35,9 @@
 							</div>
 							
 							<div class="row">
-								<div class="panel panel-primary col-sm-10 col-md-offset-1">
+								<div class="panel panel-primary col-sm-12">
 									<div class="panel-body">
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<div class="form-group">
 					                			{!! Form::label('id_insumo', 'Insumo',['class' => 'control-label']) !!}
 										 		
@@ -46,11 +46,19 @@
 											</div>
 										</div>
 
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<div class="form-group">
 
 									 			{!! Form::label('marca', 'Marca',['class' => 'control-label']) !!}
 									 			{!! Form::text('marca', null, ['class' => 'form-control', 'placeholder' => 'Rinso']) !!}
+
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="form-group">
+
+									 			{!! Form::label('contenido', 'Contenido',['class' => 'control-label']) !!}
+									 			{!! Form::text('contenido', null, ['class' => 'form-control', 'placeholder' => '1x30x30g']) !!}
 
 											</div>
 										</div>
@@ -69,25 +77,27 @@
 									 			{!! Form::number('precio_unitario', null, ['class' => 'form-control', 'placeholder' => '1000']) !!}
 											</div>
 										</div>
-										<div class="col-sm-2">
+										<div class="col-sm-1">
 											<div class="form-group">	
 												{!! Form::label('Opcion', '',['class' => 'control-label']) !!}
 												<button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
 											</div>
 										</div>
 
-										<div class="col-sm-12 ">
-											<table id="detalles" class="table table-striped">
+										<div class=" ">
+											<table id="detalles" class="table table-striped col-md-11">
 												<thead style="background-color: #A9D0F5">
 													<th>Eliminar</th>
 													<th>Insumo</th>
 													<th>Marca</th>
+													<th>Contenido</th>
 													<th>Cantidad</th>
 													<th>Precio Unidad</th>
 													<th>Subtotal</th>
 												</thead>
 												<tfoot>
 													<th>TOTAL</th>
+													<th></th>
 													<th></th>
 													<th></th>
 													<th></th>
@@ -129,6 +139,18 @@
 			
 		});
 
+		  $( function() {
+		    
+		    $( "#getvalue" ).on( "click", function() {
+		      console.log("hola");
+		    });
+		   
+
+		 
+		    
+		  } );
+
+
 		var cont=0;
 		total=0;
 		subtotal=[];
@@ -138,6 +160,7 @@
 			id_insumo = $("#id_insumo").val();
 			insumo = $("#id_insumo option:selected").text();
 			marca = $("#marca").val();
+			contenido = $("#contenido").val();
 			cantidad = $("#cantidad").val();
 			precio_unitario = $("#precio_unitario").val();
 
@@ -145,7 +168,7 @@
 				subtotal[cont] = (cantidad*precio_unitario);
 				total = total+subtotal[cont];
 
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_insumo[]" value="'+id_insumo+'">'+insumo+'</td><td><input type="text" name="marca[]" value="'+marca+'"></td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_unitario[]" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_insumo[]" value="'+id_insumo+'">'+insumo+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca[]" value="'+marca+'"></td><td><input type="text" class="form-control" readonly="readonly" name="contenido[]" value="'+contenido+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
 				cont++;
 				limpiar();
@@ -161,6 +184,7 @@
 		function limpiar(){
 		  	$("#marca").val("");
 		  	$("#cantidad").val("");
+		  	$("#contenido").val("");
 		  	$("#precio_unitario").val("");
 		}
 

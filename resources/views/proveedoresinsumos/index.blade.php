@@ -14,7 +14,7 @@
 			@endif
 
             <div class="panel panel-default">
-                <div class="panel-heading">Tipo Usuario</div>
+                <div class="panel-heading">Compra Insumos</div>
                 	<div class="panel-body">
 
 
@@ -29,11 +29,7 @@
 							<tr>
 								<th>ID</th>
 								<th>Proveedor</th>
-								<th>Insumo</th>
-								<th>Marca</th>
-								<th>Cantidad</th>
-								<th>Precio Unidad</th>
-								<th>Precio Total</th>
+								<th>Total</th>
 								<th>Tipo Comprobante</th>
 								<th>Fecha Compra</th>
 								<th>Acción</th>
@@ -43,15 +39,12 @@
 								@foreach($proveedoresinsumos as $type)
 									<tr>
 										<td>{{ $type->id }}</td>
-										<td>{{ $type->nombre_proveedor }}</td>
 										<td>{{ $type->nombre }}</td>
-										<td>{{ $type->marca }}</td>
-										<td>{{ $type->cantidad }}</td>
-										<td>{{ $type->precio_unitario }}</td>
-										<td>{{ $type->precio_total }}</td>
+										<td>{{ $type->total }}</td>
 										<td>{{ $type->tipo_comprobante }}</td>
 										<td>{{ $type->created_at }}</td>
 										<td>
+											<a href="{{ route('proveedoresinsumos.show', $type->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a> 
 											<a href="{{ route('proveedoresinsumos.edit', $type->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
 											<a href="{{ route('proveedoresinsumos.destroy', $type->id) }}" onclick="return confirm('¿Está seguro de eliminar al usuario seleccionado?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
 										</td>
