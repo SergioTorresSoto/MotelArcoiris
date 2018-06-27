@@ -65,7 +65,7 @@ class ProveedorInsumoController extends Controller
         $compra->tipo_comprobante = $request->get('tipo_comprobante');
         
         $aux=0;
-
+        
         while ($aux<count($request->get('id_insumo'))) {
             $mult = $cantidad[$aux]*$precio_unitario[$aux];
             $suma = $suma+$mult;

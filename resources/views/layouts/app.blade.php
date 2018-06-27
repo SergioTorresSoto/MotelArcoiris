@@ -11,54 +11,45 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+   
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   
     
-
-    @yield('style')
-
+    <script src="{{ asset("assets/js/modernizr.js") }}"></script> <!-- Modernizr -->
+    
+    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}"> <!-- Resource style -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     @yield('style')
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+        <header class="cd-main-header">
+        <a id="sub" href="#0" class="cd-logo"><img src="img/cd-logo.svg" alt="Logo"></a>
+        
+        <div class="cd-search is-hidden">
+            <form action="#0">
+                <input  type="search" placeholder="Search...">
+            </form>
+        </div> <!-- cd-search -->
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+        <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+        <nav class="cd-nav">
+            <ul class="cd-top-nav">
+                <li><a id="sub" href="#0">Tour</a></li>
+                <li><a id="sub" href="#0">Support</a></li>
+                @if (Auth::guest())
+                            <li><a id="sub" href="{{ route('login') }}">Login</a></li>
+                            <li><a id="sub" href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a id="sub" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->nombre }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ route('logout') }}"
+                                        <a id="sub" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
@@ -70,20 +61,98 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endif
+                @endif
+            </ul>
+        </nav>
+    </header> <!-- .cd-main-header -->
+
+    <main class="cd-main-content">
+        <nav class="cd-side-nav">
+            <ul>
+                <li class="cd-label">Main</li>
+                <li class="has-children overview">
+                    <a id="sub" href="#0">Overview</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="#0">All Data</a></li>
+                        <li><a id="sub"href="#0">Category 1</a></li>
+                        <li><a id="sub"href="#0">Category 2</a></li>
                     </ul>
-                </div>
-            </div>
+                </li>
+                <li class="has-children notifications active">
+                    <a id="sub" href="#0">Notifications<span class="count">3</span></a>
+                    
+                    <ul>
+                        <li><a id="sub" href="#0">All Notifications</a></li>
+                        <li><a id="sub" href="#0">Friends</a></li>
+                        <li><a id="sub" href="#0">Other</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-children comments">
+                    <a id="sub" href="#0">Comments</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="#0">All Comments</a></li>
+                        <li><a id="sub" href="#0">Edit Comment</a></li>
+                        <li><a id="sub" href="#0">Delete Comment</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li class="cd-label">Secondary</li>
+                <li class="has-children bookmarks">
+                    <a id="sub" href="#0">Bookmarks</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="#0">All Bookmarks</a></li>
+                        <li><a id="sub" href="#0">Edit Bookmark</a></li>
+                        <li><a id="sub" href="#0">Import Bookmark</a></li>
+                    </ul>
+                </li>
+                <li class="has-children images">
+                    <a id="sub" href="{{ url('controlhorario') }}">Asistencia</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="{{ url('controlhorario/create') }}">Marcar Asistencia</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-children users">
+                    <a id="sub" href="#0">Users</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="{{ url('users') }}">All Users</a></li>
+                        <li><a id="sub" href="#0">Edit User</a></li>
+                        <li><a id="sub" href="#0">Add User</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul>
+                <li class="cd-label">Action</li>
+                <li class="action-btn"><a id="sub" href="#0">+ Button</a></li>
+            </ul>
         </nav>
 
-        @yield('content')
+        <div class="content-wrapper">
+            @yield('content')
+        </div> <!-- .content-wrapper -->
+    </main> <!-- .cd-main-content -->
+
+        
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- -->   
-    @yield('script')
-  
+ -->
+    
+    <script src="{{ asset("assets/js/jquery-2.1.4.js") }}"></script>
+   
+    <script src="{{ asset("assets/js/jquery.menu-aim.js") }}"></script>
+    <script src="{{ asset("assets/js/main.js") }}"></script> <!-- Resource jQuery -->
+     @yield('script')   
 </body>
 </html>
