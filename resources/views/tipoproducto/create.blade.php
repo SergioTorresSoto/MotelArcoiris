@@ -4,24 +4,28 @@
 
 @section('content')
 
-<div class="container">
-	<div class="row">
-		<div >
+
+
+
+		<h3>Crear Tipo Producto</h3>
+		<hr/>
+			<div class="col-sm-5 col-md-5 ">
+				<div class="panel-body">
 			{!! Form::open(['route' => 'tipoproducto.store','method' => 'POST']) !!}
+
+				<div class="form-group">
 
 		 		{!! Form::label('tipo', 'Nombre de tipo') !!}
 				{!! Form::text('tipo', null, ['class' => 'form-control', 'placeholder' => 'tipo', 'required']) !!}
+		        </div>
 
-
-				<p></p>
-
-				<div align="center">
+				
 					{!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
-				</div>
+			
 
 			{!! Form::close() !!}
 		</div>
 	</div>
-</div>
+
 @endsection	
 

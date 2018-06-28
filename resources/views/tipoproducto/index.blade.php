@@ -1,25 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" >
-	<p></p>
 
-	<div align="right">
+
+	<div class = "col-md-12">
+		<h3> Tipo Productos</h3>
+		<hr/>
+
 		
 		<a href="{{ route('tipoproducto.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
 	
-</div>
-		<p></p>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>ID</th>
-				<th>Tipo</th>
-				<th>Acción</th>
+
+
+					<div class ="panel-body">
+					<table class="table table-striped">
+					<thead>
+					<tr>
+					<th>ID</th>
+					<th>Tipo</th>
+					<th>Acción</th>
 			
-			</thead>
-			<tbody>
-				@foreach($tipo_producto as $type)
+					</thead>
+					<tbody>
+					@foreach($tipo_producto as $type)
 					<tr>
 						<td>{{ $type->id }}</td>
 						<td>{{ $type->tipo }}</td>
@@ -35,6 +38,6 @@
 		<div style="text-align: center;">
 			{{ $tipo_producto->links() }}
 		</div>
+	</div>
 </div>
-
 @endsection

@@ -5,12 +5,10 @@
 @section('content')
 
 
-<div class = "container">
-    <div class="row">
-        <div class="col-md-11 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Compra de Producto</div>
-                	<div class="panel-body">
+		    <div class="col-md-12">
+                <h3>Crear Compra Producto</h3>
+
+              <hr/>
 
 	                	{!! Form::open(['route' => 'proveedoresproductos.store','method' => 'POST', 'class' => 'form']) !!}
 	                		<div class= "row">

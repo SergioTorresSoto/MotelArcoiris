@@ -5,32 +5,29 @@
 @section('content')
 
 
-<div class = "container">
-    <div class="row">
-        <div class="col-md-11 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Compra de Producto</div>
-                	<div class="panel-body">
+		    <div class="col-md-12">
+                <h3>Crear Compra Producto</h3>
 
-                			<div class= "row">
-		                		<div class="col-sm-6">
+              		<hr/>
+              					<div class="col-sm-2">
 									<div class="form-group">
 
 									 	{!! Form::label('proveedor', 'Proveedor',['class' => 'control-label']) !!}
 									 	{!! Form::text('proveedor', $proveedoresproductos[0]->nombreproveedor, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
 
-									</div>
 								</div>
-								<div class="col-sm-4">
+									  </div>
+								
+								<div class="col-sm-2">
 									<div class="form-group">
 
 									 	{!! Form::label('tipo_comprobante', 'Tipo Comprobante',['class' => 'control-label']) !!}
 									 	{!! Form::text('tipo_comprobante', $proveedoresproductos[0]->tipo_comprobante, ['class' => 'form-control', 'readonly' => 'readonly']) !!}
-
-									</div>
+									 </div>
 								</div>
+								
 
-							</div>
+						
 							
 							<div class="row">
 								<div class="panel panel-primary col-sm-12">
