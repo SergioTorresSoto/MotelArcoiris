@@ -9,7 +9,7 @@
                 <h3>Crear Compra Producto</h3>
 
               <hr/>
-
+              		<div class= "panel-body">
 	                	{!! Form::open(['route' => 'proveedoresproductos.store','method' => 'POST', 'class' => 'form']) !!}
 	                		<div class= "row">
 		                		<div  class="col-sm-7">
@@ -22,7 +22,7 @@
 								</div>
 
 							
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<div class="form-group">
 							 			{!! Form::label('Comprobante', 'Tipo Comprobante') !!}
 							 			
@@ -32,10 +32,10 @@
 								</div>
 							</div>
 							
-							<div class="row">
+						
 								<div class="panel panel-primary col-sm-12"> 
 									<div class="panel-body">
-										<div class="col-sm-10">
+										<div class="col-sm-2">
 											<div class="form-group">
 					                			{!! Form::label('id_producto', 'Producto',['class' => 'control-label']) !!}
 										 		
@@ -76,15 +76,15 @@
 									 			{!! Form::number('precio_unitario', null, ['class' => 'form-control', 'placeholder' => '1000']) !!}
 											</div>
 										</div>
-										<div class="col-sm-1">
+										<div class="col-sm-2">
 											<div class="form-group">	
 												{!! Form::label('Opcion', '',['class' => 'control-label']) !!}
 												<button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
 											</div>
 										</div>
-
+								
 										<div class="">
-											<table id="detalles" class="table table-striped">
+											<table id="detalles" class="table table-striped col-md-11">
 												<thead style="background-color: #A9D0F5">
 													<th>Eliminar</th>
 													<th>Producto</th>
@@ -100,6 +100,7 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th><h4 id="total">S/0.00</h4></th>
 												</tfoot>
 												<tbody>
@@ -109,7 +110,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+
 
 							
 							<div class="form-group" id="guardar">
@@ -119,13 +120,11 @@
 		                            </div>
 		                        </div>
 		                    </div>
+
 						{!! Form::close() !!}
-					</div>
 				</div>
 			</div>
-        </div>
-    </div>
-</div>
+		</div>	
 @endsection	
 
 @section('script')
@@ -156,7 +155,7 @@
 				subtotal[cont] = (cantidad*precio_unitario);
 				total = total+subtotal[cont];
 
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td><td><input type="text" name="marca_producto[]" value="'+marca_producto+'"></td><td><input type="text" name="contenido[]" value= "'+contenido+'"></td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" name="precio_unitario[]" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
+					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_insumo[]" value="'+id_producto+'">'+producto+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca[]" value="'+marca_producto+'"></td><td><input type="text" class="form-control" readonly="readonly" name="contenido[]" value="'+contenido+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
 				cont++;
 				limpiar();
