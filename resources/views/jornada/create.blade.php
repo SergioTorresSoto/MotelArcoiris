@@ -4,16 +4,11 @@
 
 @section('content')
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Crear Jornada</div>
+		<div class="col-md-12">
+            
+                <h3>Crear Jornada</h3>
+                <hr/>
                 	<div class="panel-body">
-
 
 	                	{!! Form::open(['route' => 'jornadas.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
 	                		<div class="form-group">
@@ -67,9 +62,7 @@
 
                  	</div>
                 </div>
-            </div>
+            
         </div>
-    </div>
-</div>
 @endsection	
 

@@ -27,8 +27,10 @@ class UserTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+       
+        
         return view('usertype.create');
     }
 
@@ -40,11 +42,13 @@ class UserTypeController extends Controller
      */
     public function store(Request $request)
     {
+
         $users_type = new usertype($request->all());
         
-        $var = $users_type->save();
+        $users_type->save();
         
         Session::flash('message', "Se ha registrado el tipo $users_type->type Exitosamente!");
+        
             return redirect(route('userstype.index'));
     }
 

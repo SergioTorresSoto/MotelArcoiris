@@ -6,11 +6,11 @@
 @section('content')
 
 
-<div class = "container">
-    <div class="row">
-        <div class="col-md-11 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Compra de Insumo</div>
+
+        <div class="col-md-12">
+           
+                <h3>Compra de Insumo</h3>
+                <hr/>
                 	<div class="panel-body">
 
 	                		<div class= "row">
@@ -33,7 +33,7 @@
 
 							</div>
 							
-							<div class="row">
+							
 								<div class="panel panel-primary col-sm-12">
 									<div class="panel-body">
 										<div class=" ">
@@ -71,12 +71,12 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							
 							
 						
 					</div>
 				</div>
-			</div>
+			
         </div>
     </div>
 </div>

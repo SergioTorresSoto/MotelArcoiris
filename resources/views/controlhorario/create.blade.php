@@ -6,7 +6,6 @@
 
 
         <div class="col-md-12">
-            
                 <h3>Marcar Horario</h3>
                 <hr/>
                 	<div class="col-sm-5 col-md-5 ">

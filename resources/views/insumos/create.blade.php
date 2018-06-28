@@ -5,11 +5,11 @@
 @section('content')
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Crear Insumo</div>
+        <div class="col-md-12">
+           
+                <h3>Crear Insumo</h3>
+                <hr/>
+                <div class="col-sm-7 col-md-7 ">
                 	<div class="panel-body">
 
                 		{!! Form::open(['route' => 'insumos.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
@@ -63,9 +63,8 @@
 
                  	</div>
                 </div>
-            </div>
+            
         </div>
-    </div>
-</div>
+
 @endsection	
 

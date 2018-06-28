@@ -4,8 +4,10 @@
 
 @section('content')
 
-<div class="container">
-	<div class="row">
+
+	<div class="col-md-12">
+		<h3>Crear Estado</h3>
+        <hr/>
 		<div >
 			{!! Form::open(['route' => 'estadohabitacion.store','method' => 'POST']) !!}
 
@@ -22,6 +24,6 @@
 			{!! Form::close() !!}
 		</div>
 	</div>
-</div>
+
 @endsection	
 

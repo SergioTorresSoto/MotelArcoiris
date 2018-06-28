@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" >
-	<p></p>
-
-	<div align="right">
+<div class="col-md-12" >
+	<h3>Tipo Habitacion
+		<div class="btn-group pull-right">
+			<a href="{{ route('tipohabitacion.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
+		</div> 
+	</h3>
+	<hr/>
 		
-		<a href="{{ route('tipohabitacion.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
-	
-</div>
-		<p></p>
 		<table class="table table-striped">
 			<thead>
 			<tr>

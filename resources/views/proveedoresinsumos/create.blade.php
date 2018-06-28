@@ -4,12 +4,9 @@
 
 @section('content')
 
-
-<div class = "container">
-    <div class="row">
-        <div class="col-md-11 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Compra de Insumo</div>
+        <div class="col-md-12">   
+                <h3>Compra de Insumo</h3>
+                <hr/>
                 	<div class="panel-body">
 
 	                	{!! Form::open(['route' => 'proveedoresinsumos.store','method' => 'POST', 'class' => 'form']) !!}
@@ -24,7 +21,7 @@
 								</div>
 
 							
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<div class="form-group">
 							 			{!! Form::label('Comprobante', 'Tipo Comprobante') !!}
 							 			
@@ -34,7 +31,7 @@
 								</div>
 							</div>
 							
-							<div class="row">
+							
 								<div class="panel panel-primary col-sm-12">
 									<div class="panel-body">
 										<div class="col-sm-2">
@@ -65,7 +62,7 @@
 										<div class="col-sm-2">
 											<div class="form-group">
 
-									 			{!! Form::label('cantidad', 'Cantidad',['class' => 'control-label']) !!}
+									 			{!! Form::label('cantidad', 'Cantidad (U)',['class' => 'control-label']) !!}
 									 			{!! Form::number('cantidad', null, ['class' => 'form-control', 'placeholder' => '20']) !!}
 
 											</div>
@@ -73,11 +70,11 @@
 										<div class="col-sm-2">
 											<div class="form-group">
 
-									 			{!! Form::label('precio_unitario', 'Precio',['class' => 'control-label']) !!}
+									 			{!! Form::label('precio_unitario', 'Precio Unidad',['class' => 'control-label']) !!}
 									 			{!! Form::number('precio_unitario', null, ['class' => 'form-control', 'placeholder' => '1000']) !!}
 											</div>
 										</div>
-										<div class="col-sm-1">
+										<div class="col-sm-2">
 											<div class="form-group">	
 												{!! Form::label('Opcion', '',['class' => 'control-label']) !!}
 												<button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
@@ -91,7 +88,7 @@
 													<th>Insumo</th>
 													<th>Marca</th>
 													<th>Contenido</th>
-													<th>Cantidad</th>
+													<th>Cantidad (Unidad)</th>
 													<th>Precio Unidad</th>
 													<th>Subtotal</th>
 												</thead>
@@ -111,7 +108,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							
 							
 							<div class="form-group" id="guardar">
 		                            <div class="col-md-8 col-md-offset-10">
@@ -123,10 +120,9 @@
 						{!! Form::close() !!}
 					</div>
 				</div>
-			</div>
+			
         </div>
-    </div>
-</div>
+
 @endsection	
 
 @section('script')

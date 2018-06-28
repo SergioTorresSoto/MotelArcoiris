@@ -4,14 +4,10 @@
 
 @section('content')
 
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Tipo Usuario</div>
+        <div class="col-md-12">
+      
+                <h3>Tipo Usuario</h3>
+                <hr/>
                 	<div class="panel-body">
 
 
@@ -25,6 +21,7 @@
 									{!! Form::text('type', null, ['class' => 'form-control', 'placeholder' => 'Tipo', 'required']) !!}
 
 								</div>
+								
 							</div>
 
 							<div class="form-group">
@@ -37,9 +34,8 @@
 
                  	</div>
                 </div>
-            </div>
+           
         </div>
-    </div>
-</div>
+
 @endsection	
 

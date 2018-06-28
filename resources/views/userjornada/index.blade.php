@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
+
+    <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
 			      <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
-            <div class="panel panel-default">
-                <div class="panel-heading">Usuarios
+            
+                <h3>Usuarios
                 	<div class="btn-group pull-right">
-				        <a href="{{ route('usersjornadas.create') }}" class="btn btn-info btn-sm">Asignar Jornada</a>
+				        <a href="{{ route('usersjornadas.create') }}" class="btn btn-info ">Asignar Jornada</a>
 				     </div>
-                	
                 		
-                </div>
+                </h3>
+                <hr/>
                 
 
                 	<div class="panel-body">
@@ -58,8 +58,8 @@
 						
 	                </div>
 	            </div>
-	        </div>
+	        
 	</div>
-</div>
+
 
 @endsection

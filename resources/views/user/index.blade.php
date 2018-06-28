@@ -1,25 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
+
+		<div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
 			      <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
-            <div class="panel panel-default">
-                <div class="panel-heading">Usuarios
+           
+                <h3>Usuarios 
                 	<div class="btn-group pull-right">
-				        <a href="{{ route('users.create') }}" class="btn btn-info btn-sm">Agregar Usuario</a>
-				     </div>
-                	
-                		
-                </div>
-                <div class = container>
-                	
-							
+				        <a href="{{ route('users.create') }}" class="btn btn-primary">Agregar Usuario</a>
+				     </div>  
+                </h3>
+                <hr/>
+		
 	                {!! Form::open(['route' => 'users.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
 							<div class = "form-group">
 								{!! Form::text('nombre', null ,['class' => 'form-control','placeholder'=>'Nombre Usuario']) !!}
@@ -31,8 +28,7 @@
 										
 							</div>
 					{!! Form::close() !!}
-					
-				</div>
+				
 
                 	<div class="panel-body">
 
@@ -40,7 +36,7 @@
 							<thead>
 							<tr>
 								<th>ID</th>
-								<th>Username</th>
+								
 								<th>Nombre</th>
 								<th>Apellido</th>
 								<th>Rut</th>
@@ -54,7 +50,7 @@
 								@foreach($users as $user)
 									<tr>
 										<td>{{ $user->id }}</td>
-										<td>{{ $user->username }}</td>
+										
 										<td>{{ $user->nombre }}</td>
 										<td>{{ $user->apellido }}</td>
 										<td>{{ $user->rut }}</td>
@@ -75,8 +71,6 @@
 						</div>
 	                </div>
 	            </div>
-	        </div>
-	</div>
-</div>
-
+	        
+	     <div>
 @endsection

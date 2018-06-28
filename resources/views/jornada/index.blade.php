@@ -3,9 +3,7 @@
 @section('content')
 
 
-<div class="container">
-
-    <div class="row">
+    <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
 			      <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
@@ -13,16 +11,13 @@
 			    </div>
 			@endif
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Jornadas</div>
+                <h3>Jornadas
+                	<div class="btn-group pull-right">
+				        <a href="{{ route('jornadas.create') }}" class="btn btn-info">Agregar Jornada</a>
+				     </div>
+                </h3>
+                <hr/>
                 	<div class="panel-body">
-
-
-	                	<div align="right">
-						
-							<a href="{{ route('jornadas.create') }}" class="btn btn-info">Agregar Jornada</a>
-					
-						</div>
 						
 						<table class="table table-striped">
 							<thead>
@@ -56,6 +51,6 @@
 	            </div>
 	        </div>
 	</div>
-</div>
+
 
 @endsection

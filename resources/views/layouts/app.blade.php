@@ -13,12 +13,11 @@
     <!-- Styles -->
    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-   
-    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}"> <!-- CSS reset -->
     <script src="{{ asset("assets/js/modernizr.js") }}"></script> <!-- Modernizr -->
-    
     <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}"> <!-- Resource style -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
      @yield('style')
 </head>
 <body>
@@ -40,7 +39,7 @@
                 <li><a id="sub" href="#0">Support</a></li>
                 @if (Auth::guest())
                             <li><a id="sub" href="{{ route('login') }}">Login</a></li>
-                            <li><a id="sub" href="{{ route('register') }}">Register</a></li>
+                            <li><a id="sub" href="{{ route('users.create') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a id="sub" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -103,12 +102,21 @@
             <ul>
                 <li class="cd-label">Secondary</li>
                 <li class="has-children bookmarks">
-                    <a id="sub" href="#0">Bookmarks</a>
+                    <a id="sub" href="{{ url('insumos') }}">Insumos</a>
                     
                     <ul>
-                        <li><a id="sub" href="#0">All Bookmarks</a></li>
-                        <li><a id="sub" href="#0">Edit Bookmark</a></li>
-                        <li><a id="sub" href="#0">Import Bookmark</a></li>
+                        <li><a id="sub" href="{{ url('proveedoresinsumos') }}">Listar Compra</a></li>
+                        <li><a id="sub" href="{{ url('proveedoresinsumos/create') }}">Comprar Isumos</a></li>
+                         <li><a id="sub" href="{{ url('tipoinsumo/create') }}">Listar Tipo Isumos</a></li>
+                    </ul>
+                </li>
+                <li class="has-children images">
+                    <a id="sub" href="{{ url('productos') }}">Productos</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="{{ url('proveedoresproductos') }}">Listar Compras</a></li>
+                        <li><a id="sub" href="{{ url('proveedoresproductos/create') }}">Comprar Productos</a></li>
+                        <li><a id="sub" href="{{ url('tipoproducto') }}">Listar Tipo Productos</a></li>
                     </ul>
                 </li>
                 <li class="has-children images">
@@ -119,13 +127,23 @@
                     </ul>
                 </li>
 
-                <li class="has-children users">
-                    <a id="sub" href="#0">Users</a>
+                <li class="has-children images">
+                    <a id="sub" href="{{ url('habitaciones') }}">Habitaciones</a>
                     
                     <ul>
-                        <li><a id="sub" href="{{ url('users') }}">All Users</a></li>
-                        <li><a id="sub" href="#0">Edit User</a></li>
-                        <li><a id="sub" href="#0">Add User</a></li>
+                        <li><a id="sub" href="{{ url('tipohabitacion') }}">Listar Tipo Habitacion</a></li>
+                        <li><a id="sub" href="{{ url('estadohabitacion') }}">Listar Estado Habitacion</a></li>
+                    </ul>
+                </li>
+
+                <li class="has-children users">
+                    <a id="sub" href="{{ url('users') }}">Usuarios</a>
+                    
+                    <ul>
+                        <li><a id="sub" href="{{ url('userstype') }}">Tipos de Usuarios</a></li>
+                        <li><a id="sub" href="{{ url('controlhorario') }}">Control de Asistencia</a></li>
+                        <li><a id="sub" href="{{ url('usersjornadas') }}">Horario Empleados</a></li>
+
                     </ul>
                 </li>
             </ul>
