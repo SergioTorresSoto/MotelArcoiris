@@ -40,16 +40,22 @@ class ControlHorarioController extends Controller
                     // Add color and link on event
                     [
                         'color' => '#800',
-                        'url' => route('controlhorario.edit', $value->id) ,
+                     //   'url' => route('controlhorario.edit', $value->id) ,
                     ]
                 )
                 ;
             }
-        }
+        }$calendar = new Calendar;
         $calendar = Calendar::addEvents($events)
-                            ->setOptions(['firstDay' => 1]);
-
-        $control->calendar = $calendar;
+                            ->setOptions(['firstDay' => 1])
+                            ->setCallbacks([
+                                'eventClick' => 'function() {
+                                     $("#myModal").modal();
+                                }',
+                                'dayClick' => 'function() {
+                                    $("#myModal").modal();
+                                }'
+                            ]);
         
         
         return view('controlhorario.index', compact('calendar'))->with('control', $control);

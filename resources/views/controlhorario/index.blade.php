@@ -65,11 +65,11 @@
 		<h4>Calendario</h4>
 	    <div class="panel-body">    
             {!! $calendar->calendar() !!}
-            {!! $calendar->script() !!}
+            
         </div>
     </div>
 	           
-
+  
 
 
 @endsection

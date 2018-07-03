@@ -23,5 +23,11 @@ class UserTypeSeeder extends Seeder
        	'type' => 'Ususario'
 
        ]);
+
+        DB::table('users_type')->insert([
+
+        'type' => 'Cliente'
+
+       ]);
     }
 }

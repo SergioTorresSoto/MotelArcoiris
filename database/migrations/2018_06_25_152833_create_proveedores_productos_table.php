@@ -12,7 +12,7 @@ class CreateProveedoresProductosTable extends Migration
         $table->increments('id');
         $table->integer('id_proveedor')->unsigned();
         $table->integer('id_producto')->unsigned();
-        $table->integer('id_detalle_compra')->unsigned();
+        $table->integer('id_detalle_compra')->nullable();
         $table->string('marca_producto');
         $table->string('contenido');
         $table->integer('cantidad');
