@@ -24,6 +24,7 @@ class ProveedorProductoController extends Controller
                   ->distinct()
                   ->paginate(5,['detalles_compras.id']);
 
+
         
         
         return view('proveedoresproductos.index')->with('proveedoresproductos', $proveedoresproductos);
@@ -80,8 +81,7 @@ class ProveedorProductoController extends Controller
         $compra->total = $suma;
 
         $compra->save();
-       
-
+    
 
         while ($cont<count($request->get('id_producto'))) {
 
