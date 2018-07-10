@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoHabitacionesSeeder::class);
         $this->call(EstadoHabitacionesSeeder::class);
         $this->call(ProductosSeeder::class);
+        $this->call(Habitaciones::class);
     }
 }

@@ -89,7 +89,7 @@
                 </li>
 
                 <li class="has-children comments">
-                    <a id="sub" href="#0">Comments</a>
+                    <a id="sub" href="{{ url('usuarioshabitaciones') }}">Reservas</a>
                     
                     <ul>
                         <li><a id="sub" href="#0">All Comments</a></li>

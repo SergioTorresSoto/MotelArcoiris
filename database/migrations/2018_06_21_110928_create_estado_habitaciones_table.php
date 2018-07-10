@@ -16,6 +16,8 @@ class CreateEstadoHabitacionesTable extends Migration
         Schema::create('estado_habitaciones', function (Blueprint $table) {
         $table->increments('id');
         $table->string('estado');
+        $table->string('color');
+        $table->string('estilo')->nullable();
         $table->timestamps();
         });
     }

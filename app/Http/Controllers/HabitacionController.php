@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Habitacion;
 use App\TipoHabitacion;
 use App\EstadoHabitacion;
+
 use DB;
 
 class HabitacionController extends Controller
@@ -14,14 +15,18 @@ class HabitacionController extends Controller
     public function index()
     {
         
+        
 
         $habitacion =  DB::table('habitaciones')
 
                   ->join('tipo_habitaciones', 'tipo_habitaciones.id', '=', 'habitaciones.id_tipo_habitacion' )
                   ->join('estado_habitaciones', 'estado_habitaciones.id', '=', 'habitaciones.id_estado_habitacion' )
+                  
                   ->select('habitaciones.*','tipo_habitaciones.tipo','estado_habitaciones.estado')
                   ->orderBy('habitaciones.id','ASC')
                   ->paginate(5);
+
+             
 
         
         return view('habitaciones.index')->with('habitacion', $habitacion);

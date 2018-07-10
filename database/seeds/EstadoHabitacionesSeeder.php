@@ -13,19 +13,24 @@ class EstadoHabitacionesSeeder extends Seeder
     {
         DB::table('estado_habitaciones')->insert([
 
-       'estado' => 'Disponible'
-
+       'estado' => 'Disponible',
+       'color' => 'width: 60px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; background-color:#0C981F;',
+       'estilo' => 'width: 70px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; color:#ffffff; background-color:#0C981F;',
        ]);
 
         DB::table('estado_habitaciones')->insert([
 
-       'estado' => 'Ocupado'
-
+       'estado' => 'Ocupado',
+       'color' => 'width: 60px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; background-color:#AB1919;',
+       'estilo' => 'width: 60px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; color:#ffffff; background-color:#AB1919;',
        ]);
 
         DB::table('estado_habitaciones')->insert([
 
-       'estado' => 'Limpieza'
+       'estado' => 'Limpieza',
+       'color' => 'width: 60px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; background-color:#2D94D0;',
+       'estilo' => 'width: 60px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; color:#ffffff; background-color:#2D94D0;',
+
 
        ]); 
     }

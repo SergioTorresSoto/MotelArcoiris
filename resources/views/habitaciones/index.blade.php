@@ -22,8 +22,8 @@
 						<table class="table table-striped">
 							<thead>
 							<tr>
-								<th>ID</th>
-								<th>Numero</th>
+							
+								<th>Hab</th>
 								<th>Tipo</th>
 								<th>Estado</th>	
 								<th>Descripcion</th>
@@ -37,8 +37,8 @@
 							<tbody>
 								@foreach($habitacion as $hab)
 									<tr>
-										<td>{{ $hab->id }}</td>
-										<td>{{ $hab->numero_habitacion }}</td>
+										
+										<td>#{{ $hab->numero_habitacion }}</td>
 										<td>{{ $hab->tipo }}</td>
 										<td>{{ $hab->estado}}</td>
 										<td>{{ $hab->descripcion }}</td>

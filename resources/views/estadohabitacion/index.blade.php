@@ -22,7 +22,8 @@
 				@foreach($estado_habitacion as $est)
 					<tr>
 						<td>{{ $est->id }}</td>
-						<td>{{ $est->estado }}</td>
+						<td><button type="button" style="{{ $est->estilo }}" class=" btn-circle">{{ $est->estado}}</button></td>
+						
 				
 						<td>
 							<a href="{{ route('estadohabitacion.edit', $est->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 

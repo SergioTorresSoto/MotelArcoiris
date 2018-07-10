@@ -65,6 +65,17 @@ Route::resource('proveedoresinsumos','ProveedorInsumoController');
 		'uses' => 'ProveedorInsumoController@destroy',
 		'as' => 'proveedoresinsumos.destroy'
 	]);
+
+
+Route::resource('usuarioshabitaciones','UsuarioHabitacionController'); 
+
+	Route::get('usuarioshabitaciones/{id}/destroy', [
+		'uses' => 'UsuarioHabitacionController@destroy',
+		'as' => 'usuarioshabitaciones.destroy'
+	]);
+
+Route::resource('habitacionesinsumos','HabitacionInsumoController'); 
+
 Route::resource('proveedoresproductos','ProveedorProductoController');
 	Route::get('proveedoresproductos/{id}/destroy', [
 		'uses' => 'ProveedorProductoController@destroy',

@@ -15,6 +15,11 @@
 			 		{!! Form::label('estado', 'Nombre de Estado') !!}
 					{!! Form::text('estado', $estado_habitacion->estado, ['class' => 'form-control', 'placeholder' => ' estado', 'required']) !!}
 
+					{!! Form::label('color', 'Color') !!}
+					{!! Form::color('color', $estado_habitacion->color, ['class' => 'form-control', 'required']) !!}
+
+			
+
 					<p></p>
 					<div align="center">
 						{!! Form::submit('Editar', ['class' => 'btn btn-primary']) !!}

@@ -36,10 +36,12 @@ class EstadoHabitacionController extends Controller
      */
     public function store(Request $request)
     {
+
         $estado_habitacion = new EstadoHabitacion($request->all());
-        
+        $estado_habitacion->estilo = 'width: 70px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; color:#ffffff; background-color:'.$request->color.';';
         $estado_habitacion->save();
         Session::flash('message_success', "Se ha registrado el estado $estado_habitacion->estado Exitosamente!");
+
             return redirect(route('estadohabitacion.index'));
     }
 
@@ -77,6 +79,8 @@ class EstadoHabitacionController extends Controller
     {
         $estado_habitacion = EstadoHabitacion::find($estado_habitacion);
         $estado_habitacion->estado = $request->estado;
+        $estado_habitacion->color = $request->color;
+        $estado_habitacion->estilo = 'width: 70px; height: 30px; text-align: center; padding: 6px 0; font-size: 12px; line-height: 1.428571429; border-radius: 15px; color:#ffffff; background-color:'.$request->color.';';
         $estado_habitacion->save();
         return redirect()->route('estadohabitacion.index');
     }
