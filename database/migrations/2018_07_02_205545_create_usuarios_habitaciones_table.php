@@ -26,7 +26,7 @@ class CreateUsuariosHabitacionesTable extends Migration
             $table->integer('tarifa_horas_extras')->nullable();
             $table->boolean('es_online');
             $table->boolean('activa')->default(false);
-
+            $table->boolean('reserva')->nullable();
             $table->string('patente')->nullable();
             $table->string('tipo_pago');
             $table->timestamps();
@@ -38,8 +38,11 @@ class CreateUsuariosHabitacionesTable extends Migration
         DB::unprepared('
         CREATE TRIGGER actualizar_estado_ocupada AFTER INSERT ON usuarios_habitaciones FOR EACH ROW
             BEGIN
-                UPDATE habitaciones SET id_estado_habitacion = 2
-                WHERE habitaciones.id = NEW.id_habitacion;
+                
+                IF (NEW.tiempo_inicio <= NOW()) THEN
+                    UPDATE habitaciones SET id_estado_habitacion = 2
+                    WHERE habitaciones.id = NEW.id_habitacion;
+                END IF;
             END
         ');
         DB::unprepared('

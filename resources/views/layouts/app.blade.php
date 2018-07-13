@@ -20,16 +20,10 @@
     
      @yield('style')
 </head>
-<body>
+<body onload="alertaTras5seg()">
     <div id="app">
         <header class="cd-main-header">
         <a id="sub" href="#0" class="cd-logo"><img src="img/cd-logo.svg" alt="Logo"></a>
-        
-        <div class="cd-search is-hidden">
-            <form action="#0">
-                <input  type="search" placeholder="Search...">
-            </form>
-        </div> <!-- cd-search -->
 
         <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
@@ -40,10 +34,10 @@
                 @if (Auth::guest())
                             <li><a id="sub" href="{{ route('login') }}">Login</a></li>
                             <li><a id="sub" href="{{ route('users.create') }}">Register</a></li>
-                        @else
+                @else
                             <li class="dropdown">
                                 <a id="sub" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->nombre }} <span class="caret"></span>
+                                    {{ Auth::user()->email }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -172,5 +166,56 @@
     <script src="{{ asset("assets/js/jquery.menu-aim.js") }}"></script>
     <script src="{{ asset("assets/js/main.js") }}"></script> <!-- Resource jQuery -->
      @yield('script')   
+    <script type="text/javascript">
+
+        function alertaTras5seg() {
+
+            setTimeout(mostrarAlerta, 0);
+
+        }
+
+        function mostrarAlerta() { 
+    
+
+    $.ajaxSetup({
+
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        }
+
+    });
+
+        var name = "nombre";
+
+        var password = "nombre";
+
+        var email = "email";
+
+
+        $.ajax({
+
+           type:'POST',
+
+           url:'/usuarioshabitaciones/consulta',
+
+           data:{name:name, password:password, email:email},
+
+           success:function(data){
+            if(!data){
+              console.log(data.success);
+            }else{
+                alert(data.success);
+                location.reload();
+            }
+           }
+        });
+
+            setTimeout(mostrarAlerta, 60000); 
+        }
+
+    </script>
+
 </body>
 </html>

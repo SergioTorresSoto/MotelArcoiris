@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         
         $users = new User($request->all());
-        $users->password = bcrypt($request->password);
+        $users->password = encrypt($request->password);
        
         
         $users->save();

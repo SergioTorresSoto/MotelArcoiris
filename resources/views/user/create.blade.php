@@ -98,18 +98,18 @@
 	$('#id_type').change(function(){
         insumo = $("#id_type option:selected").text();
         if(insumo=="Cliente"){
-        	$(".nombre").hide();
-        	$(".apellido").hide();
-        	$(".rut").hide();
-        	$(".telefono").hide();
+        	$(".nombre").hide("fast");
+        	$(".apellido").hide("fast");
+        	$(".rut").hide("fast");
+        	$(".telefono").hide("fast");
         }else{
-        	$(".nombre").show();
+        	$(".nombre").show("fast");
         	$("#nombre").prop('required',true);
-        	$(".apellido").show();
+        	$(".apellido").show("fast");
         	$("#apellido").prop('required',true);
-        	$(".rut").show();
+        	$(".rut").show("fast");
         	$("#rut").prop('required',true);
-        	$(".telefono").show();
+        	$(".telefono").show("fast");
         	$("#telefono").prop('required',true);
         }
 		console.log(insumo);

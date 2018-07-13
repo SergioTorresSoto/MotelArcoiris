@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::resource('users','UserController');
 
 	Route::get('users/{id}/destroy', [
@@ -74,6 +75,14 @@ Route::resource('usuarioshabitaciones','UsuarioHabitacionController');
 		'as' => 'usuarioshabitaciones.destroy'
 	]);
 
+	Route::get('usuarioshabitaciones/{id}/ticket', [
+		'uses' => 'UsuarioHabitacionController@ticket',
+		'as' => 'usuarioshabitaciones.ticket'
+	]);
+
+	Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
+	Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
+
 Route::resource('habitacionesinsumos','HabitacionInsumoController'); 
 
 Route::resource('proveedoresproductos','ProveedorProductoController');
@@ -82,6 +91,7 @@ Route::resource('proveedoresproductos','ProveedorProductoController');
 		'as' => 'proveedoresproductos.destroy'
 	]);
 
+Route::resource('reservaonline','ReservaOnlineController');
 
 Route::resource('tipoproducto','TipoProductoController');
 

@@ -46,127 +46,209 @@
 				</div>
 		   
 				<div class="row">
-					<div class=" table-responsive panel-body" >	
+					<div id="exTab2" >	
+					<ul class="nav nav-tabs">
+						<li class="active">
+					        <a  href="#1" data-toggle="tab">Activas</a>
+						</li>
+						<li><a href="#2" data-toggle="tab">Reservas</a>
+						</li>
+					</ul>
+
+					<div class="tab-content ">
+					    <div class="tab-pane active" id="1">
+					         <div class=" table-responsive panel-body" >	
 						
-						<table class="table" id="tbl">
-							<thead style="background-color: #A9D0F5">
-							<tr>
-								
-								<th>Hab</th>
-								<th>Tipo</th>
-								<th>Estado</th>
-								<th>Servicio</th>
-								<th>Ingreso</th>	
-								<th>Retirada</th>
-								<th>MedioPago</th>
-								<th>Tarifa</th>
-								<th>Patente</th>
-								<th>RetiradaReal</th>
-								<th>HorasExtras</th>
-								<th>Finalizar</th>
-								<th>Editar</th>
-								<th>Eliminar</th>
-								
-							</tr>
-							</thead>
-							<tbody>
-								@foreach($habitacion as $hab)
+								<table class="table" id="tbl">
+									<thead style="background-color: #A9D0F5">
 									<tr>
-										<td class="id_habitacion hidden">{{ $hab->id }}</td>
-										<td>#{{ $hab->numero_habitacion }}</td>
-										<td>{{ $hab->tipo }}</td>
-										@if($hab->activa==1)
-										<td><button type="button" style="{{$hab->estilo}}" >{{ $hab->estado}}</button></td>
-										@else
-										<td></td>
-										@endif	
-										<td>{{ $hab->tiempo_reserva}} Hrs</td>
-										<td>{{ $hab->tiempo_inicio }}</td>
-										<td class="numero">{{ $hab->tiempo_fin}}</td>
-										<td>{{ $hab->tipo_pago}}</td>
-										<td>{{ $hab->tarifa}}</td>
 										
+										<th>Hab</th>
+										<th>Tipo</th>
+										<th>Estado</th>
+										<th>Servicio</th>
+										<th>Ingreso</th>	
+										<th>Retirada</th>
+										<th>MedioPago</th>
+										<th>Tarifa</th>
+										<th>Patente</th>
+										<th>Observacion</th>
+										<th>Print</th>
+										<th>RetiradaReal</th>
+										<th>HorasExtras</th>
+										<th>Finalizar</th>
+										<th>Editar</th>
+										<th>Eliminar</th>
 										
-										<td>{{ $hab->patente}}</td>
-										<td>{{ $hab->tiempo_fin_real }}</td>
-										<td>{{ $hab->tarifa_horas_extras}}</td>
-										@if($hab->activa==1)
-											@if($hab->estado == "Limpieza")
-												
-												<td align="center" ><a href="{{ route('habitacionesinsumos.create',$hab->id_habitacion) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> 
-
-												</td>
-											@else
-												
-												<td align="center" class="botton"><a data-toggle="modal" data-target="#myModal" class="btn btn-success"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a> 
-												</td>
-											
-											@endif
-										@else
-											<td></td>
-										@endif
-										<td>
-											
-											<a href="{{ route('usuarioshabitaciones.edit', $hab->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
-										</td>
-										<td>
-											<a href="{{ route('usuarioshabitaciones.destroy', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
-											
-										</td>
 									</tr>
-								@endforeach
-							</tbody>
-						</table>
-						@if(isset($hab))
-												<!-- Modal -->
-						  <div class="modal fade" id="myModal" role="dialog">
-						    <div class="modal-dialog">
-						    
-						      <!-- Modal content-->
-						      <div class="modal-content">
-						      	{!! Form::open(['route' => ['usuarioshabitaciones.update', 0],'method' => 'PUT', 'class' => 'form-horizontal']) !!}
+									</thead>
+									<tbody>
+										@foreach($habitacion as $hab)
+										@if($hab->activa==true)
+											<tr>
+												<td class="id_habitacion hidden">{{ $hab->id }}</td>
+												<td>#{{ $hab->numero_habitacion }}</td>
+												<td>{{ $hab->tipo }}</td>												
+												<td><button type="button" style="{{$hab->estilo}}" >{{ $hab->estado}}</button></td>
+												<td>{{ $hab->tiempo_reserva}} Hrs</td>
+												<td>{{ $hab->tiempo_inicio }}</td>
+												<td class="numero">{{ $hab->tiempo_fin}}</td>
+												<td>{{ $hab->tipo_pago}}</td>
+												<td>{{ $hab->tarifa}}</td>
+												<td>{{ $hab->patente}}</td>
+												<td>{{ $hab->observacion }}</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+													
+												</td>
+												<td>{{ $hab->tiempo_fin_real }}</td>
+												<td>{{ $hab->tarifa_horas_extras}}</td>
+				
+													@if($hab->estado == "Limpieza")
+														
+														<td align="center" ><a href="{{ route('habitacionesinsumos.create',$hab->id_habitacion) }}" class="btn btn-info"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> 
 
-						        <div class="modal-header">
-						          <button type="button" class="close" data-dismiss="modal">×</button>
-						          <h4 class="modal-title">Finalizar</h4>
-						        </div>
-						        <div class="modal-body">
+														</td>
+													@else
+														
+														<td align="center" class="botton"><a data-toggle="modal" data-target="#myModal" data-toggle="tooltip" title="Finalizar" class="btn btn-success"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a> 
+														</td>
+													
+													@endif
 
-						        	
-						        	
-						        
-								 		{!! Form::label('tiempo_fin_real', 'Hora Salida Real', ['class' => 'control-label']) !!}
-								 		
-											{!! Form::text('tiempo_fin_real', null, ['class' => 'form-control', 'required']) !!}
+												<td>
+													
+													<a href="{{ route('usuarioshabitaciones.edit', $hab->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
+												</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.destroy', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+													
+												</td>
+											</tr>
+										@endif
+										@endforeach
+									</tbody>
+								</table>
+								@if(isset($hab))
+														<!-- Modal -->
+								  <div class="modal fade" id="myModal" role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								      	{!! Form::open(['route' => ['usuarioshabitaciones.update', 0],'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 
-										{!! Form::label('horas_extras', 'Horas Extras', ['class' => 'control-label']) !!}
-									 		
-												{!! Form::time('horas_extras', null, ['class' => 'form-control', 'required']) !!}
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">×</button>
+								          <h4 class="modal-title">Finalizar</h4>
+								        </div>
+								        <div class="modal-body">
+
+								        	
+								        	
+								        
+										 		{!! Form::label('tiempo_fin_real', 'Hora Salida Real', ['class' => 'control-label']) !!}
+										 		
+													{!! Form::text('tiempo_fin_real', null, ['class' => 'form-control', 'required']) !!}
+
+												{!! Form::label('horas_extras', 'Horas Extras', ['class' => 'control-label']) !!}
+											 		
+														{!! Form::time('horas_extras', null, ['class' => 'form-control', 'required']) !!}
 
 
-										{!! Form::label('tarifa_horas_extras', 'Tarifa Horas Extras', ['class' => 'control-label']) !!}
-									 		
-												{!! Form::number('tarifa_horas_extras', null, ['class' => 'form-control', 'required']) !!}
+												{!! Form::label('tarifa_horas_extras', 'Tarifa Horas Extras', ['class' => 'control-label']) !!}
+											 		
+														{!! Form::number('tarifa_horas_extras', null, ['class' => 'form-control', 'required']) !!}
 
 
-										{!! Form::label('id', 'Hora Entrada', ['class' => 'control-label hidden']) !!}
-								 		
-											{!! Form::text('id', $hab->id, ['class' => 'form-control hidden', 'required']) !!}
+												{!! Form::label('id', 'Hora Entrada', ['class' => 'control-label hidden']) !!}
+										 		
+													{!! Form::text('id', $hab->id, ['class' => 'form-control hidden', 'required']) !!}
 
-						        	
-											
-								 </div>
-						        <div class="modal-footer">
-					  				 {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
-			                        
-						        </div>
-						       
-						      </div>
-						      {!! Form::close() !!}
-						    </div>
-						  </div>
-						@endif
-	                </div>
+								        	
+													
+										 </div>
+								        <div class="modal-footer">
+							  				 {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
+					                        
+								        </div>
+								       
+								      </div>
+								      {!! Form::close() !!}
+								    </div>
+								  </div>
+								@endif
+			                </div>
+						</div>
+						<div class="tab-pane" id="2">
+					        <div class=" table-responsive panel-body" >	
+						
+								<table class="table" id="tbl">
+									<thead style="background-color: #A9D0F5">
+									<tr>
+										
+										<th>Hab</th>
+										<th>Tipo</th>
+										
+										<th>Servicio</th>
+										<th>Ingreso</th>	
+										<th>Retirada</th>
+										<th>MedioPago</th>
+										<th>Tarifa</th>
+										<th>Patente</th>
+										<th>Observacion</th>
+										<th>Print</th>
+										<th>RetiradaReal</th>
+										<th>HorasExtras</th>
+										
+										<th>Editar</th>
+										<th>Eliminar</th>
+										
+									</tr>
+									</thead>
+									<tbody>
+										@foreach($habitacion as $hab)
+										@if($hab->reserva==true && $hab->activa==false)
+											<tr>
+												<td class="hidden">{{ $hab->id }}</td>
+												<td>#{{ $hab->numero_habitacion }}</td>
+												<td>{{ $hab->tipo }}</td>
+													
+												<td>{{ $hab->tiempo_reserva}} Hrs</td>
+												<td>{{ $hab->tiempo_inicio }}</td>
+												<td>{{ $hab->tiempo_fin}}</td>
+												<td>{{ $hab->tipo_pago}}</td>
+												<td>{{ $hab->tarifa}}</td>
+												<td>{{ $hab->patente}}</td>
+												<td>{{ $hab->observacion }}</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+													
+												</td>
+												<td>{{ $hab->tiempo_fin_real }}</td>
+												<td>{{ $hab->tarifa_horas_extras}}</td>
+												
+												
+												<td>
+													
+													<a href="{{ route('usuarioshabitaciones.edit', $hab->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
+												</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.destroy', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+													
+												</td>
+											</tr>
+										@endif
+										@endforeach
+									</tbody>
+								</table>
+								
+			                </div>
+						</div>
+					</div>
+	    		</div>
+
+					
 	            </div>
 	       	</div>
 	        
@@ -233,18 +315,6 @@
 
     </script>
 
-<style type="text/css">
-	.btn-circle {
-  width: 60px;
-  height: 30px;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 15px;
-  background-color: red;
-}
 
-</style>
    
 @endsection
