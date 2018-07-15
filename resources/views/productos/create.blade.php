@@ -4,12 +4,15 @@
 
 @section('content')
 
-
+<div class="container">
+	<div class = "col-md-12">
+		<div class="panel panel-info">
+           	<div class="panel-heading"> 
 				<h3>Crear Producto</h3>
-				<hr/>
-				      <div class="col-sm-5 col-md-5 ">
-				      	<div class="panel-body">
-
+			</div>
+			<div class="panel-body">
+				      <div class="col-sm-5 col-md-5 col-sm-offset-3 col-md-offset-3 ">
+	
                 		{!! Form::open(['route' => 'productos.store','method' => 'POST', 'class' => 'form-horizontal','enctype' => "multipart/form-data"]) !!}
 	                	
 	                		<div class="form-group">
@@ -68,6 +71,8 @@
                  	</div>
                 </div>
             </div>
- 
+          </div>
+    </div>
+</div>
 @endsection	
 

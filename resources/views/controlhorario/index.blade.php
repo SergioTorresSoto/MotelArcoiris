@@ -6,6 +6,7 @@
 
 @section('content')
 
+<div class="container">
     <div class="col-md-12">
         @if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -13,11 +14,16 @@
 			            {{ Session::get('message') }}	
 			    </div>
 		@endif
-				
-	            <h3>Control de Usuario</h3>
-                <hr/>
+			<div class="panel panel-info">
+            <div class="panel-heading">	
+	            <h3>Control de Usuario
+	            	<div class="btn-group pull-right">
+				        <a href="{{ route('controlhorario.create') }}" class="btn btn-info" align="right">Marcar</a>
+				     </div>  
+	            </h3>
+             </div>
 		 				
- 				<a href="{{ route('controlhorario.create') }}" class="btn btn-info" align="right">Marcar</a>
+ 				
 	                	
                	<div class="panel-body">
 
@@ -58,18 +64,21 @@
 						{{ $control->links() }}
 					</div>
 	            </div>
+	        </div>
 	</div>
 	            
-	<div class="col-md-8">
-			            
-		<h4>Calendario</h4>
-	    <div class="panel-body">    
-            {!! $calendar->calendar() !!}
-            
-        </div>
+	<div class="col-md-12">
+		<div class="panel panel-info">
+            <div class="panel-heading">		            
+			<h4>Calendario</h4>
+			</div>
+		    <div class="panel-body">    
+	            {!! $calendar->calendar() !!}
+	            
+	        </div>
     </div>
 	           
-  
+</div>
 
 
 @endsection

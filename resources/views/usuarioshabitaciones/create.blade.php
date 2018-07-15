@@ -9,11 +9,16 @@
 @endsection
 
 @section('content')
-
+	<div class="container">
 		    <div class="col-md-12">
+		    	<div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Crear Reserva</h3>
-                <hr/>
-                 	     
+            </div>
+                 
+
+			
+            	<div class="panel-body">	     
 	            {!! Form::open(['route' => 'usuarioshabitaciones.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
 	            	<div class="col-sm-6 col-md-6 ">
 
@@ -97,9 +102,10 @@
 
 				{!! Form::close() !!}
 	                 	
-	                
+	                    </div>
+					</div>    
 	        </div>
-
+	</div>
 
 @endsection	
 

@@ -9,11 +9,12 @@
 @section('content')
 
 
-   
+   <div class="container">
         <div class="col-md-12">
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Editar Jornada</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 						{!! Form::open(['route' => ['jornadas.update', $jornadas], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 							<div class="form-group">
@@ -63,9 +64,10 @@
 						{!! Form::close() !!}
 					</div>
 				</div>
+			</div>
 		</div>
 	
-
+</div>
 @endsection	
 
 

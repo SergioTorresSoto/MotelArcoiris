@@ -13,36 +13,151 @@
     <!-- Styles -->
    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}"> <!-- CSS reset -->
-    <script src="{{ asset("assets/js/modernizr.js") }}"></script> <!-- Modernizr -->
-    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}"> <!-- Resource style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="{{ asset("assets/js/jquery-2.1.4.js") }}"></script>
+    
+    <link href="{{ asset('css/navStyle.css') }}" rel="stylesheet">
+
     
      @yield('style')
 </head>
 <body onload="alertaTras5seg()">
     <div id="app">
-        <header class="cd-main-header">
-        <a id="sub" href="#0" class="cd-logo"><img src="img/cd-logo.svg" alt="Logo"></a>
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ route('reservaonline.index') }}">Motel Acoiris</a>
+            </div>
 
-        <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ route('reservaonline.create') }}">Reserva</a></li>
+                <li><a href="#">Habitaciones</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administracion<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ route('usuarioshabitaciones.index') }}">Reservas</a></li>
+                    <li><a href="{{ route('habitaciones.index') }}">Habitaciones</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ route('proveedoresproductos.index') }}">Compra Productos</a></li>
+                    <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" >Insumos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a tabindex="-1" href="{{ route('insumos.index') }}">Insumos</a></li>
+                          <li><a tabindex="-1" href="{{ route('proveedoresinsumos.index') }}">Compra</a></li>
+                          <li><a tabindex="-1" href="{{ route('tipoinsumo.index') }}">Tipo</a></li>
+                          
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                   
+                    <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="{{ route('users.index') }}">Usuarios <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a tabindex="-1" href="{{ route('userstype.index') }}">Tipo</a></li>
+                          <li><a tabindex="-1" href="{{ route('usersjornadas.index') }}">Horarios</a></li>
+                          <li><a tabindex="-1" href="{{ route('jornadas.index') }}">Jornadas Laborales</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ route('controlhorario.index') }}">Asistencia</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><p class="navbar-text">¿Estas de visita?</p></li>
 
-        <nav class="cd-nav">
-            <ul class="cd-top-nav">
-                <li><a id="sub" href="#0">Tour</a></li>
-                <li><a id="sub" href="#0">Support</a></li>
                 @if (Auth::guest())
-                            <li><a id="sub" href="{{ route('login') }}">Login</a></li>
-                            <li><a id="sub" href="{{ route('users.create') }}">Register</a></li>
-                @else
+                 <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+                    <ul id="login-dp" class="dropdown-menu">
+
+                        <li>
+                             <div class="row">
+                                    <div class="col-md-12">
+                                        Login via
+                                <div class="social-buttons">
+                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+                                </div>
+                                or
+                                        <form class="form" id="login-nav" method="POST" action="{{ route('login') }}">
+                                              {{ csrf_field() }}
+                                                
+                                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                                    <label for="email" class="sr-only">E-Mail Address</label>
+
+                                                    
+                                                        <input id="email" class="form-control" name="email" value="{{ old('email') }}"placeholder="Email address" required autofocus>
+
+                                                        @if ($errors->has('email'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('email') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                  
+                                                </div>
+                                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                                    <label for="password" class="sr-only">Password</label>
+                                                        <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+
+                                                        @if ($errors->has('password'))
+                                                            <span class="help-block">
+                                                                <strong>{{ $errors->first('password') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                   
+                                                </div>
+                                                <div class="form-group">
+                                                    
+                                                        <button type="submit" class="btn btn-primary btn-block">
+                                                            Login
+                                                        </button>
+
+                                                        <a class="help-block text-right" href="{{ route('password.request') }}">
+                                                            Forgot Your Password?
+                                                        </a>
+                                                  
+                                                </div>
+ 
+                                                <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                                         </label>
+                                                </div>
+                                                   
+                                                
+                                               
+                                         </form>
+                                    </div>
+                                    <div class="bottom text-center">
+                                        New here ? <a href="#"><b>Join Us</b></a>
+                                    </div>
+                             </div>
+                        </li>
+                    </ul>
+                </li>
+            
+                        @else
                             <li class="dropdown">
-                                <a id="sub" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->email }} <span class="caret"></span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{ Auth::user()->nombre }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a id="sub" href="{{ route('logout') }}"
+                                        <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
@@ -54,119 +169,32 @@
                                     </li>
                                 </ul>
                             </li>
-                @endif
-            </ul>
+                        @endif
+               
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
         </nav>
-    </header> <!-- .cd-main-header -->
-
-    <main class="cd-main-content">
-        <nav class="cd-side-nav">
-            <ul>
-                <li class="cd-label">Main</li>
-                <li class="has-children overview">
-                    <a id="sub" href="#0">Overview</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="#0">All Data</a></li>
-                        <li><a id="sub"href="#0">Category 1</a></li>
-                        <li><a id="sub"href="#0">Category 2</a></li>
-                    </ul>
-                </li>
-                <li class="has-children notifications active">
-                    <a id="sub" href="#0">Notifications<span class="count">3</span></a>
-                    
-                    <ul>
-                        <li><a id="sub" href="#0">All Notifications</a></li>
-                        <li><a id="sub" href="#0">Friends</a></li>
-                        <li><a id="sub" href="#0">Other</a></li>
-                    </ul>
-                </li>
-
-                <li class="has-children comments">
-                    <a id="sub" href="{{ url('usuarioshabitaciones') }}">Reservas</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="#0">All Comments</a></li>
-                        <li><a id="sub" href="#0">Edit Comment</a></li>
-                        <li><a id="sub" href="#0">Delete Comment</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-            <ul>
-                <li class="cd-label">Secondary</li>
-                <li class="has-children bookmarks">
-                    <a id="sub" href="{{ url('insumos') }}">Insumos</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="{{ url('proveedoresinsumos') }}">Listar Compra</a></li>
-                        <li><a id="sub" href="{{ url('proveedoresinsumos/create') }}">Comprar Isumos</a></li>
-                         <li><a id="sub" href="{{ url('tipoinsumo/create') }}">Listar Tipo Isumos</a></li>
-                    </ul>
-                </li>
-                <li class="has-children images">
-                    <a id="sub" href="{{ url('productos') }}">Productos</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="{{ url('proveedoresproductos') }}">Listar Compras</a></li>
-                        <li><a id="sub" href="{{ url('proveedoresproductos/create') }}">Comprar Productos</a></li>
-                        <li><a id="sub" href="{{ url('tipoproducto') }}">Listar Tipo Productos</a></li>
-                    </ul>
-                </li>
-                <li class="has-children images">
-                    <a id="sub" href="{{ url('controlhorario') }}">Asistencia</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="{{ url('controlhorario/create') }}">Marcar Asistencia</a></li>
-                    </ul>
-                </li>
-
-                <li class="has-children images">
-                    <a id="sub" href="{{ url('habitaciones') }}">Habitaciones</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="{{ url('tipohabitacion') }}">Listar Tipo Habitacion</a></li>
-                        <li><a id="sub" href="{{ url('estadohabitacion') }}">Listar Estado Habitacion</a></li>
-                    </ul>
-                </li>
-
-                <li class="has-children users">
-                    <a id="sub" href="{{ url('users') }}">Usuarios</a>
-                    
-                    <ul>
-                        <li><a id="sub" href="{{ url('userstype') }}">Tipos de Usuarios</a></li>
-                        <li><a id="sub" href="{{ url('controlhorario') }}">Control de Asistencia</a></li>
-                        <li><a id="sub" href="{{ url('usersjornadas') }}">Horario Empleados</a></li>
-
-                    </ul>
-                </li>
-            </ul>
-
-            <ul>
-                <li class="cd-label">Action</li>
-                <li class="action-btn"><a id="sub" href="#0">+ Button</a></li>
-            </ul>
-        </nav>
-
-        <div class="content-wrapper">
-            @yield('content')
-        </div> <!-- .content-wrapper -->
-    </main> <!-- .cd-main-content -->
-
-        
-    </div>
-
+        </div>
+        @yield('content')    
+    
+</body>
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- -->
     
-    <script src="{{ asset("assets/js/jquery-2.1.4.js") }}"></script>
-   
-    <script src="{{ asset("assets/js/jquery.menu-aim.js") }}"></script>
-    <script src="{{ asset("assets/js/main.js") }}"></script> <!-- Resource jQuery -->
+
      @yield('script')   
+
     <script type="text/javascript">
+
+        $(document).ready(function(){
+          $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+          });
+        });
 
         function alertaTras5seg() {
 

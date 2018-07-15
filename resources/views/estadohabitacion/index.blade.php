@@ -1,14 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
 <div class="col-md-12" >
+	<div class="panel panel-info">
+    <div class="panel-heading"> 
 	<h3>Estado Habitacion
 
 		<div class="btn-group pull-right">
 			<a href="{{ route('estadohabitacion.create') }}" class="btn btn-info">Nuevo Estado</a>
 		</div>  
 	</h3>
-	<hr/>
+	</div>
 		
 		<table class="table table-striped">
 			<thead>
@@ -22,8 +25,8 @@
 				@foreach($estado_habitacion as $est)
 					<tr>
 						<td>{{ $est->id }}</td>
-						<td><button type="button" style="{{ $est->estilo }}" class=" btn-circle">{{ $est->estado}}</button></td>
 						
+						<td><span style="background-color:{{ $est->color }}" class="label label-default">{{ $est->estado}}</span></td>
 				
 						<td>
 							<a href="{{ route('estadohabitacion.edit', $est->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
@@ -36,6 +39,8 @@
 		<div style="text-align: center;">
 			{{ $estado_habitacion->links() }}
 		</div>
+	</div>
+</div>
 </div>
 
 @endsection

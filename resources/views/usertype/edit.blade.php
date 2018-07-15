@@ -3,10 +3,12 @@
 @section('title', 'Editar Tipo ' . $users_type->type)
 
 @section('content')
-
+<div class="container">
         <div class="col-md-12">
+        	<div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Tipo Usuario</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 						{!! Form::open(['route' => ['userstype.update', $users_type], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 							<div class="form-group">
@@ -27,5 +29,7 @@
 						{!! Form::close() !!}
 					</div>
 				</div>
+			</div>
 		</div>
+</div>
 @endsection	

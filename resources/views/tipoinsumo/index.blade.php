@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
 <div class="col-md-12" >
-	<h3>Tipo Insumo
+	<div class="panel panel-info">
+        <div class="panel-heading"> 
+			<h3>Tipo Insumo
 
-		<div class="btn-group pull-right">
-			<a href="{{ route('tipoinsumo.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
-		</div>  
-	</h3>
-	<hr/>
-
+				<div class="btn-group pull-right">
+					<a href="{{ route('tipoinsumo.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
+				</div>  
+			</h3>
+		</div>
+		<div class="panel-body">
 		<table class="table table-striped">
 			<thead>
 			<tr>
@@ -35,6 +38,8 @@
 		<div style="text-align: center;">
 			{{ $tipo_insumo->links() }}
 		</div>
+		</div>
+	</div>
 </div>
-
+</div>
 @endsection

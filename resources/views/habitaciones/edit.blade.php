@@ -3,13 +3,16 @@
 @section('title', 'Editar Tipo ' . $habitacion->numero_habitacion)
 
 @section('content')
-
+	<div class="container">
 			<div class ="col-md12">
- 				<h3>Editar Habitacion</h3>
- 				<hr/>
+				<div class="panel panel-info">
+		            <div class="panel-heading">
+		 				<h3>Editar Habitacion</h3>
+		 			</div>
+		 			<div class="panel-body">
 
- 				  <div class="col-sm-5 col-md-5 ">
-                	<div class="panel-body">
+ 				  		<div class="col-sm-5 col-md-5  col-sm-offset-3 col-md-offset-3 ">
+                	
 						
 						{!! Form::open(['route' => ['habitaciones.update', $habitacion,'files'=>true],'method' => 'PUT', 'class' => 'form-horizontal','enctype' => "multipart/form-data"]) !!}
 							
@@ -68,4 +71,6 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
 @endsection	

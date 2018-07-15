@@ -4,11 +4,13 @@
 
 @section('content')
 
-
-		    <div class="col-md-12">
-                <h3>Crear Compra Producto</h3>
-
-              		<hr/>
+<div class="container">
+	<div class="col-md-12">
+		<div class="panel panel-info">
+           	<div class="panel-heading">  
+                <h3>Detalle Compra</h3>
+            </div>
+            <div class= "panel-body">
               					<div class="col-sm-2">
 									<div class="form-group">
 

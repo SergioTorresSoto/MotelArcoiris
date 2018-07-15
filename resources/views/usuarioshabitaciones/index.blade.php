@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+	<div class="container">
     	 <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -12,16 +12,20 @@
 			@endif
 
 
-			
-			
-			<h3> Reservas 
+			<div class="panel panel-info">
+            <div class="panel-heading">
+            	<h3> Reservas 
                 	<div class="btn-group pull-right">
 				        <a href="{{ route('usuarioshabitaciones.create') }}" class="btn btn-primary" align="right">Registrar Reserva</a>
 				     </div>  
-            </h3>
-            <hr/>
+            </div>	
+			
+			
+          
+            <div class="panel-body ">
             <div class="row">
-             {!! Form::open(['route' => 'usuarioshabitaciones.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+            	<div class="btn-group pull-right">
+             {!! Form::open(['route' => 'usuarioshabitaciones.index', 'method' => 'GET', 'class' => 'navbar-form']) !!}
 							<div class = "form-group">
 								{!! Form::select('ordenar', array('tiempo_inicio,asc' => 'Ingreso ASC','tiempo_inicio,desc' => 'Ingreso DESC','tiempo_fin,asc' => 'Salida ASC','tiempo_fin,desc' => 'Salida DESC') ,null, ['class' => 'form-control', 'placeholder' => 'Ordenar Por:']) !!}
 								<div class="input-group">
@@ -44,6 +48,7 @@
 							</div>
 					{!! Form::close() !!}
 				</div>
+			</div>
 		   
 				<div class="row">
 					<div id="exTab2" >	
@@ -88,8 +93,9 @@
 											<tr>
 												<td class="id_habitacion hidden">{{ $hab->id }}</td>
 												<td>#{{ $hab->numero_habitacion }}</td>
-												<td>{{ $hab->tipo }}</td>												
-												<td><button type="button" style="{{$hab->estilo}}" >{{ $hab->estado}}</button></td>
+												<td>{{ $hab->tipo }}</td>
+												<td><span style="background-color:{{ $hab->color }}" class="label label-default">{{ $hab->estado}}</span></td>												
+											
 												<td>{{ $hab->tiempo_reserva}} Hrs</td>
 												<td>{{ $hab->tiempo_inicio }}</td>
 												<td class="numero">{{ $hab->tiempo_fin}}</td>
@@ -247,11 +253,12 @@
 						</div>
 					</div>
 	    		</div>
-
+</div>
+			</div>
 					
 	            </div>
 	       	</div>
-	        
+	   </div>     
 	
 
 

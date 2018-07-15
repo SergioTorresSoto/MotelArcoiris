@@ -9,11 +9,12 @@
 
 @section('content')
 
-
+<div class="container">
         <div class="col-md-12">
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Asignar Jornada</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 
                 		{!! Form::open(['route' => 'usersjornadas.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
@@ -61,10 +62,10 @@
 
                  	</div>
                 </div>
-            
+            </div>
         </div>
 
-
+</div>
 
 @endsection	
 

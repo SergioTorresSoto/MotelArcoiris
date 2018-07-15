@@ -6,11 +6,12 @@
 @section('content')
 
 
-
+<div class="container">
         <div class="col-md-12">
-           
+            <div class="panel panel-info">
+            <div class="panel-heading"> 
                 <h3>Compra de Insumo</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 
 	                		<div class= "row">
@@ -76,7 +77,7 @@
 						
 					</div>
 				</div>
-			
+			</div>
         </div>
     </div>
 </div>

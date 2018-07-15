@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="container">
     <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -9,14 +9,15 @@
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Usuarios
                 	<div class="btn-group pull-right">
 				        <a href="{{ route('usersjornadas.create') }}" class="btn btn-info ">Asignar Jornada</a>
 				     </div>
                 		
                 </h3>
-                <hr/>
+            </div>
                 
 
                 	<div class="panel-body">
@@ -58,8 +59,8 @@
 						
 	                </div>
 	            </div>
-	        
+	        </div>
 	</div>
-
+</div>
 
 @endsection

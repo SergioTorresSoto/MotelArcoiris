@@ -1,14 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
 <div class="col-md-12" >
+	<div class="panel panel-info">
+    <div class="panel-heading">
 	<h3>Tipo Habitacion
 		<div class="btn-group pull-right">
 			<a href="{{ route('tipohabitacion.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
 		</div> 
 	</h3>
-	<hr/>
-		
+	</div>
+	<div class="panel-body ">	
 		<table class="table table-striped">
 			<thead>
 			<tr>
@@ -34,6 +37,8 @@
 		<div style="text-align: center;">
 			{{ $tipo_habitacion->links() }}
 		</div>
+	</div>
+	</div>
 </div>
-
+</div>
 @endsection

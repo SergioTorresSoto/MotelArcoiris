@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Crear tipo')
-
 @section('content')
-
-        <div class="col-md-12">
-           
+	<div class="container">
+        <div class="col-md-12">  
+        	<div class="form-area">   
+        	<div class="panel panel-info">
+            <div class="panel-heading">  
                 <h3>Crear Usuario</h3>
-                <hr/>
-                <div class="col-sm-10 col-md-10">
+            </div>
+                
                 	<div class="panel-body">
 
                 		{!! Form::open(['route' => 'users.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
@@ -24,7 +24,7 @@
 							        <a href="{{ route('userstype.create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 							     </div>  
 
-							<div class=" panel panel-primary col-sm-11 col-md-11 ">
+							<div class=" panel panel-primary col-sm-12 col-md-12 ">
 								<div class="panel-body">
 			                		<div class="form-group nombre">
 			                			{!! Form::label('nombre', 'Nombre',['class' => 'col-md-4 control-label']) !!}
@@ -87,12 +87,14 @@
 						{!! Form::close() !!}
 
                  	</div>
-                </div>
-           
+               </div> 
+           	</div>
         </div>
+    </div>
 @endsection	
 
 @section('script')
+
 <script type="text/javascript">
 	
 	$('#id_type').change(function(){

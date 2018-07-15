@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+<div class="container">
 		<div class= "col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -10,12 +10,17 @@
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
+				<div class="panel panel-info">
+           		 	<div class="panel-heading">  
 
+					   <h3> Lista Compras
+					   	<div class="btn-group pull-right">
+							<a href="{{ route('proveedoresproductos.create') }}" class="btn btn-info">Comprar Productos</a>
+					     </div>  
+					   </h3>
+					</div>
 
-					   <h3> Compra Productos</h3>
-						<hr/>
-
-							<a href="{{ route('proveedoresproductos.create') }}" class="btn btn-info">Asignar Proveedor a Producto</a>
+				
 					
 						<div class="panel-body">
 						
@@ -51,7 +56,8 @@
 						</div>
 	                </div>
 	            </div>
-	       
+	        </div>
+</div>	       
 
 
 @endsection

@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+	<div class="container">
     	 <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -10,12 +10,17 @@
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
+			<div class="panel panel-info">
+	            <div class="panel-heading">
 
+				<h3> Habitaciones
+					<div class="btn-group pull-right">
+				        <a href="{{ route('habitaciones.create') }}" class="btn btn-info" align="right">Agregar Habitaciones</a>
+				     </div>  
+				</h3>
+				</div>
 
-			<h3> Habitaciones</h3>
-			<hr/>
-
-		    <a href="{{ route('habitaciones.create') }}" class="btn btn-info" align="right">Agregar Habitaciones</a>
+		    
 					
 					<div class="panel-body" >	
 						
@@ -60,9 +65,8 @@
 							{{ $habitacion->links() }}
 						</div>
 	                </div>
-	            </div>
-	        
-	
+	            </div>  
+		</div>
 
 
 @endsection

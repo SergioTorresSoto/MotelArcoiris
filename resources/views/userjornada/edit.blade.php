@@ -4,16 +4,17 @@
 
 @section('style')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
 @endsection
 
 @section('content')
 
- 
+<div class="container"> 
         <div class="col-md-12">
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Asignar Jornada</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 
                 		{!! Form::open(['route' =>  ['usersjornadas.update', $userjornada],'method' => 'PUT', 'class' => 'form-horizontal']) !!}
@@ -55,10 +56,10 @@
 
                  	</div>
                 </div>
-            
+            </div>
         </div>
 
-
+</div>
 
 @endsection	
 

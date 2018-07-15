@@ -91,7 +91,14 @@ Route::resource('proveedoresproductos','ProveedorProductoController');
 		'as' => 'proveedoresproductos.destroy'
 	]);
 
+Route::resource('tarifas','TarifaController');
+
+
+
 Route::resource('reservaonline','ReservaOnlineController');
+
+	Route::get('reservaonline/consulta', 'ReservaOnlineController@consulta');
+	Route::post('reservaonline/consulta', 'ReservaOnlineController@consultaPost');
 
 Route::resource('tipoproducto','TipoProductoController');
 

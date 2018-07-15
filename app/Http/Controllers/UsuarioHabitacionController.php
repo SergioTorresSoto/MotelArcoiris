@@ -39,7 +39,7 @@ class UsuarioHabitacionController extends Controller
                   ->join('tipo_habitaciones', 'tipo_habitaciones.id', '=', 'habitaciones.id_tipo_habitacion' )
                   ->join('estado_habitaciones', 'estado_habitaciones.id', '=', 'habitaciones.id_estado_habitacion' )
                   ->join('usuarios_habitaciones','usuarios_habitaciones.id_habitacion','=', 'habitaciones.id')
-                  ->select('habitaciones.*','usuarios_habitaciones.*','tipo_habitaciones.tipo','estado_habitaciones.estado','estado_habitaciones.estilo')
+                  ->select('habitaciones.*','usuarios_habitaciones.*','tipo_habitaciones.tipo','estado_habitaciones.estado','estado_habitaciones.color')
         //        ->where('usuarios_habitaciones.activa',true)
             //    ->orwhere('usuarios_habitaciones.reserva',true)
                   ->orderBy('usuarios_habitaciones.id','DESC')
@@ -224,7 +224,7 @@ class UsuarioHabitacionController extends Controller
                   $printer->feed(1);
                   $printer->text("Username : ".$reserva[0]->email);
                   $printer->feed(1);
-                  $printer->text("Contrasena : ".decrypt($reserva[0]->password));
+              //    $printer->text("Contrasena : ".decrypt($reserva[0]->password));
                  $printer->feed(3); // saltos de linea
                   
                 } finally {

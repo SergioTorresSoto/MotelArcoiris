@@ -3,11 +3,12 @@
 @section('title', 'Crear control')
 
 @section('content')
-
+<div class="container">
 		<div class="col-md-12">
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Crear Jornada</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 
 	                	{!! Form::open(['route' => 'jornadas.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
@@ -62,7 +63,8 @@
 
                  	</div>
                 </div>
-            
+            </div>
         </div>
+</div>
 @endsection	
 

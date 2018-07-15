@@ -10,31 +10,36 @@
 
 @section('content')
 
-
+<div class="container">
 	<div class="col-md-12">
-		<h3>Crear Estado</h3>
-        <hr/>
-		<div >
-			{!! Form::open(['route' => 'estadohabitacion.store','method' => 'POST']) !!}
+		<div class="panel panel-info">
+           	<div class="panel-heading"> 
+				<h3>Crear Estado</h3>
+	        </div>
+			<div class="panel-body">
+                <div class="col-sm-12 col-md-12 "> 
+					{!! Form::open(['route' => 'estadohabitacion.store','method' => 'POST']) !!}
 
-		 		{!! Form::label('estado', 'Nombre de estado') !!}
-				{!! Form::text('estado', null, ['class' => 'form-control', 'placeholder' => 'estado', 'required']) !!}
+				 		{!! Form::label('estado', 'Nombre de estado') !!}
+						{!! Form::text('estado', null, ['class' => 'form-control', 'placeholder' => 'estado', 'required']) !!}
 
-				{!! Form::label('color', 'Color') !!}
-				{!! Form::color('color', null, ['class' => 'form-control', 'required']) !!}
+						{!! Form::label('color', 'Color') !!}
+						{!! Form::color('color', null, ['class' => 'form-control', 'required']) !!}
 
 
 
-				<p></p>
+						<p></p>
 
-			<div align="center">
-				{!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
+					<div align="center">
+						{!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
+					</div>
+
+					{!! Form::close() !!}
+				</div>
 			</div>
-
-			{!! Form::close() !!}
 		</div>
 	</div>
-
+</div>
 
 @endsection	
 

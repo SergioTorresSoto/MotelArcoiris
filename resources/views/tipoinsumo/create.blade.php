@@ -4,11 +4,13 @@
 
 @section('content')
 
-
+<div class="container">
 	<div class="col-md-12">
-		<h3>Registrar Tipo de Insumo</h3>
-		<hr/>
-		<div >
+	<div class="panel panel-info">
+            <div class="panel-heading"> 	
+				<h3>Registrar Tipo de Insumo</h3>
+			</div>
+		<div class="panel-body">
 			{!! Form::open(['route' => 'tipoinsumo.store','method' => 'POST']) !!}
 
 		 		{!! Form::label('tipo', 'Nombre de tipo') !!}
@@ -24,6 +26,7 @@
 			{!! Form::close() !!}
 		</div>
 	</div>
-
+	</div>
+</div>
 @endsection	
 

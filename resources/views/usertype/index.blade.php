@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="container">
 	<div class="col-md-12">
 
     		@if(Session::has('message'))
@@ -10,13 +10,14 @@
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
-
+			<div class="panel panel-info">
+            <div class="panel-heading"> 
                 <h3>Tipo Usuario
                 	<div class="btn-group pull-right">
 				        <a href="{{ route('userstype.create') }}" class="btn btn-info">Agregar Tipo Usuario</a>
 				     </div>
                 </h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 						
 						<table class="table table-striped">
@@ -45,8 +46,7 @@
 							{{ $users_type->links() }}
 						</div>
 	                </div>
-	          
-	        
+	         </div>       
 	</div>
-
+</div>
 @endsection

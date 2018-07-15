@@ -3,12 +3,15 @@
 @section('title', 'Editar Tipo ' . $proveedor->nombre)
 
 @section('content')
-
-			 <div class="col-md-12">
+<div class="container">
+	<div class="col-md-12">
+		<div class="panel panel-info">
+           	<div class="panel-heading"> 
 					<h3> Proveedores</h3>
-						<hr/>
+			</div>
 
                 	<div class="panel-body">
+                		<div class="col-sm-12 col-md-12 "> 
 						{!! Form::open(['route' => ['proveedores.update', $proveedor], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 							<div class="form-group">
 
@@ -53,7 +56,10 @@
 
 						{!! Form::close() !!}
 					</div>
+					</div>
 				</div>
 			</div>
+		</div>
+</div>
 	
 @endsection	

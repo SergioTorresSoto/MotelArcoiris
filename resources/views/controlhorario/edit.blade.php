@@ -8,12 +8,14 @@
 @endsection
 
 @section('content')
-
+	<div class="container">
  		<div class="col-sm-12 col-md-12">
-    		<h3 >Editar Control</h3>
-    	 	 <hr/>
-    	 
-	        <div class="col-sm-5 col-md-5 ">
+ 			<div class="panel panel-info">
+            <div class="panel-heading"> 
+    			<h3 >Editar Control</h3>
+    	 	</div>
+    	 		<div class="panel-body">
+	       		 <div class="col-sm-12 col-md-12 ">
 	                
 	                	
 							{!! Form::open(['route' => ['controlhorario.update', $control], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
@@ -62,18 +64,19 @@
 								
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" align="center">
 		                            
 											{!! Form::submit('Editar', ['class' => 'btn btn-primary']) !!}
 									
 								</div>
 
 							{!! Form::close() !!}
-					
+						</div>
+					</div>
 				
 			</div>
 		</div>
-
+	</div>
 
 @endsection	
 

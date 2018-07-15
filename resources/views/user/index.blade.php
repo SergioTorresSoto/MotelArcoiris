@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<dir class="container">
 		<div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -9,13 +9,15 @@
 			         {{ Session::get('message') }}	
 			    </div>
 			@endif
-           
+           	<div class="panel panel-info">
+            <div class="panel-heading">
                 <h3>Usuarios 
                 	<div class="btn-group pull-right">
 				        <a href="{{ route('users.create') }}" class="btn btn-primary">Agregar Usuario</a>
 				     </div>  
                 </h3>
-                <hr/>
+            </div>
+            <div class="panel-body ">
 		
 	                {!! Form::open(['route' => 'users.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
 							<div class = "form-group">
@@ -71,6 +73,8 @@
 						</div>
 	                </div>
 	            </div>
-	        
+	      	   <div>
+			</dir>  
 	     <div>
+	</dir>
 @endsection

@@ -3,11 +3,12 @@
 @section('title', 'Crear tipo')
 
 @section('content')
-
+	<div class="container">
         <div class="col-md-12">
-      
+      		<div class="panel panel-info">
+            <div class="panel-heading">  
                 <h3>Tipo Usuario</h3>
-                <hr/>
+            </div>
                 	<div class="panel-body">
 
 
@@ -34,8 +35,8 @@
 
                  	</div>
                 </div>
-           
+           </div>
         </div>
-
+    </div>
 @endsection	
 

@@ -3,10 +3,12 @@
 @section('title', 'Crear tipo')
 
 @section('content')
-
-        <div class="col-md-12">   
-                <h3>Insumos Necesarios</h3>
-                <hr/>
+<div class="container">
+        <div class="col-md-12"> 
+        	<div class="panel panel-info">
+           		 <div class="panel-heading">    
+                	<h3>Insumos Necesarios</h3>
+               	</div>
                 	<div class="panel-body">
 
 	                	{!! Form::open(['route' => 'habitacionesinsumos.store','method' => 'POST', 'class' => 'form']) !!}
@@ -89,9 +91,9 @@
 						{!! Form::close() !!}
 					</div>
 				</div>
-			
+			</div>
         </div>
-
+</div>
 @endsection	
 
 @section('script')

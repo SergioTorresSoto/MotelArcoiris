@@ -4,15 +4,18 @@
 
 @section('content')
 
-
+	<div class="container">
         <div class="col-md-12">
+        	<div class="panel panel-info">
+            <div class="panel-heading">	
                 <h3>Marcar Horario</h3>
-                <hr/>
-                	<div class="col-sm-5 col-md-5 ">
+            </div>
+                	
 	                	<div class="panel-body">
 
 
 		                	{!! Form::open(['route' => 'controlhorario.store','method' => 'POST', 'class' => 'form-horizontal']) !!}
+		                	<div class="col-sm-12 col-md-12">
 		                		<div class="form-group">
 
 						 			{!! Form::label('rut', 'Rut',['class' => 'control-label']) !!}
@@ -26,19 +29,19 @@
 
 								
 
-								<div class="form-group">
+								<div class="form-group" align="center">
 		                           
 		                                {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
 		                            </div>
 		                       
-
+		                    </div>
 							{!! Form::close() !!}
 
-	                 	</div>
+	                 	
 	                </div>
                 </div>
-           
+           	</div>
         </div>
-
+     </div>
 @endsection	
 

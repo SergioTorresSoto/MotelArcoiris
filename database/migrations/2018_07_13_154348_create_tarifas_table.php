@@ -15,7 +15,13 @@ class CreateTarifasTable extends Migration
     {
         Schema::create('tarifas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_tipo')->unsigned();
+            $table->integer('horas');
+            $table->integer('precio');
             $table->timestamps();
+
+            $table->foreign('id_tipo')->references('id')->on('tipo_habitaciones')->onDelete('cascade');
+        
         });
     }
 

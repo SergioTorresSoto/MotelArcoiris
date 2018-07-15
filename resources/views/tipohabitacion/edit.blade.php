@@ -4,10 +4,13 @@
 
 @section('content')
 
-
+<div class="container">
 	<div class="col-md-12">
+		<div class="panel panel-info">
+    	<div class="panel-heading">
 		<h3>Editar Tipo Habitacion</h3>
-		<hr/>
+		</div>
+		<div class="panel-body ">
 		<div >
 			{!! Form::open(['route' => ['tipohabitacion.update', $tipo_habitacion], 'method' => 'PUT']) !!}
 
@@ -23,5 +26,7 @@
 			{!! Form::close() !!}
 		</div>
 	</div>
-
+	</div>
+</div>
+</div>
 @endsection	

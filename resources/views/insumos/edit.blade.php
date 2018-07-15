@@ -3,13 +3,14 @@
 @section('title', 'Editar Insumo ' . $insumos->nombre)
 
 @section('content')
-
+<div class="container">
         <div class="col-md-12">
-           
+            <div class="panel panel-info">
+            <div class="panel-heading"> 
                 <h3>Editar Insumos</h3>
-                <hr/>
-                <div class="col-sm-7 col-md-7 ">
-                	<div class="panel-body">
+            </div>
+               <div class="panel-body">
+               		<div class="col-sm-12 col-md-12 ">
 						{!! Form::open(['route' => ['insumos.update', $insumos,'files'=>true],'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 							<div class="form-group">
 
@@ -60,6 +61,7 @@
 						{!! Form::close() !!}
 					</div>
 				</div>
-			
+			</div>
 		</div>
+</div>
 @endsection	

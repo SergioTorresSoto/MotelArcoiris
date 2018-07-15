@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\TipoHabitacion;
+use App\Habitacion;
+use DB;
+use Carbon\Carbon;
 class ReservaOnlineController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class ReservaOnlineController extends Controller
      */
     public function index()
     {
-        return view('cliente.index');
+
+        return view('reservaonline.index');
     }
 
     /**
@@ -23,7 +27,14 @@ class ReservaOnlineController extends Controller
      */
     public function create()
     {
-        return view('cliente.create');
+        $tipo_habitacion= DB::table('tipo_habitaciones')
+                     ->orderBy('id')
+                     ->pluck('tipo','id');
+
+         $horas= DB::table('tarifas')
+                     ->distinct('horas')
+                     ->pluck('horas','id');
+        return view('reservaonline.create')->with('tipo_habitacion', $tipo_habitacion)->with('horas', $horas);
     }
 
     /**
@@ -80,5 +91,37 @@ class ReservaOnlineController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function consulta(){
+        return back();
+    }
+
+     public function consultaPost(){
+
+        $input = request()->all();
+        $fecha = $input['fecha'];
+        $fin = new Carbon($fecha);
+        $fin->addHour($input['horas']);
+        $reservas = DB::table('usuarios_habitaciones')
+                //      ->join('habitaciones','habitaciones.id','=','usuarios_habitaciones.id_habitacion')
+                        ->whereBetween('usuarios_habitaciones.tiempo_inicio',[$fecha,$fin])  
+                        ->orWhereBetween('usuarios_habitaciones.tiempo_fin',[$fecha,$fin]) 
+                //      ->where('habitaciones.id_tipo_habitacion',$input['id_tipo'])
+                //      ->select('habitaciones.*')
+                        ->get();
+        $contador = count($reservas);
+
+        $habitaciones = Habitacion::where('habitaciones.id_tipo_habitacion',$input['id_tipo'])
+                            ->get();
+        foreach ($reservas as  $reserva) {
+            foreach ($habitaciones as $key => $habitacion) {
+                if($reserva->id_habitacion == $habitacion->id){
+                    $habitaciones->forget($key);
+                }
+            }
+        }
+        
+        return response()->json(['input'=>$habitaciones]);
     }
 }

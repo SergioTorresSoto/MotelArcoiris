@@ -4,12 +4,12 @@
 
 @section('content')
 
-
+	<div class="container">
         <div class="col-md-12">
-            
+            <div class="panel panel-info">
+            <div class="panel-heading">  
                 <h3>Editar Usuario</h3>
-                <hr/>
-                <div class="col-sm-10 col-md-10 ">
+             </div>
                 	<div class="panel-body">
 						{!! Form::open(['route' => ['users.update', $users], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 
@@ -21,7 +21,7 @@
 								<div class="col-sm-1 col-md-1">
 							        <a href="{{ route('userstype.create','num=>1') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 							     </div>  
-							<div class=" panel panel-primary col-sm-11 col-md-11 ">
+							<div class=" panel panel-primary col-sm-12 col-md-12 ">
 								<div class="panel-body">
 			                		<div class="form-group nombre">
 
@@ -70,9 +70,10 @@
 
 						{!! Form::close() !!}
 					</div>
-				</div>
-			
+				
+			</div>
 		</div>
+	</div>
 @endsection	
 
 @section('script')

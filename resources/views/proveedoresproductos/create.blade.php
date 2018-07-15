@@ -4,11 +4,13 @@
 
 @section('content')
 
-
+<div class="container">
 		    <div class="col-md-12">
-                <h3>Crear Compra Producto</h3>
+		    <div class="panel panel-info">
+           		 	<div class="panel-heading">  
+               	 		<h3>Crear Compra Producto</h3>
 
-              <hr/>
+            		</div>
               		<div class= "panel-body">
 	                	{!! Form::open(['route' => 'proveedoresproductos.store','method' => 'POST', 'class' => 'form']) !!}
 	                		<div class= "row">
@@ -124,7 +126,9 @@
 						{!! Form::close() !!}
 				</div>
 			</div>
+			</div>
 		</div>	
+</div>
 @endsection	
 
 @section('script')
