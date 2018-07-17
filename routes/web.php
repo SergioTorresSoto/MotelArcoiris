@@ -100,6 +100,10 @@ Route::resource('reservaonline','ReservaOnlineController');
 	Route::get('reservaonline/consulta', 'ReservaOnlineController@consulta');
 	Route::post('reservaonline/consulta', 'ReservaOnlineController@consultaPost');
 
+	Route::get('/downloadPDF/{id}','ReservaOnlineController@downloadPDF');
+
+	Route::post('reservaonline/consulta/enviar', 'ReservaOnlineController@pdfCorreoPost');
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [
@@ -147,6 +151,18 @@ Route::get('habitaciones/{id}/destroy', [
 	'uses' => 'HabitacionController@destroy',
 	'as' => 'habitaciones.destroy'
 	]);
+
+// Paypal
+	// Enviamos nuestro pedido a PayPal
+	Route::get('payment', array(
+		'as' => 'payment',
+		'uses' => 'PaypalController@postPayment',
+	));
+	// Después de realizar el pago Paypal redirecciona a esta ruta
+	Route::get('payment/status', array(
+		'as' => 'payment.status',
+		'uses' => 'PaypalController@getPaymentStatus',
+	));
 
 
 Auth::routes();

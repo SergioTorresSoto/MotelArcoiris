@@ -2,6 +2,12 @@
 
 
 @section('content')
+  @if(\Session::has('message'))
+           <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
+                 {{ Session::get('message') }}  
+            </div>
+  @endif
 	<div class="slide">
       <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
   <!-- Overlay -->

@@ -4,6 +4,12 @@
 
 @section('content')
 <div class="container">
+	  @if(Session::has('message'))
+           <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
+                 {{ Session::get('message') }}  
+            </div>
+  @endif
         <div class="col-md-12">   
         	<div class="panel panel-info">
             <div class="panel-heading"> 
