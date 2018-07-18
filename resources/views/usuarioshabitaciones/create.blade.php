@@ -118,12 +118,8 @@
 	
 	 jQuery(function(){
  			jQuery('#tiempo_inicio').datetimepicker({
- 				lang:'es',
   				format:'Y-m-d H:i',
-  				allowTimes:['00:00','00:15','00:30','00:35','00:45','01:00','01:15','01:30','01:45','02:00','02:15','02:30','02:45','03:00',
-				  '12:00', '13:00', '15:00', 
-				  '17:00', '17:05', '17:20', '19:00', '20:00'
-				 ],
+  				minDate: new Date(),
   				/*onShow:function( ct ){
   					this.setOptions({
   						maxDate:jQuery('#checkout').val()?jQuery('#checkout').val():false

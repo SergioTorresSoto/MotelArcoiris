@@ -104,6 +104,8 @@ Route::resource('reservaonline','ReservaOnlineController');
 
 	Route::post('reservaonline/consulta/enviar', 'ReservaOnlineController@pdfCorreoPost');
 
+	Route::post('reservaonline/consulta/horas', 'ReservaOnlineController@horasPost');
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [

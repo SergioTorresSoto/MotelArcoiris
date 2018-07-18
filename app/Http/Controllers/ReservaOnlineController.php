@@ -97,6 +97,17 @@ class ReservaOnlineController extends Controller
         //
     }
 
+    public function horasPost(){
+
+        $id = request()->all();
+        $hora = DB::table('tarifas')
+                ->where('tarifas.id_tipo',$id['id_tipo'])
+                ->select('id','horas')
+                ->get();
+
+        return response()->json($hora);
+    }
+
     public function downloadPDF($id)
     {   
         $reserva = UsuarioHabitacion::find($id); 

@@ -48,7 +48,7 @@
 											<div class="form-group">
 					                			{!! Form::label('horas', 'Cantidad de Horas',['class' => 'control-label']) !!}
 													<div class='input-group' id='calendar1'>
-							                               {!! Form::select('horas', $horas, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
+							                               {!! Form::select('horas', ['' => ''] , null, ['class' => 'form-control', 'required']) !!}
 							                                <div class="input-group-addon">Hrs</div>
 							                         </div>
 										 			
@@ -191,15 +191,40 @@
  			resize:vertical;
  		}
  	</style>
+ 	<script type="text/javascript">
+ 		$(document).on('change','#id_tipo',function(){
+ 			id_tipo = $("#id_tipo").val();
+ 			$("#horas option").remove();
+ 		//	alert(id_tipo);
+
+ 			$.ajax({
+
+	           type:'POST',
+
+	           url:'/reservaonline/consulta/horas',
+
+	           data:{id_tipo:id_tipo},
+
+	           success:function(data){
+
+		          	  $.each(data, function(index, object) {
+					      $("#horas").append('<option value="' + object.id + '">'+object.horas+'</option>');				
+					}); 	           	
+	           }
+	        });
+               
+          });
+
+ 	</script>
 
     <script>
 	 jQuery(function(){
  			jQuery('#tiempo_inicio').datetimepicker({
- 				lang:'es',
+
   				format:'Y-m-d H:i',
-  				allowTimes:['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00', '14:00', 
-				  '17:00','16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00' , '23:00'
-				 ],
+  				mask:true,
+  				minDate: new Date().setDate(new Date().getDate() + 1),
+  				
   				/*onShow:function( ct ){
   					this.setOptions({
   						maxDate:jQuery('#checkout').val()?jQuery('#checkout').val():false
@@ -227,8 +252,11 @@
 		     tipo = $("#id_tipo option:selected").text();
 		     horas = $("#horas option:selected").text();
 		     fecha = $("#tiempo_inicio").val();
-		    
+		     menor = new Date(fecha).setDate(new Date(fecha).getDate());
+		     mayor= new Date().setDate(new Date().getDate() + 1);
 
+		    console.log(menor+'/'+mayor);
+		  if(fecha!="" && menor > mayor){
 		     $.ajax({
 
 	           type:'POST',
@@ -238,8 +266,8 @@
 	           data:{id_tipo:id_tipo, horas:horas, fecha:fecha},
 
 	           success:function(data){
-	            if(!data){
-	              console.log(data.input);
+	            if(!data || data.input.length==0){
+	              alert("No hay habitaciones disponibles");
 	            }else{
 	                
 	                precio = data.tarifa[0].precio;
@@ -255,6 +283,9 @@
 	            }
 	           }
 	        });
+		  }else{
+		  	alert("Fecha Invalida")
+		  }
 		});
 		function detalle(index){
 		/*	document.getElementById('tarifa').innerHTML = precio;
