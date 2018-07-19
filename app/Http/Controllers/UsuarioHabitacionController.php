@@ -211,11 +211,10 @@ class UsuarioHabitacionController extends Controller
                     ->get();
     
 
-        $nombre_impresora = "POS-58"; 
-        $connector = new WindowsPrintConnector($nombre_impresora);
-        $printer = new Printer($connector);
-           
+        $nombre_impresora = "POS-58";     
                try {
+                 $connector = new WindowsPrintConnector($nombre_impresora);
+                 $printer = new Printer($connector);
                  $printer->text("ID : ".$reserva[0]->id);
                  $printer->feed(1); // saltos de linea
                   $printer->text("Entrada : ".$reserva[0]->tiempo_inicio);
@@ -225,10 +224,10 @@ class UsuarioHabitacionController extends Controller
                   $printer->text("Username : ".$reserva[0]->email);
                   $printer->feed(1);
               //    $printer->text("Contrasena : ".decrypt($reserva[0]->password));
-                 $printer->feed(3); // saltos de linea
-                  
-                } finally {
+                  $printer->feed(3); // saltos de linea
                   $printer -> close();
+                } catch(Exception $e) {
+                    
                 }
 
     return back();

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="{{ asset("assets/js/jquery-2.1.4.js") }}"></script>
     
+    
     <link href="{{ asset('css/navStyle.css') }}" rel="stylesheet">
 
     
@@ -182,6 +183,7 @@
     
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('alertas/alert.js') }}"></script>
     
 
      @yield('script')   

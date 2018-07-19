@@ -142,9 +142,9 @@ class ReservaOnlineController extends Controller
             //Recipients
             $mail->setFrom('keopo.coke017@gmail.com', 'Motel Arcoiris');
             $mail->addAddress($correo['correo']);               // Name is optional
-            $mail->addReplyTo('info@example.com', 'Information');
-            $mail->addCC('cc@example.com');
-            $mail->addBCC('bcc@example.com');
+      //      $mail->addReplyTo('info@example.com', 'Information');
+      //      $mail->addCC('cc@example.com');
+       //     $mail->addBCC('bcc@example.com');
 
             //Attachments
             $mail->addStringAttachment($pdfString, 'reserva.pdf');
@@ -156,13 +156,12 @@ class ReservaOnlineController extends Controller
             $mail->Subject = 'Motel Arcoiris Reserva';
             $mail->Body    = 'Presenta este comprobante para hacer valida la reserva';
             $mail->send();
-            
-            return response()->json(['var'=>$var]);  
+            $mensaje = 'mensaje enviado'; 
             
         } catch (Exception $e) {
             $mensaje = $mail->ErrorInfo;
         }
-        $var = "mensaje";
+        return response()->json(['var'=>$mensaje]);  
       
     }
 

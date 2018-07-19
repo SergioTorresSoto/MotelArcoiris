@@ -86,44 +86,53 @@ class ControlHorarioController extends Controller
     {
         $control = $request->all();
 
+        $user = DB::table('users')
+                    ->where('users.rut',$control['rut'])
+                    ->select('users.rut')
+                    ->count();
+
         $lista_control = DB::table('control_horario')
                         ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
                         ->select('control_horario.*','users.nombre')
                         ->orderBy('control_horario.id','ASC')
                         ->get();
+        if ($user==1) {
         
-        $aux=0;
-        foreach($lista_control as $lista){
-            $rut1=$lista->rut;
-            if($control['rut']==$rut1){
+            $aux=0;
+            foreach($lista_control as $lista){
+                $rut1=$lista->rut;
+                if($control['rut']==$rut1){
 
-                if(is_null($lista->hora_salida)){
+                    if(is_null($lista->hora_salida)){
 
-                    $aux=1;
-                    $horaYfecha = new \DateTime();
-                    $hora_salida = $horaYfecha->format('H:i:s');
-                    $fecha_salida = $horaYfecha->format('Y-m-d');
+                        $aux=1;
+                        $horaYfecha = new \DateTime();
+                        $hora_salida = $horaYfecha->format('H:i:s');
+                        $fecha_salida = $horaYfecha->format('Y-m-d');
 
-                    DB::table('control_horario')
-                            ->where('control_horario.id', $lista->id)
-                            ->update(['hora_salida' => $hora_salida ,'fecha_salida' => $fecha_salida]);
-                    Session::flash('message', "Se ha registrado la hora de salida Exitosamente!");
+                        DB::table('control_horario')
+                                ->where('control_horario.id', $lista->id)
+                                ->update(['hora_salida' => $hora_salida ,'fecha_salida' => $fecha_salida]);
+                        Session::flash('message', "Se ha registrado la hora de salida Exitosamente!");
+                    }
+
                 }
-
             }
-        }
-        if($aux==0 || empty($lista_control)){
+            if($aux==0 || empty($lista_control)){
 
-            $id = Auth::id();
-            $control['id_user'] = $id;
-            $horaYfecha = new \DateTime();
-            $control['hora_entrada'] = $horaYfecha->format('H:i:s');           
-            $control['fecha_entrada'] = $horaYfecha->format('Y-m-d');            
-            $control_horario = new controlHorario($control);              
-            $control_horario->save();
-            Session::flash('message', "Se ha registrado la hora de entrada Exitosamente!");
+                $id = Auth::id();
+                $control['id_user'] = $id;
+                $horaYfecha = new \DateTime();
+                $control['hora_entrada'] = $horaYfecha->format('H:i:s');           
+                $control['fecha_entrada'] = $horaYfecha->format('Y-m-d');            
+                $control_horario = new controlHorario($control);              
+                $control_horario->save();
+                Session::flash('message', "Se ha registrado la hora de entrada Exitosamente!");
+            }
+        }else{
+           Session::flash('message', "RUT INEXISTENTE"); 
+           return redirect(route('controlhorario.create'));
         }
-
     return redirect(route('controlhorario.index'));
         
        

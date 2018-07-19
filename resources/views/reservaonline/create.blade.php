@@ -1,8 +1,9 @@
 
 @extends('layouts.app')
 @section('style')
-	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset ('datetimepicker/jquery.datetimepicker.css')}}"/ >
+
 
 @endsection
 
@@ -13,7 +14,6 @@
            <div class="alert alert-success alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
                  {{ Session::get('message') }}  
-                 {{ $reserva = Session::get('reserva') }}
             </div>
      @endif
 			<div class="panel panel-info">
@@ -101,9 +101,9 @@
 					
 						<div class="col-xs-12 .col-sm-3 col-lg-3 col-md-3">
 						   <div class="input-group">
-						    	<input id="correo" type="text" class="form-control" placeholder="ejemplo@email.com">
+						    	<input id="correo" type="email" class="form-control" placeholder="ejemplo@email.com">
 						     	 <span class="input-group-btn">
-						        <button id="enviar" value="{{Session::get('reserva')->id}}" class="btn btn-success" type="button"><span class="glyphicon glyphicon-envelope "></span></button>
+						        <button type="button" value="{{ Session::get('reserva')->id }}" class="btn btn-success" id="enviar" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Enviando"><span class="glyphicon glyphicon-envelope "></span></button>
 						      </span>
 						   </div><!-- /input-group -->
 						</div><!-- /.col-lg-6 -->
@@ -184,8 +184,7 @@
 @endsection
 @section('script')
 	
- 	<script src="{{asset ('datetimepicker/build/jquery.datetimepicker.full.min.js')}}"></script>
-
+ 	<script src="{{ asset ('datetimepicker/build/jquery.datetimepicker.full.min.js')}}"></script>
  	<style type="text/css">
  		#comentario{
  			resize:vertical;
@@ -254,38 +253,53 @@
 		     fecha = $("#tiempo_inicio").val();
 		     menor = new Date(fecha).setDate(new Date(fecha).getDate());
 		     mayor= new Date().setDate(new Date().getDate() + 1);
+		     if (id_tipo!="") {
+			  if(fecha!="" && menor >= mayor){
+			     $.ajax({
 
-		    console.log(menor+'/'+mayor);
-		  if(fecha!="" && menor > mayor){
-		     $.ajax({
+		           type:'POST',
 
-	           type:'POST',
+		           url:'/reservaonline/consulta',
 
-	           url:'/reservaonline/consulta',
+		           data:{id_tipo:id_tipo, horas:horas, fecha:fecha},
 
-	           data:{id_tipo:id_tipo, horas:horas, fecha:fecha},
+		           success:function(data){
+		            if(!data || data.input.length==0){
+		              $.alert('No hay habitaciones disponibles', {
+                    	
+                    	type: 'warning', 
+                    	position:  ['top-right', [60, 12]],
+					  });
 
-	           success:function(data){
-	            if(!data || data.input.length==0){
-	              alert("No hay habitaciones disponibles");
-	            }else{
-	                
-	                precio = data.tarifa[0].precio;
-	                fin=data.fin;
-	                $("#tab_a , #tab_x").removeClass('active');
-	                $( "#tab_b , #tab_y" ).addClass('active');
-	                $("#habitaciones tr").remove();  //limpia tr de tabla 
-	                for (i = 0; i < data.input.length; i++){
-		                var fila = '<tr class="selected" id="fila'+data.input[i].id+'"><td><img width="100px" name="imagen" src=" {{Storage::url('+data.input[i].imagen+') }}"></td><td><input type="text" class="form-control" readonly="readonly" name="descripcion" value="'+data.input[i].descripcion+'"></td><td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" onclick="detalle('+data.input[i].numero_habitacion+');"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></button></td></tr>';
+		            }else{
+		                
+		                precio = data.tarifa[0].precio;
+		                fin=data.fin;
+		                $("#tab_a , #tab_x").removeClass('active');
+		                $( "#tab_b , #tab_y" ).addClass('active');
+		                $("#habitaciones tr").remove();  //limpia tr de tabla 
+		                for (i = 0; i < data.input.length; i++){
+			                var fila = '<tr class="selected" id="fila'+data.input[i].id+'"><td><img width="100px" name="imagen" src=" {{Storage::url('+data.input[i].imagen+') }}"></td><td><input type="text" class="form-control" readonly="readonly" name="descripcion" value="'+data.input[i].descripcion+'"></td><td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" onclick="detalle('+data.input[i].numero_habitacion+');"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></button></td></tr>';
 
-		                $('#habitaciones').append(fila);
+			                $('#habitaciones').append(fila);
+			            }
 		            }
-	            }
-	           }
-	        });
-		  }else{
-		  	alert("Fecha Invalida")
-		  }
+		           }
+		        });
+			  }else{			
+			  	$.alert('Fecha invalida', {
+                    	 
+                    	type: 'warning', 
+                    	position:  ['top-right', [60, 12]],
+					});
+			  }
+			 }else{
+			 	$.alert('Seleccione un tipo de habitacion', {
+                    	
+                    	type: 'warning', 
+                    	position:  ['top-right', [60, 12]],
+					});
+			 }
 		});
 		function detalle(index){
 		/*	document.getElementById('tarifa').innerHTML = precio;
@@ -309,6 +323,13 @@
     </script>
     <script type="text/javascript">
     	$("#enviar").click(function() { 
+
+    		var $this = $(this);
+			  $this.button('loading');
+			
+			  
+			  
+
     		correo = $("#correo").val();
     		id= $("#enviar").val();
   
@@ -321,11 +342,20 @@
 	           data:{correo:correo,id:id},
 
 	           success:function(data){
-
-	            	alert("Correo enviado!");
+	           		$this.button('reset');
+	            	$.alert('Correo enviado', {
+                    	
+                    	type: 'success', 
+                    	position:  ['top-right', [60, 12]],
+					});
 	           },
 	           error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    alert("Vuelva a Intentarlo"); 
+	           		$this.button('reset');
+                    $.alert('Vuelva a intentarlo !', {
+                    	
+                    	type: 'warning', 
+                    	position:  ['top-right', [60, 12]],
+					});
                 } 
 
 	        });

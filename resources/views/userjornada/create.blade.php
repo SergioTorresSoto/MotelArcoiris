@@ -3,8 +3,8 @@
 @section('title', 'Crear tipo')
 
 @section('style')
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	
+    
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
 	                			{!! Form::label('fecha_entrada', 'Fecha Entrada',['class' => 'col-md-4 control-label']) !!}
 						 		<div class="col-md-6">
 						 			
-									{!! Form::text('fecha_entrada', null, array('id' => 'datepicker_entrada','class' => 'form-control', 'required')) !!}
+									{!! Form::date('fecha_entrada', null, array('id' => 'datepicker_entrada','class' => 'form-control', 'required')) !!}
 
 								</div>
 							</div>
@@ -70,13 +70,7 @@
 @endsection	
 
 @section('script')
-	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	  <script>
-	  $(function() {
-	    $( "#datepicker_salida" ).datepicker({ dateFormat: 'yy-mm-dd ' });
-	    $( "#datepicker_entrada" ).datepicker({ dateFormat: 'yy-mm-dd ' });
-	  });
-    </script>
+	
 
    
 @endsection
