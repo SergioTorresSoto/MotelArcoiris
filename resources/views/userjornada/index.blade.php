@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('style')
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"/>
+@endsection
 @section('content')
 <div class="container">
     <div class="col-md-12">
@@ -11,16 +13,28 @@
 			@endif
             <div class="panel panel-info">
             <div class="panel-heading">
-                <h3>Usuarios
+                <h3>Empleados
                 	<div class="btn-group pull-right">
 				        <a href="{{ route('usersjornadas.create') }}" class="btn btn-info ">Asignar Jornada</a>
 				     </div>
                 		
                 </h3>
             </div>
-                
+                <div class="panel-body">    
+	            {!! $calendar->calendar() !!}
+	            
+	        	</div>
 
-                	<div class="panel-body">
+                	
+	            </div>
+	        </div>
+
+	<div class="col-md-12">
+		<div class="panel panel-info">
+            <div class="panel-heading">		            
+			<h4>Calendario</h4>
+			</div>
+			<div class="panel-body">
 
 						<table class="table table-striped">
 							<thead>
@@ -58,9 +72,36 @@
 						</table>
 						
 	                </div>
-	            </div>
-	        </div>
+		    
+    </div>
+    <div id="calendarModal" class="modal fade">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		        <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+		            <h4 id="modalTitle" class="modal-title"></h4>
+		        </div>
+		        <div id="modalBody" class="modal-body"> 
+
+		        </div>
+		        <div class="modal-footer">
+		            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		    </div>
+		</div>
 	</div>
 </div>
 
+@endsection
+
+@section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
+{!! $calendar->script() !!}
+<style type="text/css">
+	.fc-widget-header{
+    background-color:#A9D0F5;
+}
+</style>
 @endsection

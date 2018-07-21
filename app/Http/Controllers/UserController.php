@@ -118,6 +118,7 @@ class UserController extends Controller
         $users->nombre = $request->nombre;
         $users->apellido = $request->apellido;
         $users->rut = $request->rut;
+        $users->color = $request->color;
         $users->telefono = $request->telefono;
         $users->email = $request->email;
         $users->username = $request->username;

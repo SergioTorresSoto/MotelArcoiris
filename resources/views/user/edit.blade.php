@@ -59,6 +59,12 @@
 								 			{!! Form::text('email', $users->email, ['class' => 'form-control', 'required']) !!}
 										</div>
 									</div>
+									<div class="form-group color">
+			                			{!! Form::label('color', 'Color',['class' => 'col-md-4 control-label']) !!}
+								 		<div class="col-md-6">
+								 			{!! Form::color('color', $users->color, ['class' => 'form-control', 'required']) !!}
+										</div>
+									</div>
 								</div>
 							</dir>
 
@@ -82,18 +88,21 @@
 	$('#id_type').change(function(){
         insumo = $("#id_type option:selected").text();
         if(insumo=="Cliente"){
-        	$(".nombre").hide();
-        	$(".apellido").hide();
-        	$(".rut").hide();
-        	$(".telefono").hide();
+        	$(".nombre").hide("fast");
+        	$(".apellido").hide("fast");
+        	$(".rut").hide("fast");
+        	$(".telefono").hide("fast");
+        	$(".color").hide("fast");
         }else{
-        	$(".nombre").show();
+        	$(".color").show("fast");
+        	$("#color").prop('required',true);
+        	$(".nombre").show("fast");
         	$("#nombre").prop('required',true);
-        	$(".apellido").show();
+        	$(".apellido").show("fast");
         	$("#apellido").prop('required',true);
-        	$(".rut").show();
+        	$(".rut").show("fast");
         	$("#rut").prop('required',true);
-        	$(".telefono").show();
+        	$(".telefono").show("fast");
         	$("#telefono").prop('required',true);
         }
 		console.log(insumo);

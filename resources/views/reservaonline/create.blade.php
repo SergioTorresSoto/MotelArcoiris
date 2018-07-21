@@ -256,7 +256,6 @@
 		     if (id_tipo!="") {
 			  if(fecha!="" && menor >= mayor){
 			     $.ajax({
-
 		           type:'POST',
 
 		           url:'/reservaonline/consulta',

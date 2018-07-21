@@ -49,7 +49,9 @@
 							<div class="form-group">
 	                            <div class="col-md-8 col-md-offset-4">
 	                                {!! Form::submit('Editar', ['class' => 'btn btn-primary']) !!}
+	                                 <a href="{{ route('usersjornadas.destroy', $userjornada) }}" onclick="return confirm('¿Está seguro de eliminar al usuario seleccionado?')" class="btn btn-danger">Eliminar</a>
 	                            </div>
+
 	                        </div>
 
 						{!! Form::close() !!}

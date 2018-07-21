@@ -50,8 +50,8 @@
 							</thead>
 							<tbody>
 								@foreach($users as $user)
-									<tr>
-										<td>{{ $user->id }}</td>
+									<tr >
+										<td style="background-color:{{ $user->color }}" >{{ $user->id }}</td>
 										
 										<td>{{ $user->nombre }}</td>
 										<td>{{ $user->apellido }}</td>

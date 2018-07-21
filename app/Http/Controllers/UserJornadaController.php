@@ -7,6 +7,8 @@ use App\userJornada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use DB;
+use Carbon\Carbon;
+use Calendar;
 
 class UserJornadaController extends Controller
 {
@@ -20,12 +22,51 @@ class UserJornadaController extends Controller
         
         $horarios = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
                     ->join('users', 'users.id', '=', 'users_jornadas.id_user')
-                    ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
+                    ->select('users_jornadas.*','users.nombre','users.color','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
+                    ->orderBy('id')
                     ->get();
 
+        $events = [];
+        if($horarios->count()) {
+            foreach ($horarios as $key => $value) {
+
+                $events[] = Calendar::event(
+                    $value->nombre,
+                    false,
+                    new \DateTime($value->fecha_entrada. $value->hora_entrada),
+                    new \DateTime($value->fecha_salida. $value->hora_salida),
+                    $value->id,
+                    // Add color and link on event
+                    [
+                        'color' => $value->color,
+                        'url' => route('usersjornadas.edit', $value->id) ,
+                    ]
+                )
+                ;
+            }
+        }$calendar = new Calendar;
+        $calendar = Calendar::addEvents($events)
+                            ->setOptions(['firstDay' => 1, 
+                                             'navLinks'=> true, 
+                                             'selectable'=> true,
+                                             'editable'=> true,
+
+                            ])
+                            ->setCallbacks([
+
+                                'eventClick' => 'function(event) {
+                                     console.log(event)
+                                }',
+                                'dayClick' => 'function(date, jsEvent, view) {
+                                    
+                                    $("#modalTitle").text(date.format());
+                                    $("#calendarModal").modal("show");
+                                }',
+
+                            ]);
         
 
-        return view('userjornada.index', compact('horarios'));
+        return view('userjornada.index', compact('horarios','calendar'));
        
     }
 
@@ -59,20 +100,75 @@ class UserJornadaController extends Controller
      */
     public function store(Request $request)
     {
-        $jornada = Jornada::find($request->id_jornada);
-
-        $horarios = new userJornada($request->all());
-        $fecha = new \DateTime($request->fecha_entrada.$jornada->hora_entrada);
-
-        $duracion = $jornada->duracion_hora.' '.$jornada->duracion_minuto;
-        $fecha->modify($duracion);
-        $fecha->format('d-m-Y H:i:s');
-        $fecha = date_format($fecha, 'Y-m-d');
+    //    dd($request->all());
+        $numeroDias = $this->numeroDia($request->get('diasNuevos'));
         
-        $horarios->fecha_salida = $fecha;
-        $horarios->save();
-         Session::flash('message', 'El horario se asigno exitosamente.');
-         return redirect(route('usersjornadas.index'));
+    //    $dia = date("w",strtotime($request->get('fecha_inicio')))  ; //obtendo el dia de la semana en numero domingo=0
+
+        $fechaEmision = Carbon::parse($request->get('fecha_inicio'));
+        $fechaExpiracion = Carbon::parse($request->get('fecha_termino'));
+    
+        $dif = $fechaExpiracion->diffInDays($fechaEmision);
+        while ($dif >= 0) {
+            
+            foreach ($numeroDias as $key => $dia) {
+               if ($dia == date("w",strtotime($fechaEmision))) {
+
+                    $jornada = Jornada::find($request->id_jornada[$key]);
+
+                    $horarios = new userJornada();
+            //        $fecha = Carbon::createFromFormat('Y-m-d H', $fechaEmision.$jornada->hora_entrada);
+                    $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $fechaEmision->format('Y-m-d').' '.$jornada->hora_entrada);
+
+                    $duracion = $jornada->duracion_hora.' '.$jornada->duracion_minuto;
+                    $fecha->modify($duracion);
+                    $fecha->format('d-m-Y H:i:s');
+                    $fecha = date_format($fecha, 'Y-m-d');
+
+                    $horarios->id_user = $request->id_user;
+                    $horarios->fecha_entrada = $fechaEmision;
+                    $horarios->id_jornada = $request->id_jornada[$key];
+                    $horarios->fecha_salida = $fecha;
+
+                    $horarios->save();
+               }
+            }
+            $fechaEmision->addDay(1);
+            $dif--;
+           
+        }
+        
+        Session::flash('message', 'El horario se asigno exitosamente.');
+        return redirect(route('usersjornadas.index'));
+    }
+
+     public function numeroDia($dias)
+    {
+        $numeroDia =[];
+        foreach ($dias as $key => $dia) {
+            if($dia=='Lunes'){
+                $numeroDia[] = 1;
+            }
+            if ($dia=='Martes') {
+                $numeroDia[] = 2;
+            }
+            if ($dia=='Miercoles') {
+                $numeroDia[] = 3;
+            }
+            if ($dia=='Jueves') {
+                $numeroDia[] = 4;
+            }
+            if ($dia=='Viernes') {
+                $numeroDia[] = 5;
+            }
+            if ($dia=='Sabado') {
+                $numeroDia[] = 6;
+            }
+            if ($dia=='Domingo') {
+                $numeroDia[] = 0;
+            }
+        }
+        return $numeroDia;
     }
 
     /**

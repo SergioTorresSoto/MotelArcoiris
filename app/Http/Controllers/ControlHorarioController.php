@@ -22,7 +22,7 @@ class ControlHorarioController extends Controller
     {
         $control =  DB::table('control_horario')
                   ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
-                  ->select('control_horario.*','users.nombre')
+                  ->select('control_horario.*','users.nombre','users.color')
                   ->orderBy('control_horario.id','ASC')
                   ->paginate(5);
 
@@ -39,7 +39,7 @@ class ControlHorarioController extends Controller
                     null,
                     // Add color and link on event
                     [
-                        'color' => '#800',
+                        'color' => $value->color,
                      //   'url' => route('controlhorario.edit', $value->id) ,
                     ]
                 )
