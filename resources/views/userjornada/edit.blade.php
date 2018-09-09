@@ -43,6 +43,14 @@
 
 								</div>
 							</div>
+							<div class="form-group">
+	                			{!! Form::label('color', 'Color',['class' => 'col-md-4 control-label']) !!}
+						 		<div class="col-md-6">
+						 			
+									{!! Form::color('color', $userjornada->color, ['class' => 'form-control', 'required']) !!}
+
+								</div>
+							</div>
 							
 
 

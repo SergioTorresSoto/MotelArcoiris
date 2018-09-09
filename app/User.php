@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nombre', 'apellido', 'rut', 'telefono', 'color','email', 'password', 'username','id_type'
+        'nombre', 'apellido', 'rut', 'telefono', 'email', 'password', 'username','id_type'
     ];
 
     /**
@@ -51,6 +51,14 @@ class User extends Authenticatable
         
         if(trim($nombre)!=""){
             return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
+
+    public function scopeNumero($query, $numero){
+        
+        if(trim($numero)!=""){
+            return $query->where('email',$numero);
         }
 
     }

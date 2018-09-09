@@ -124,7 +124,23 @@ class ProveedorInsumoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detalle = DetalleCompra::find($id);
+
+        $insumosComprados = proveedorInsumo::join('proveedores','proveedores.id' ,'=', 'proveedores_insumos.id_proveedor')
+                                ->join('detalles_compras','detalles_compras.id','=','proveedores_insumos.id_detalle_compra')
+                                ->join('insumos','insumos.id','=','proveedores_insumos.id_insumo')
+                                ->select('proveedores.nombre AS nombreproveedor','proveedores.direccion','detalles_compras.*','insumos.*','proveedores_insumos.*')
+                                ->where('id_detalle_compra','=',$id)
+                                ->get();
+                               
+
+         $proveedores = Proveedor::select(DB::raw("id,CONCAT(nombre,'  ',direccion) as horario"))
+                        ->orderBy('id')
+                        ->pluck('horario','id');
+
+        $insumos = Insumo::pluck('nombre','id');
+
+        return view('proveedoresinsumos.edit')->with('detalleCompra', $detalle)->with('insumosComprados', $insumosComprados)->with('proveedores',$proveedores)->with('insumos',$insumos);
     }
 
     /**
@@ -136,7 +152,32 @@ class ProveedorInsumoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      //  dd($request->all());
+        $detalle = DetalleCompra::find($id);
+        $detalle->tipo_comprobante = $request->tipo_comprobante;
+        $detalle->total = $request->total;
+        $detalle->save();
+
+        $id_insumo = $request->id_insumo;
+
+        proveedorInsumo::where('id_detalle_compra','=',$id)
+                                ->delete();
+                                
+        foreach ($id_insumo as $key => $id) {
+            $newCompra = new proveedorInsumo;
+            $newCompra->id_detalle_compra = $detalle->id;
+            $newCompra->id_proveedor = $request->id_proveedor;
+            $newCompra->id_insumo = $request->id_insumo[$key];
+            $newCompra->marca = $request->marca[$key];
+            $newCompra->contenido = $request->contenido[$key];
+            $newCompra->cantidad = $request->cantidad[$key];
+            $newCompra->precio_unitario = $request->precio_unitario[$key];
+            $newCompra->precio_total=$request->cantidad[$key]*$request->precio_unitario[$key];
+            $newCompra->save();
+        }
+        Session::flash('message', "Se ha modificado Exitosamente!");
+            return redirect(route('proveedoresinsumos.index'));
+
     }
 
     /**

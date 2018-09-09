@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tarifa;
 use DB;
+use Illuminate\Support\Facades\Session;
 class TarifaController extends Controller
 {
     /**
@@ -70,7 +71,13 @@ class TarifaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lista_tipo= DB::table('tipo_habitaciones')
+                     ->orderBy('id')
+                     ->pluck('tipo','id');
+        
+        $tarifa = Tarifa::find($id);
+
+        return view('tarifas.edit')->with('lista_tipo',$lista_tipo)->with('tarifa',$tarifa);
     }
 
     /**
@@ -82,7 +89,14 @@ class TarifaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tarifa = Tarifa::find($id);
+        $tarifa->id_tipo = $request->id_tipo;
+        $tarifa->horas = $request->horas;
+        $tarifa->precio = $request->precio;
+        $tarifa->save();
+
+        Session::flash('message', "Se ha modificadola tarifa Exitosamente!");
+        return redirect()->route('tarifas.index');
     }
 
     /**

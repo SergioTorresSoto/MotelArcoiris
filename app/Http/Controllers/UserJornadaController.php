@@ -22,9 +22,14 @@ class UserJornadaController extends Controller
         
         $horarios = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
                     ->join('users', 'users.id', '=', 'users_jornadas.id_user')
-                    ->select('users_jornadas.*','users.nombre','users.color','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
+                    ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
                     ->orderBy('id')
                     ->get();
+        $horariosPaginados = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
+                    ->join('users', 'users.id', '=', 'users_jornadas.id_user')
+                    ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
+                    ->orderBy('id')
+                    ->paginate(5);
 
         $events = [];
         if($horarios->count()) {
@@ -66,7 +71,7 @@ class UserJornadaController extends Controller
                             ]);
         
 
-        return view('userjornada.index', compact('horarios','calendar'));
+        return view('userjornada.index', compact('horarios','calendar'))->with('horariosPaginados', $horariosPaginados);
        
     }
 
@@ -126,6 +131,7 @@ class UserJornadaController extends Controller
                     $fecha = date_format($fecha, 'Y-m-d');
 
                     $horarios->id_user = $request->id_user;
+                    $horarios->color = $request->color;
                     $horarios->fecha_entrada = $fechaEmision;
                     $horarios->id_jornada = $request->id_jornada[$key];
                     $horarios->fecha_salida = $fecha;
@@ -225,6 +231,7 @@ class UserJornadaController extends Controller
          $userjornada->id_user = $request->id_user;
          $userjornada->id_jornada = $request->id_jornada;
          $userjornada->fecha_entrada = $request->fecha_entrada;
+         $userjornada->color = $request->color;
          
          $jornada = Jornada::find($userjornada->id_jornada);
          $fecha = new \DateTime($request->fecha_entrada.$jornada->hora_entrada);

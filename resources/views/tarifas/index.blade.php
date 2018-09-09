@@ -32,8 +32,6 @@
 								<th>Tipo</th>
 								<th>Horas</th>	
 								<th>Valor</th>
-								<th>Observacion</th>
-								
 								<th>opciones</th>
 								
 								
@@ -48,14 +46,11 @@
 										<td>{{ $hab->horas}}</td>
 										<td>{{ $hab->precio }}</td>
 										
-									
-
-								
 										<td>
-											<div align = "right">
+											
 											<a href="{{ route('tarifas.edit', $hab->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
 											<a href="{{ route('tarifas.destroy', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
-											</div>
+										
 										</td>
 									</tr>
 								@endforeach

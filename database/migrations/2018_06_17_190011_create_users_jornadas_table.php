@@ -19,6 +19,7 @@ class CreateUsersJornadasTable extends Migration
             $table->integer('id_user')->unsigned();
             $table->date('fecha_entrada');
             $table->date('fecha_salida')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
 
             $table->foreign('id_jornada')->references('id')->on('jornadas')->onDelete('cascade');

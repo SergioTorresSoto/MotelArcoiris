@@ -75,12 +75,7 @@
 								 			{!! Form::password('password',['class' => 'form-control', 'placeholder' => '********', 'required']) !!}
 										</div>
 									</div>
-									<div class="form-group color">
-			                			{!! Form::label('color', 'Color',['class' => 'col-md-4 control-label']) !!}
-								 		<div class="col-md-6">
-								 			{!! Form::color('color', null, ['class' => 'form-control', 'required']) !!}
-										</div>
-									</div>
+
 								</div>
 							</dir>
 						
@@ -110,10 +105,9 @@
         	$(".apellido").hide("fast");
         	$(".rut").hide("fast");
         	$(".telefono").hide("fast");
-        	$(".color").hide("fast");
+    
         }else{
-        	$(".color").show("fast");
-        	$("#color").prop('required',true);
+
         	$(".nombre").show("fast");
         	$("#nombre").prop('required',true);
         	$(".apellido").show("fast");

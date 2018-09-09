@@ -132,7 +132,22 @@ class ProveedorProductoController extends Controller
      */
     public function edit($id)
     {
-    //    
+        $detalle = DetalleCompra::find($id);
+
+        $productosComprados = ProveedorProducto::join('proveedores','proveedores.id' ,'=', 'proveedores_productos.id_proveedor')
+                                ->join('detalles_compras','detalles_compras.id','=','proveedores_productos.id_detalle_compra')
+                                ->join('productos','productos.id','=','proveedores_productos.id_producto')
+                                ->select('proveedores.nombre AS nombreproveedor','proveedores.direccion','detalles_compras.*','proveedores_productos.*','productos.*')
+                                ->where('id_detalle_compra','=',$id)
+                                ->get();
+        $proveedores = Proveedor::select(DB::raw("id,CONCAT(nombre,'  ',direccion) as prov"))
+                        ->orderBy('id')
+                        ->pluck('prov','id');
+        $productos= DB::table('productos')
+                     ->orderBy('id')
+                     ->pluck('nombre','id');
+
+        return view('proveedoresproductos.edit')->with('detalleCompra', $detalle)->with('productosComprados', $productosComprados)->with('proveedores',$proveedores)->with('productos',$productos);
     }
 
     /**
@@ -144,8 +159,31 @@ class ProveedorProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
+       // dd($request->all());
+        $detalle = DetalleCompra::find($id);
+        $detalle->tipo_comprobante = $request->tipo_comprobante;
+        $detalle->total = $request->total;
+        $detalle->save();
 
-        //
+        $id_producto = $request->id_producto;
+        
+        ProveedorProducto::where('id_detalle_compra','=',$id)
+                                ->delete();
+                                
+        foreach ($id_producto as $key => $id) {
+            $newCompra = new ProveedorProducto;
+            $newCompra->id_detalle_compra = $detalle->id;
+            $newCompra->id_proveedor = $request->id_proveedor;
+            $newCompra->id_producto = $request->id_producto[$key];
+            $newCompra->marca_producto = $request->marca_producto[$key];
+            $newCompra->contenido = $request->contenido[$key];
+            $newCompra->cantidad = $request->cantidad[$key];
+            $newCompra->precio_unitario = $request->precio_unitario[$key];
+            $newCompra->precio_total=$request->cantidad[$key]*$request->precio_unitario[$key];
+            $newCompra->save();
+        }
+        Session::flash('message', "Se ha modificado Exitosamente!");
+            return redirect(route('proveedoresproductos.index'));
         
     }
 

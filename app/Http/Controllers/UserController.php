@@ -18,13 +18,21 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        
-                  
-                  
+                
         $users= User::nombre($request->get('nombre'))
                   ->type($request->get('type'))
-                  ->join('users_type', 'users_type.id', '=', 'users.id_type' )            
+                  ->join('users_type', 'users_type.id', '=', 'users.id_type' )          
                   ->select('users.*','users_type.type')
+                  ->where('users.id_type',1)
+                  ->orWhere('users.id_type',2)
+                  ->orderBy('users.id','ASC')
+                  ->paginate(5);
+
+        $clientes= User::numero($request->get('numero'))
+                  ->join('users_type', 'users_type.id', '=', 'users.id_type' )          
+                  ->select('users.*','users_type.type')
+                  ->where('users.id_type',3)
+                
                   ->orderBy('users.id','ASC')
                   ->paginate(5);
 
@@ -32,7 +40,7 @@ class UserController extends Controller
                      ->orderBy('id')
                      ->pluck('type','id');
         
-        return view('user.index')->with('users', $users);
+        return view('user.index')->with('users', $users)->with('clientes', $clientes);
     }
 
     /**

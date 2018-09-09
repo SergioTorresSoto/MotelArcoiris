@@ -20,7 +20,7 @@
 
                 		{!! Form::open(['route' => 'usersjornadas.store','method' => 'POST', 'class' => 'form']) !!}
 	                		<div class= "row">
-		                		<div  class="col-sm-6">
+		                		<div  class="col-sm-5">
 			                		<div class="form-group">
 			                			{!! Form::label('rut', 'Usuario') !!}
 
@@ -28,6 +28,14 @@
 
 									</div>
 								</div>
+								<div  class="col-sm-1">
+			                		<div class="form-group">
+			                			{!! Form::label('color', 'Color') !!}
+										{!! Form::color('color', null, ['class' => 'form-control', 'required']) !!}
+
+									</div>
+								</div>
+
 								<div class="col-sm-3">
 									<div class="form-group">
 

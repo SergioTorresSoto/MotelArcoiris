@@ -51,7 +51,7 @@
 							
 							</thead>
 							<tbody>
-								@foreach($horarios as $user)
+								@foreach($horariosPaginados as $user)
 								<tr>
 									<td>{{ $user->id }} </td>    	 
 									<td>{{ $user->nombre }} {{ $user->apellido }}</td> 
@@ -70,7 +70,9 @@
 							</tbody>
 								
 						</table>
-						
+						<div style="text-align: center;">
+							{{ $horariosPaginados->links() }}
+						</div>
 	                </div>
 		    
     </div>
