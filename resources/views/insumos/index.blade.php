@@ -26,9 +26,8 @@
 								<th>Nombre</th>
 								<th>Descripcion</th>
 								<th>Observacion</th>
-								<th>imagen</th>
 								<th>Stock</th>
-								
+								<th>Opciones</th>
 							
 							</thead>
 							<tbody>
@@ -40,6 +39,7 @@
 										<td>{{ $ins->descripcion }}</td>
 										<td>{{ $ins->observacion }}</td>
 										<td>{{ $ins->stock }}</td>
+
 								
 								
 										<td>

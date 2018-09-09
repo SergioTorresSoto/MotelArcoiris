@@ -139,8 +139,11 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         $producto = Producto::find($id);
-
+        //$producto_imagen = $producto->imagen;
+        //if(Storage::delete($producto_imagen)){
         $producto->delete();    
+            
+        //}
         Session::flash('message', "Se ha eliminado el usuario $producto->nombre Exitosamente!");
         return redirect(route('productos.index'));
     }

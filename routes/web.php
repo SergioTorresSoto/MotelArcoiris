@@ -80,6 +80,14 @@ Route::resource('usuarioshabitaciones','UsuarioHabitacionController');
 		'as' => 'usuarioshabitaciones.ticket'
 	]);
 
+	Route::resource('productosusuarios','ProductoUsuarioController');
+	Route::get('productosusuarios/{id}/destroy', [
+		'uses' => 'ProductoUsuarioController@destroy',
+		'as' => 'productosusuarios.destroy'	
+	]);
+
+	Route::resource('productosclientes','ProductoClienteController');	
+
 	Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
 	Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
 

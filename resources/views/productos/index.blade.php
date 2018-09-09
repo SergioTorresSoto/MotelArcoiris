@@ -11,7 +11,7 @@
 			@endif
    		<div class="panel panel-info">
            	<div class="panel-heading"> 
-		    	<h3> Habitaciones
+		    	<h3> Productos
 		    		<div class="btn-group pull-right">
 							<a href="{{ route('productos.create') }}" class="btn btn-info">Agregar Productos</a>
 					 </div> 
