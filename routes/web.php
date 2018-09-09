@@ -126,6 +126,8 @@ Route::get('grafico/comprainsumos', 'GraficosController@compraInsumos');
 	Route::get('grafico/grafica_compra_insumos_anual/{anio}', 'GraficosController@compraInsumosAnual');
 	Route::get('grafico/grafica_numero_compras_anual/{anio}', 'GraficosController@numeroComprasAnual');
 
+Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
+
 Route::resource('tipoproducto','TipoProductoController');
 
   Route::get('tipoproducto/{id}/destroy', [

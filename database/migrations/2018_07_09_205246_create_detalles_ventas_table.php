@@ -15,7 +15,7 @@ class CreateDetallesVentasTable extends Migration
     {
             Schema::create('detalles_ventas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo_comprobante');
+            $table->string('tipo_comprobante')->nullable();
             $table->integer('total');
             $table->timestamps();
             

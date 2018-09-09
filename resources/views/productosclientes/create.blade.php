@@ -2,61 +2,102 @@
 
 @section('content')
 
-
-
-	
 	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 	 
-			<div class = "container">		   
-        <div class="panel panel-info">
-            <div class="panel-heading"> 
-                <h3> Lista Productos </h3>
-					 
-            </div>
+<div class = "container">		   
+    <div class="panel panel-info">
+        <div class="panel-heading"> 
+            <h3> Lista Productos
+
+                <div class="btn-group pull-right">
+                	<div class = "col-sm-10 col-md-10">
+                		 {!! Form::label('nombreProducto', 'Proveedor' ,['class' => 'hidden']) !!}
+           				 {!! Form::text('nombreProducto', null ,['class' => 'form-control','placeholder'=>'Nombre Producto']) !!} 
+        			</div>		
+				    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary"><span id="notificacion" class="badge"></span><span class="glyphicon glyphicon-shopping-cart"></span></button>
+				 </div>
+            </h3>
+			 
+        </div>
             		
-                	      <div class = "row">
-                	      	<div class = "form-group">
-                	     @foreach($productocliente as $procliente)
-                	  
-                	   	<div class = "col-sm-5 col-md-3">
-					<div class = "thumbnail">		 			
-					 
-					  <img width="100px" src=" {{Storage::url($procliente->imagen) }}">
-						<h4> {{$procliente->nombre}} </h4>
-						<p>Descripcion: {{$procliente->descripcion}}</p>	
-						<p>Precio: ${{number_format($procliente->precio)}}</p>
-						 {!! Form::number('cantidad', null, ['class' => 'form-control', 'placeholder' => 'cantidad...', 'required']) !!}
-						<button type="button" id="bt_add" class="btn btn-primary agregar">Agregar</button>
-						
-						
+        <div class = "row">
+            <div id="listaProductos" class = "form-group">
+                @foreach($productocliente as $procliente)               	  
+	                <div class = "eliminarProducto col-sm-5 col-md-3">
+						<div class = "thumbnail">		 			
+							<img id="imagen{{$procliente->id}}" width="100px" src=" {{Storage::url($procliente->imagen) }}">
+							<h4 id="nombre{{$procliente->id}}"> {{$procliente->nombre}} </h4>
+							<p id="descripcion{{$procliente->id}}">Descripcion: {{$procliente->descripcion}}</p>	
+							<p id="precio{{$procliente->id}}">Precio: ${{$procliente->precio}}</p>
+							 
+							<div class="input-group">
+							  {!! Form::label($procliente->id, '',['class' => 'hidden']) !!}
+						      {!! Form::number($procliente->id, null, ['class' => 'form-control', 'placeholder' => 'cantidad...', 'required']) !!}
+						    	<span class="input-group-btn">
+						        <button type="button" id="{{ $procliente->id}}" onclick="agregar({{ $procliente->id}})"data-toggle="modal" data-target="#myModal" class="btn btn-primary agregarCarro">Agregar</button>
+						      </span>
+						    </div><!-- /input-group -->
 						</div>
+					</div>
+				@endforeach
+			</div>
+		</div>
+	</div>						
+</div>
+					
 							
-							</div>
-								
-
-
-					@endforeach
-
-
-
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="container">
+		<div  class="row">
+			<div class="col-xs-8 col-md-8 col-md-offset-2 col-xs-offset-2">
+				{!! Form::open(['route' => 'productosclientes.store','method' => 'POST', 'class' => 'form']) !!}
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<div class="row">
+								<div class="col-xs-6">
+									<h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+								</div>
+								<div class="col-xs-6">
+									<button type="button" class="btn btn-primary btn-sm btn-block" data-dismiss="modal">
+									<span class="glyphicon glyphicon-share-alt"></span> Continue shopping
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div id="carrito" class="panel-body">
+
+						<!-- lista carrito -->
+					
+					</div>
+					<div class="panel-footer">
+
+						<div class="row text-center">
 						
-									</div>
-								</div>
+							<div class="col-xs-3">
+								{!! Form::select('tipo_pago', array('Efectivo' => 'Efectivo', 'Tarjeta' => 'Tarjeta'), null,['class' => 'form-control', 'placeholder' => 'Medio de Pago','required']) !!}
+							</div>
+							<div class="col-xs-3">
+								<h4 class="text-right">Total <strong id="total">$0</strong></h4>
+							</div>
+							<div class="col-xs-3">
 
-
-							
-							<div class="form-group" id="guardar">
-		                            <div class="col-md-8 col-md-offset-10">
-		                            	<input value="{{ csrf_token() }}" name="_token" type="hidden"></input>
-		                                {!! Form::submit('Registrar', ['class' => 'btn btn-primary desactivar']) !!}
-		                            </div>
-		                        </div>
-
+								<input value="{{ csrf_token() }}" name="_token" type="hidden"></input>
+								{!! Form::submit('Solicitar', ['class' => 'btn btn-success btn-block']) !!}
+								
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
+				{!! Form::close() !!}
+			</div>
+		</div>
+	</div>
+ </div>
 
 
 
@@ -68,62 +109,79 @@
 @section('script')
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 	<script>
+		var total = 0;
+		var cont=0;
+		var temTotal = [];
+		var temPrecio = [];
+
+
 		$(document).ready(function(){
-			$('.agregar').click(function(){
-				agregar();
+
+
+			$(document).on("change",".cantidadVariable",function(){
+			  cantidad = $(this).val();
+			  total = total-temTotal[this.id];
+			  precioInt= temPrecio[this.id].split("$");
+			  temTotal[this.id] = parseInt(cantidad)*parseInt(precioInt[1]);
+			  total = temTotal[this.id]+total;
+			  document.getElementById("total").innerHTML =total;
 			});
 			
 		});
 
-		var cont=0;
-		total=0;
-		subtotal=[];
-		$('.desactivar').attr("disabled", true);
+		function agregar(id){
+			cantidad = $("#"+id).val();
+				if(cantidad != "" && cantidad > 0){
+					
+					imagen = document.getElementById("imagen"+id).src;
+					nombre = document.getElementById("nombre"+id).innerHTML;
+					descripcion = document.getElementById("descripcion"+id).innerHTML;
+					precio = document.getElementById("precio"+id).innerHTML;
+					temPrecio[id] = precio;
+					precioInt= precio.split("$");
+			
+					temTotal[id] = (parseInt(cantidad)*parseInt(precioInt[1]));
+					total = (parseInt(cantidad)*parseInt(precioInt[1]))+parseInt(total);
 
-		function agregar(){
-			id_producto = $("#id_producto").val();
-			producto = $("#id_producto option:selected").text();
-			marca_producto = $("#marca_producto").val();
-			cantidad = $("#cantidad").val();
-			precio_unitario = $("#precio_unitario").val();
+					var producto ='<div id="producto'+id+'" class="row"><div class="col-xs-2"><img class="img-responsive" src="'+imagen+'"></div><div class="col-xs-4"><h4 class="product-name"><strong>'+nombre+'</strong></h4><h4><small>'+descripcion+'</small></h4></div><div class="col-xs-6"><div class="col-xs-6 text-right"><h6><strong>'+precio+'<span class="text-muted">x</span></strong></h6></div><div class="col-xs-4"><input id="'+id+'" name="cantidad[]" type="text" class="form-control input-sm cantidadVariable" value="'+cantidad+'"><input name="productoId[]" type="text" class="hidden" value="'+id+'"><input name="total" type="text" class="hidden" value="'+total+'"></div><div class="col-xs-2"><button onclick="eliminar('+id+');" type="button" class="btn btn-link btn-xs"><span class="glyphicon glyphicon-trash"> </span></button></div></div></div><hr id="hr'+id+'">' ;
 
+					$('#carrito').append(producto);
+					
+		
+					document.getElementById("total").innerHTML = total;
+					
+				}
+		}
+		function eliminar(productoId){
+			$("#producto"+productoId).remove();
+			$("#hr"+productoId).remove();
 
-			if(id_producto!="" && marca_producto!="" && cantidad!="" && precio_unitario!=""){
-				subtotal[cont] = (cantidad*precio_unitario);
-				total = total+subtotal[cont];
-
-					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca_producto[]" value="'+marca_producto+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
-
-				cont++;
-				limpiar();
-				$("#total").html("S/." + total);
-				evaluar();
-				$('#detalles').append(fila);
+			total = total-temTotal[productoId];
+			document.getElementById("total").innerHTML = total;
+		}
+		$('#nombreProducto').on('keyup',function(){
+ 			var value=$(this).val();
+			if(value != ""){
+				var url = "filtroproductos/"+value+"";
+			}else{
+				var url = "filtroproductos/1";
 			}
-			else{
-				alert("Error al ingresar los datos")
-			}
-		}
 
-		function limpiar(){
-		  	$("#marca_producto").val("");
-		  	$("#cantidad").val("");
-		  	$("#precio_unitario").val("");
-		}
+				$.get(url,function(resul){
+					var datos= jQuery.parseJSON(resul);
+					$(".eliminarProducto").remove();
+			
+					for (var i = 0; i<datos.productos.length; i++) {
 
-	    function evaluar(){
-		  	if(total>0){
-		  		$('.desactivar').attr("disabled", false);
-		  	}else{
-		  		$('.desactivar').attr("disabled", true);
-		  	}
-
-		}
-		function eliminar(index){
-			total=total-subtotal[index];
-			$("#total").html("S/," + total);
-			$("#fila" + index).remove();
-			evaluar();
-
-		}
+						var producto ='<div class="eliminarProducto col-sm-5 col-md-3"><div class = "thumbnail"><img id="imagen'+datos.productos[i].id+'" width="100px" src="http://localhost:8000/storage/'+datos.productos[i].imagen+'"><h4 id="nombre'+datos.productos[i].id+'"> '+datos.productos[i].nombre+' </h4><p id="descripcion'+datos.productos[i].id+'">Descripcion: '+datos.productos[i].descripcion+'</p><p id="precio'+datos.productos[i].id+'">Precio: $'+datos.productos[i].precio+'</p><div class="input-group"><label for="'+datos.productos[i].id+'" class="hidden">'+datos.productos[i].id+'</label><input type="number" name="'+datos.productos[i].id+'" placeholder="Cantidad" class="form-control" id="'+datos.productos[i].id+'"><span class="input-group-btn"><button type="button" id="'+datos.productos[i].id+'" data-toggle="modal" data-target="#myModal" onclick="agregar('+datos.productos[i].id+');" class="btn btn-primary agregarCarro">Agregar</button></span></div></div></div>';
+						
+						$('#listaProductos').append(producto);
+					}
+					 
+				})
+			
+		})
+	
     </script>
+
+@endsection
