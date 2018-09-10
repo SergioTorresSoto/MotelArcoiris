@@ -30,6 +30,20 @@ Route::resource('userstype','UserTypeController');
 		'as' => 'userstype.destroy'
 	]);
 
+Route::resource('tiposervicio','TipoServicioController');
+
+  Route::get('tiposervicio/{id}/destroy', [
+		'uses' => 'TipoServicioController@destroy',
+		'as' => 'tiposervicio.destroy'
+	]);
+
+  Route::resource('pagoservicio','PagoServicioController');
+
+  Route::get('pagoservicio/{id}/destroy', [
+		'uses' => 'PagoServicioController@destroy',
+		'as' => 'pagoservicio.destroy'
+	]);
+
 Route::resource('controlhorario','ControlHorarioController'); 
 
   Route::get('controlhorario/{id}/destroy', [
