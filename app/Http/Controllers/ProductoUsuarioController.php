@@ -150,7 +150,25 @@ class ProductoUsuarioController extends Controller
      */
     public function edit($id)
     {
-    //    
+         $detalle = DetalleVenta::find($id);
+
+     
+
+        $productosComprados = ProductoUsuario::join('users','users.id' ,'=', 'productos_usuarios.id_usuario')
+                                ->join('detalles_ventas','detalles_ventas.id','=','productos_usuarios.id_detalle_venta')
+                                ->join('productos','productos.id','=','productos_usuarios.id_producto')
+                                ->select('users.id AS idUsuario','users.email AS nombreusuario','detalles_ventas.*','productos_usuarios.*','productos.*')
+                                ->where('id_detalle_venta','=',$id)
+                                ->get();
+        $clientes= User::where('users.id_type',3)               
+                  ->orderBy('users.id','ASC')
+                  ->pluck('email','id');
+
+        $productos= DB::table('productos')
+                     ->orderBy('id')
+                     ->pluck('nombre','id');
+     //   dd($productosComprados);
+        return view('productosusuarios.edit')->with('detalleCompra', $detalle)->with('productosComprados', $productosComprados)->with('clientes',$clientes)->with('productos',$productos);
     }
 
     /**
@@ -163,7 +181,30 @@ class ProductoUsuarioController extends Controller
     public function update(Request $request, $id)
     {
 
-        //
+       // dd($request->all());
+        $detalle = DetalleVenta::find($id);
+        $detalle->tipo_comprobante = $request->tipo_comprobante;
+        $detalle->total = $request->total;
+        $detalle->save();
+
+        $id_producto = $request->id_producto;
+
+        ProductoUsuario::where('id_detalle_venta','=',$id)
+                                ->delete();
+
+        foreach ($id_producto as $key => $id) {
+            $newCompra = new ProductoUsuario;
+            $newCompra->id_detalle_venta = $detalle->id;
+            $newCompra->id_usuario = $request->id_cliente;
+            $newCompra->id_producto = $request->id_producto[$key];
+            $newCompra->marca_producto = $request->marca_producto[$key];
+            $newCompra->cantidad = $request->cantidad[$key];
+            $newCompra->precio_unitario = $request->precio_unitario[$key];
+            $newCompra->precio_total=$request->cantidad[$key]*$request->precio_unitario[$key];
+            $newCompra->save();
+        }
+        Session::flash('message', "Se ha modificado Exitosamente!");
+            return redirect(route('productosusuarios.index'));
         
     }
 

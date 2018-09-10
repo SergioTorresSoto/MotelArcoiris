@@ -45,6 +45,7 @@
 										<td>{{ $propro->created_at }}</td>
 										<td>
 											<a href="{{ route('productosusuarios.show', $propro->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a> 
+											<a href="{{ route('productosusuarios.edit', $propro->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
 											<a href="{{ route('productosusuarios.destroy', $propro->id) }}" onclick="return confirm('¿Está seguro de eliminar el suministro seleccionado?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
 										</td>
 									</tr>
