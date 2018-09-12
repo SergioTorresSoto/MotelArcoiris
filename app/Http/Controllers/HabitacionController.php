@@ -80,7 +80,7 @@ class HabitacionController extends Controller
      */
     public function show($id)
     {
-        //
+    
     }
 
     /**

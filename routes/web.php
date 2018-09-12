@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('habitacionc', function (){
+	return view('habitacionc/index');
+});
+
 
 Route::resource('users','UserController');
 
@@ -201,6 +205,8 @@ Route::get('habitaciones/{id}/destroy', [
 		'as' => 'payment.status',
 		'uses' => 'PaypalController@getPaymentStatus',
 	));
+
+
 
 
 Auth::routes();

@@ -14,9 +14,11 @@
 	            <div class="panel-heading">
 
 				<h3> Habitaciones
+					@auth
 					<div class="btn-group pull-right">
 				        <a href="{{ route('habitaciones.create') }}" class="btn btn-info" align="right">Agregar Habitaciones</a>
 				     </div>  
+				     @endauth
 				</h3>
 				</div>
 
@@ -25,6 +27,7 @@
 					<div class="panel-body" >	
 						
 						<table class="table table-striped">
+							@auth
 							<thead>
 							<tr>
 							
@@ -58,8 +61,48 @@
 											</div>
 										</td>
 									</tr>
+									
+
+									
+
 								@endforeach
 							</tbody>
+							@endauth
+
+
+							@guest
+							<thead>
+							<tr>
+							
+								<th>Hab</th>
+								<th>imagen</th>
+								<th>Tipo</th>
+								<th>Descripcion</th>
+								
+								
+								
+							
+							</thead>
+							<tbody>
+								@foreach($habitacion as $hab)
+									<tr>
+											
+										<td>#{{ $hab->numero_habitacion }}</td>
+										<td><img width="320px" src=" {{Storage::url($hab->imagen) }}"></td>
+										<td>{{ $hab->tipo }}</td>
+										<td>{{ $hab->descripcion }}</td>
+									
+
+									</tr>
+									
+
+									
+
+								@endforeach
+							</tbody>
+							@endguest
+
+
 						</table>
 						<div style="text-align: center;">
 							{{ $habitacion->links() }}
@@ -67,6 +110,6 @@
 	                </div>
 	            </div>  
 		</div>
-
+</div>
 
 @endsection
