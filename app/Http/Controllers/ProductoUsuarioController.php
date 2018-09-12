@@ -10,25 +10,30 @@ use App\UserType;
 use App\Producto;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoUsuarioController extends Controller
 {
-     public function index()
+     public function index(Request $request)
     {
-        
-
-        $productosusuarios =  DB::table('productos_usuarios')
+        if($request->all()){
+            $id=array_keys($request->toArray());
+            $idDetalleVenta = $id[0];
+            $user = Auth::user();
+            $user->unreadNotifications->markAsRead();
+        }
+        $productosusuarios = DB::table('productos_usuarios')
             
                   ->join('users','users.id','=','productos_usuarios.id_usuario')
-                    ->join('detalles_ventas','detalles_ventas.id','=','productos_usuarios.id_detalle_venta')
+                  ->join('detalles_ventas','detalles_ventas.id','=','productos_usuarios.id_detalle_venta')
                   ->select('users.email','detalles_ventas.*')
-                  ->orderBy('productos_usuarios.id','ASC')
+                  ->orderBy('productos_usuarios.id','DESC')
                    ->distinct()
                   ->paginate(5);
 
-
-        
-        
+        if($request){
+            
+        }
         return view('productosusuarios.index')->with('productosusuarios', $productosusuarios);
     }
 

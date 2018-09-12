@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container-fluid">
     	 <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -89,7 +89,7 @@
 									</thead>
 									<tbody>
 										@foreach($habitacion as $hab)
-										@if($hab->activa==true)
+										
 											<tr>
 												<td class="id_habitacion hidden">{{ $hab->id }}</td>
 												<td>#{{ $hab->numero_habitacion }}</td>
@@ -131,7 +131,7 @@
 													
 												</td>
 											</tr>
-										@endif
+										
 										@endforeach
 									</tbody>
 								</table>
@@ -213,8 +213,8 @@
 									</tr>
 									</thead>
 									<tbody>
-										@foreach($habitacion as $hab)
-										@if($hab->reserva==true && $hab->activa==false)
+										@foreach($habitacionReserva as $hab)
+										
 											<tr>
 												<td class="hidden">{{ $hab->id }}</td>
 												<td>#{{ $hab->numero_habitacion }}</td>
@@ -244,7 +244,7 @@
 													
 												</td>
 											</tr>
-										@endif
+									
 										@endforeach
 									</tbody>
 								</table>
@@ -253,13 +253,13 @@
 						</div>
 					</div>
 	    		</div>
-</div>
+
 			</div>
 					
 	            </div>
 	       	</div>
 	   </div>     
-	
+	</div>
 
 
 @endsection

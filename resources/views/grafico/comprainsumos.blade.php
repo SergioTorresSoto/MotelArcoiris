@@ -81,7 +81,7 @@
 			</div>
 			</div>
 					<br/>
-					<div class="col-md-6">
+				<div class="col-md-6">
 
 	 				{!! Form::label('anio', 'Año',['class' => 'control-label']) !!}
 				    {!! Form::selectRange('anio', 2015, 2030, $anio, ['class' => 'form-control', 'onchange' => 'cambiar_anio_grafica()']) !!}

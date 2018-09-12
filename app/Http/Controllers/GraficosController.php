@@ -8,8 +8,10 @@ use App\UsuarioHabitacion;
 use App\Habitacion;
 
 use App\proveedorInsumo;
+use App\ProveedorProducto;
 use App\Insumo;
 use App\Proveedor;
+use App\Producto;
 class GraficosController extends Controller
 {
     /**
@@ -313,6 +315,91 @@ class GraficosController extends Controller
                ->with("anio",$anio)
                ->with("mes",$mes);
         
+    }
+
+    public function compraProductos()
+    {
+        $anio=date("Y");
+        $mes=date("m");
+        return view('grafico.compraproductos')
+               ->with("anio",$anio)
+               ->with("mes",$mes);
+        
+    }
+
+    public function registroComprasInsimos($inicio,$fin,$opcion)
+    {
+   //     if($opcion == "semana"){
+            $fechaI = new \DateTime('2017-09-21');
+            $fechaF = new \DateTime('2017-10-21');
+            $semanainicio = (int) $fechaI->format("W"); // Convertimos a entero
+            $semanafin = (int) $fechaF->format("W");// Convertimos a entero
+
+            $nSena = [];
+            while ($semanainicio <=  $semanafin) {
+                $nSena[] = $semanainicio;
+                $semanainicio++;
+            }
+    //    }
+
+        $fechas = [];
+        $contador = [];
+        for($i=$inicio;$i<=$fin;$i = date("Y-m-d", strtotime($i ."+ 1 days"))){
+            $qwe = new \DateTime($i);
+            $fechas[] =  $qwe->format('Y-m-d');  
+
+         //aca puedes comparar $i a una fecha en la bd y guardar el resultado en un arreglo
+        }
+        foreach ($fechas as $key => $fecha) {
+            $total =0;
+            $compras = ProveedorProducto::whereDate('created_at',$fecha)->get();
+            foreach ($compras as $key => $compra) {
+                if($compra->count()>0){
+                     $total = $compra->precio_total+$total;
+                }
+            }
+            
+            
+            $contador[] = $total;
+        }
+
+        $data=array("fechas"=>$fechas,"contador"=>$contador,"semanafin"=>$semanafin);
+
+        return json_encode($data);
+    }
+    public function registroComprasInsimosPie($inicio,$fin){
+
+        $genetal =[];
+        $nombreProducto = [];       
+        $cantidadProducto =[];
+        $productos=Producto::all();
+        $ctp=count($productos);
+        $compras=ProveedorProducto::whereBetween('created_at', [$inicio,  $fin])
+                        ->get();
+        for ($i=0; $i < $ctp; $i++) { 
+          $cantidadProducto[$i]=0;
+        }
+        foreach ($productos as $key => $producto) {  
+
+            $nombreProducto[$key]= $producto->nombre;  
+            $sum=0;
+            foreach ($compras as $jey => $compra) {
+
+                if($producto->id==$compra->id_producto){  
+
+                    $sum = $compra->cantidad+$sum;               
+                    $cantidadProducto[$key] = $sum;
+                    
+                }
+                
+               
+            }
+            
+        }
+
+
+        $data=array("cantidadProducto"=>$cantidadProducto,"nombreProducto"=>$nombreProducto);
+        return json_encode($data);
     }
 
 

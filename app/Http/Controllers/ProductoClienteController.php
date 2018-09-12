@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Producto;
 use App\ProductoUsuario;
 use App\DetalleVenta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use DB;
+
+use App\Notifications\VentaProducto;
+
 class ProductoClienteController extends Controller
 {
     public function filtroProductos($nombre){
@@ -76,9 +80,19 @@ class ProductoClienteController extends Controller
             $productosusuarios->save();
             $cont++;
 
-            Session::flash('message', "Se ha registrado Exitosamente!");
-        return redirect(route('productosclientes.index'));
+            
         }
+        $users= User::where('users.id_type',1)
+                  ->orWhere('users.id_type',2)
+                  ->orderBy('users.id','ASC')
+                  ->get();
+        foreach ($users as $key => $user) {
+            $user->notify(new VentaProducto($venta));
+        }
+        
+
+        Session::flash('message', "Se ha registrado Exitosamente!");
+        return redirect(route('productosclientes.index'));
 
         
     }

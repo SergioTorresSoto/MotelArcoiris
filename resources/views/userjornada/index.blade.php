@@ -3,7 +3,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"/>
 @endsection
 @section('content')
-<div class="container">
+<div class="container" >
     <div class="col-md-12">
     		@if(Session::has('message'))
 			   <div class="alert alert-success alert-dismissible" role="alert">
@@ -92,6 +92,7 @@
 		    </div>
 		</div>
 	</div>
+</div>
 </div>
 
 @endsection

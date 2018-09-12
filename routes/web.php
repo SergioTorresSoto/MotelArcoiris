@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('reservaonline.index');
 });
 
 Route::get('habitacionc', function (){
@@ -144,7 +144,16 @@ Route::get('grafico/comprainsumos', 'GraficosController@compraInsumos');
 	Route::get('grafico/grafica_compra_insumos_anual/{anio}', 'GraficosController@compraInsumosAnual');
 	Route::get('grafico/grafica_numero_compras_anual/{anio}', 'GraficosController@numeroComprasAnual');
 
+Route::get('grafico/compraproductos', 'GraficosController@compraProductos'); 
+	Route::get('grafico/registro_compras_insumos/{inicio}/{fin}/{opcion}', 'GraficosController@registroComprasInsimos'); 
+	Route::get('grafico/registro_compras_insumos_pie/{inicio}/{fin}', 'GraficosController@registroComprasInsimosPie');
+
 Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
+
+Route::get('consultalogin/{numero}',function(){
+
+    return json_encode((\Auth::check()) ? True : False);
+});
 
 Route::resource('tipoproducto','TipoProductoController');
 

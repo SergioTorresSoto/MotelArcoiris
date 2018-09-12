@@ -25,7 +25,7 @@
     
      @yield('style')
 </head>
-<body onload="alertaTras5seg()">
+<body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg()">
     <div id="app">
         <nav class="navbar navbar-default navbar-inverse" role="navigation">
           <div class="container-fluid">
@@ -124,20 +124,28 @@
                     <li class="dropdown-submenu">
                         <a class="test" tabindex="-1" href="{{ route('users.index') }}">Usuarios <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                          <li><a tabindex="-1" href="{{ route('users.index') }}">Usuarios</a></li>
                           <li><a tabindex="-1" href="{{ route('userstype.index') }}">Tipo</a></li>
                           <li><a tabindex="-1" href="{{ route('usersjornadas.index') }}">Horarios</a></li>
                           <li><a tabindex="-1" href="{{ route('jornadas.index') }}">Jornadas Laborales</a></li>
                         </ul>
                     </li>
-
-
-
-
-
+ 
                     <li><a href="{{ route('controlhorario.index') }}">Asistencia</a></li>
+                     <li class="divider"></li>
+                      <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="{{ route('users.index') }}">Graficos<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a tabindex="-1" href="{{ url('grafico/comprainsumos') }}">Compra Insumos</a></li>
+                          <li><a tabindex="-1" href="{{ url('grafico/compraproductos') }}">Compra Productos</a></li>
+                          <li><a tabindex="-1" href="{{ url('grafico/reservas') }}">Reservas</a></li>
+                         
+                        </ul>
+                    </li>
                   </ul>
                 </li>
-         
+              
+              
 
               <!-- Recepcion -->
 
@@ -181,6 +189,21 @@
 
 
               <ul class="nav navbar-nav navbar-right">
+                @if (!Auth::guest())
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Notifications <span class="badge">{{count(Auth::user()->unreadNotifications)}}</span>
+                    </a>
+                 
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @foreach (Auth::user()->unreadNotifications as $notification)
+                                <a href="{{ route('productosusuarios.index', $notification->data['venta']['id']) }}"><i>Habitacion N°{{ $notification->data["user"]["email"] }}</i> solicita productos por:  <b>${{ $notification->data["venta"]["total"] }} con {{ $notification->data["venta"]["tipo_comprobante"] }}</b></a>
+                            @endforeach
+                        </li>
+                    </ul>
+                </li>
+                @endif
                 <li><p class="navbar-text">¿Estas de visita?</p></li>
 
                 @if (Auth::guest())
@@ -335,7 +358,8 @@
      @yield('script')   
 
     <script type="text/javascript">
-
+        aux =false;
+      
         $(document).ready(function(){
           $('.dropdown-submenu a.test').on("click", function(e){
             $(this).next('ul').toggle();
@@ -345,50 +369,74 @@
         });
 
         function alertaTras5seg() {
+            var url = "consultalogin/1";
 
-            setTimeout(mostrarAlerta, 0);
-
+            $.get(url,function(resul){
+                var aux= jQuery.parseJSON(resul);
+             //   console.log(url);
+                    if (aux == true) {
+                    comienzaReserva();
+                    finalizaReserva();
+                    }
+            })
         }
-
-        function mostrarAlerta() { 
+        function finalizaReserva(){
+            
+            var url = "usuarioshabitaciones/consultarreserva/";
+            $.post(url,function(resul){
+                var aux= jQuery.parseJSON(resul);
     
+                  for (var i = aux.length - 1; i >= 0; i--) {
+                        
+                      
+                        Push.create("Habitacion #"+aux[i].numero_habitacion+"",{
+                            body:"Esta habitacion esta a 15 minutos de cumplir su horario",
+                            timeout: 40000,
+                            onClick: function(){
+                                window.location="http://localhost:8000/usuarioshabitaciones";
+                                this.close();
+                            }
+                        });
+                       
+                    }  
+                
+            })
 
-    $.ajaxSetup({
-
-        headers: {
-
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-
+            setTimeout(finalizaReserva, 60000*10);
         }
 
-    });
+        function comienzaReserva() { 
+    
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var name = "nombre";
+            var password = "nombre";
+            var email = "email";
 
-        var name = "nombre";
+            $.ajax({
+               type:'POST',
+               url:'/usuarioshabitaciones/consulta',
+               data:{name:name, password:password, email:email},
+               success:function(data){
+                    if(!data){
+                        console.log(data.success);
+                    }else{
+                        Push.create("Reserva proxima a comenzar",{
+                            body: data.success,
+                            timeout: 40000,
+                            onClick: function(){
+                                window.location="http://localhost:8000/usuarioshabitaciones";
+                                this.close();
+                            }
+                        });                      
+                    }
+                }
+            });
 
-        var password = "nombre";
-
-        var email = "email";
-
-
-        $.ajax({
-
-           type:'POST',
-
-           url:'/usuarioshabitaciones/consulta',
-
-           data:{name:name, password:password, email:email},
-
-           success:function(data){
-            if(!data){
-              console.log(data.success);
-            }else{
-                alert(data.success);
-                location.reload();
-            }
-           }
-        });
-
-            setTimeout(mostrarAlerta, 60000); 
+            setTimeout(comienzaReserva, 60000); 
         }
 
     </script>

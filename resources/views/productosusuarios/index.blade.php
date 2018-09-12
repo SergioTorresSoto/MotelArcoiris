@@ -35,9 +35,9 @@
 								<th>Acción</th>
 							
 							</thead>
-							<tbody>
+							<tbody >
 								@foreach($productosusuarios as $propro)
-									<tr>
+									<tr >
 										<td>{{ $propro->id }}</td>
 										<td>{{ $propro->email }}</td>
 										<td>{{ $propro->total }}</td>
