@@ -357,9 +357,8 @@
 
      @yield('script')   
 
-    <script type="text/javascript">
-        aux =false;
-      
+<script type="text/javascript">
+
         $(document).ready(function(){
           $('.dropdown-submenu a.test').on("click", function(e){
             $(this).next('ul').toggle();
@@ -369,77 +368,54 @@
         });
 
         function alertaTras5seg() {
-            var url = "consultalogin/1";
 
-            $.get(url,function(resul){
-                var aux= jQuery.parseJSON(resul);
-             //   console.log(url);
-                    if (aux == true) {
-                    comienzaReserva();
-                    finalizaReserva();
-                    }
-            })
-        }
-        function finalizaReserva(){
-            
-            var url = "usuarioshabitaciones/consultarreserva/";
-            $.post(url,function(resul){
-                var aux= jQuery.parseJSON(resul);
-    
-                  for (var i = aux.length - 1; i >= 0; i--) {
-                        
-                      
-                        Push.create("Habitacion #"+aux[i].numero_habitacion+"",{
-                            body:"Esta habitacion esta a 15 minutos de cumplir su horario",
-                            timeout: 40000,
-                            onClick: function(){
-                                window.location="http://localhost:8000/usuarioshabitaciones";
-                                this.close();
-                            }
-                        });
-                       
-                    }  
-                
-            })
+            setTimeout(mostrarAlerta, 0);
 
-            setTimeout(finalizaReserva, 60000*10);
         }
 
-        function comienzaReserva() { 
+        function mostrarAlerta() { 
     
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var name = "nombre";
-            var password = "nombre";
-            var email = "email";
 
-            $.ajax({
-               type:'POST',
-               url:'/usuarioshabitaciones/consulta',
-               data:{name:name, password:password, email:email},
-               success:function(data){
-                    if(!data){
-                        console.log(data.success);
-                    }else{
-                        Push.create("Reserva proxima a comenzar",{
-                            body: data.success,
-                            timeout: 40000,
-                            onClick: function(){
-                                window.location="http://localhost:8000/usuarioshabitaciones";
-                                this.close();
-                            }
-                        });                      
-                    }
-                }
-            });
+    $.ajaxSetup({
 
-            setTimeout(comienzaReserva, 60000); 
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        }
+
+    });
+
+        var name = "nombre";
+
+        var password = "nombre";
+
+        var email = "email";
+
+
+        $.ajax({
+
+           type:'POST',
+
+           url:'/usuarioshabitaciones/consulta',
+
+           data:{name:name, password:password, email:email},
+
+           success:function(data){
+            if(!data){
+              console.log(data.success);
+            }else{
+                alert(data.success);
+                location.reload();
+            }
+           }
+        });
+
+            setTimeout(mostrarAlerta, 60000); 
         }
 
     </script>
+
 
 </body>
 </html>
