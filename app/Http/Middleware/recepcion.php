@@ -15,7 +15,7 @@ class recepcion
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->id_type == 2 || $request->user()->id_type == 1){
+        if($request->user()->id_type == 2 || $request->user()->id_type == 1||  ){
 
  
         return $next($request);

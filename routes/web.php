@@ -15,11 +15,14 @@ Route::get('/', function () {
     return view('reservaonline.index');
 });
 
+Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
+Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
+
+
 route::group(['middleware' => ['auth','recepcion']],function(){
 
 Route::resource('usuarioshabitaciones','UsuarioHabitacionController'); 
-Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
-Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
+
 	
 Route::get('usuarioshabitaciones/{id}/destroy', [
 		'uses' => 'UsuarioHabitacionController@destroy',

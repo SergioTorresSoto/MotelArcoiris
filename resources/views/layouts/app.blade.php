@@ -199,7 +199,8 @@
           @endif
         </ul>
               <ul class="nav navbar-nav navbar-right">
-                @if (!Auth::guest())
+                @auth
+                @if (!Auth::user()->tipo3())
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Notifications <span class="badge">{{count(Auth::user()->unreadNotifications)}}</span>
@@ -213,6 +214,7 @@
                         </li>
                     </ul>
                 </li>
+                @endauth
                 @endif
                 <li><p class="navbar-text">¿Estas de visita?</p></li>
 
@@ -378,7 +380,7 @@
         });
 
         function alertaTras5seg() {
-
+          
             setTimeout(mostrarAlerta, 0);
 
         }
