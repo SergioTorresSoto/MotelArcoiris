@@ -55,8 +55,24 @@ class UsuarioHabitacionController extends Controller
                   ->join('tipo_habitaciones', 'tipo_habitaciones.id', '=', 'habitaciones.id_tipo_habitacion' )
                   ->join('estado_habitaciones', 'estado_habitaciones.id', '=', 'habitaciones.id_estado_habitacion' )
                   ->join('usuarios_habitaciones','usuarios_habitaciones.id_habitacion','=', 'habitaciones.id')
-                  ->where('activa',true)
-                  ->where('reserva',false)
+                  ->where('activa',false)
+                  ->where('reserva',true)
+                  ->select('habitaciones.*','usuarios_habitaciones.*','tipo_habitaciones.tipo','estado_habitaciones.estado','estado_habitaciones.color')
+        //        ->where('usuarios_habitaciones.activa',true)
+            //    ->orwhere('usuarios_habitaciones.reserva',true)
+                  ->orderBy('usuarios_habitaciones.id','DESC')
+                  ->get();
+
+        $habitacionTodas =  Habitacion::
+                  estado($request->get('estado'))
+                  ->activa($request->get('activa'))
+                  ->inicio($request->get('fecha_inicio'))
+                  ->fin($request->get('fecha_fin'))
+                  ->ordenar($request->get('ordenar'))
+                  ->join('tipo_habitaciones', 'tipo_habitaciones.id', '=', 'habitaciones.id_tipo_habitacion' )
+                  ->join('estado_habitaciones', 'estado_habitaciones.id', '=', 'habitaciones.id_estado_habitacion' )
+                  ->join('usuarios_habitaciones','usuarios_habitaciones.id_habitacion','=', 'habitaciones.id')
+
                   ->select('habitaciones.*','usuarios_habitaciones.*','tipo_habitaciones.tipo','estado_habitaciones.estado','estado_habitaciones.color')
         //        ->where('usuarios_habitaciones.activa',true)
             //    ->orwhere('usuarios_habitaciones.reserva',true)
@@ -70,7 +86,7 @@ class UsuarioHabitacionController extends Controller
                     ->pluck('estado','id'); 
 
                     
-        return view('usuarioshabitaciones.index')->with('habitacion', $habitacion)->with('insumos', $insumos)->with('estados', $estados)->with('habitacionReserva', $habitacionReserva);
+        return view('usuarioshabitaciones.index')->with('habitacion', $habitacion)->with('insumos', $insumos)->with('estados', $estados)->with('habitacionReserva', $habitacionReserva)->with('habitacionTodas', $habitacionTodas);
     }
 
     /**

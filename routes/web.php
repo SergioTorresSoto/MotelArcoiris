@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('reservaonline.index');
 });
 
-Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
-Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
 
 
 route::group(['middleware' => ['auth','recepcion']],function(){
@@ -33,6 +31,7 @@ Route::get('usuarioshabitaciones/{id}/ticket', [
 		'uses' => 'UsuarioHabitacionController@ticket',
 		'as' => 'usuarioshabitaciones.ticket'
 ]);
+
 
 Route::resource('habitacionesinsumos','HabitacionInsumoController'); 
 
@@ -54,6 +53,9 @@ Route::get('controlhorario/{id}/destroy', [
 
 
 });
+Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
+Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
+Route::post('usuarioshabitaciones/consultareserva', 'UsuarioHabitacionController@consultaReserva');
 
 route::group(['middleware' => ['auth','admin']],function(){
 
@@ -229,10 +231,6 @@ Route::resource('reservaonline','ReservaOnlineController');
 	Route::post('reservaonline/consulta/horas', 'ReservaOnlineController@horasPost');
 
 
-Route::get('consultalogin/{numero}',function(){
-
-    return json_encode((\Auth::check()) ? True : False);
-});
 
 
 // Paypal

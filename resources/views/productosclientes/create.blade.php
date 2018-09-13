@@ -51,7 +51,7 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="container">
 		<div  class="row">
-			<div class="col-xs-8 col-md-8 col-md-offset-2 col-xs-offset-2">
+			<div class="col-xs-8 col-md-8 col-md-offset-6 col-xs-offset-6">
 				{!! Form::open(['route' => 'productosclientes.store','method' => 'POST', 'class' => 'form']) !!}
 				<div class="panel panel-info">
 					<div class="panel-heading">

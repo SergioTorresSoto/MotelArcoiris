@@ -58,6 +58,8 @@
 						</li>
 						<li><a href="#2" data-toggle="tab">Reservas</a>
 						</li>
+						<li><a href="#3" data-toggle="tab">Todas</a>
+						</li>
 					</ul>
 
 					<div class="tab-content ">
@@ -214,6 +216,71 @@
 									</thead>
 									<tbody>
 										@foreach($habitacionReserva as $hab)
+										
+											<tr>
+												<td class="hidden">{{ $hab->id }}</td>
+												<td>#{{ $hab->numero_habitacion }}</td>
+												<td>{{ $hab->tipo }}</td>
+													
+												<td>{{ $hab->tiempo_reserva}} Hrs</td>
+												<td>{{ $hab->tiempo_inicio }}</td>
+												<td>{{ $hab->tiempo_fin}}</td>
+												<td>{{ $hab->tipo_pago}}</td>
+												<td>{{ $hab->tarifa}}</td>
+												<td>{{ $hab->patente}}</td>
+												<td>{{ $hab->observacion }}</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+													
+												</td>
+												<td>{{ $hab->tiempo_fin_real }}</td>
+												<td>{{ $hab->tarifa_horas_extras}}</td>
+												
+												
+												<td>
+													
+													<a href="{{ route('usuarioshabitaciones.edit', $hab->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
+												</td>
+												<td>
+													<a href="{{ route('usuarioshabitaciones.destroy', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+													
+												</td>
+											</tr>
+									
+										@endforeach
+									</tbody>
+								</table>
+								
+			                </div>
+						</div>
+						<div class="tab-pane" id="3">
+					        <div class=" table-responsive panel-body" >	
+						
+								<table class="table" id="tbl">
+									<thead style="background-color: #A9D0F5">
+									<tr>
+										
+										<th>Hab</th>
+										<th>Tipo</th>
+										
+										<th>Servicio</th>
+										<th>Ingreso</th>	
+										<th>Retirada</th>
+										<th>MedioPago</th>
+										<th>Tarifa</th>
+										<th>Patente</th>
+										<th>Observacion</th>
+										<th>Print</th>
+										<th>RetiradaReal</th>
+										<th>HorasExtras</th>
+										
+										<th>Editar</th>
+										<th>Eliminar</th>
+										
+									</tr>
+									</thead>
+									<tbody>
+										@foreach($habitacionTodas as $hab)
 										
 											<tr>
 												<td class="hidden">{{ $hab->id }}</td>

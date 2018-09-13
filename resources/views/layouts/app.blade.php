@@ -25,7 +25,7 @@
     
      @yield('style')
 </head>
-<body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg()">
+<body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg('{{!Auth::guest()}}')">
     <div id="app">
         <nav class="navbar navbar-default navbar-inverse" role="navigation">
           <div class="container-fluid">
@@ -363,7 +363,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('alertas/alert.js') }}"></script>
+    <script src="{{ asset('push.js-master/push.js') }}"></script>
     
     
 
@@ -379,51 +379,82 @@
           });
         });
 
-        function alertaTras5seg() {
+        function alertaTras5seg(login) {
+
+        //   console.log(login);
+            if (login == 1) {
+              comienzaReserva();
+              finalizaReserva();
           
-            setTimeout(mostrarAlerta, 0);
-
-        }
-
-        function mostrarAlerta() { 
-    
-
-    $.ajaxSetup({
-
-        headers: {
-
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-
-        }
-
-    });
-
-        var name = "nombre";
-
-        var password = "nombre";
-
-        var email = "email";
-
-
-        $.ajax({
-
-           type:'POST',
-
-           url:'/usuarioshabitaciones/consulta',
-
-           data:{name:name, password:password, email:email},
-
-           success:function(data){
-            if(!data){
-              console.log(data.success);
-            }else{
-                alert(data.success);
-                location.reload();
             }
-           }
-        });
+        }
+        function finalizaReserva(){
+            
 
-            setTimeout(mostrarAlerta, 60000); 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+               type:'POST',
+               url:'/usuarioshabitaciones/consultareserva',
+               data:{},
+               success:function(resul){
+                   var aux= jQuery.parseJSON(resul);
+                  //  console.log(aux);
+                  for (var i = aux.length - 1; i >= 0; i--) {
+                        
+                      
+                        Push.create("Habitacion #"+aux[i].numero_habitacion+"",{
+                            body:"Esta habitacion esta a 15 minutos de cumplir su horario",
+                            timeout: 40000,
+                            onClick: function(){
+                                window.location="http://localhost:8000/usuarioshabitaciones";
+                                this.close();
+                            }
+                        });
+                       
+                    }  
+                }
+            });
+
+            setTimeout(finalizaReserva, 60000*10);
+        }
+
+       function comienzaReserva() { 
+    
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var name = "nombre";
+            var password = "nombre";
+            var email = "email";
+
+            $.ajax({
+               type:'POST',
+               url:'/usuarioshabitaciones/consulta',
+               data:{name:name, password:password, email:email},
+               success:function(data){
+                    if(!data){
+                        console.log(data.success);
+                    }else{
+                        Push.create("Reserva proxima a comenzar",{
+                            body: data.success,
+                            timeout: 40000,
+                            onClick: function(){
+                                window.location="http://localhost:8000/usuarioshabitaciones";
+                                this.close();
+                            }
+                        });                      
+                    }
+                }
+            });
+
+            setTimeout(comienzaReserva, 60000); 
         }
 
     </script>
