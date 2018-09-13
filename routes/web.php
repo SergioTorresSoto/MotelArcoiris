@@ -15,6 +15,43 @@ Route::get('/', function () {
     return view('reservaonline.index');
 });
 
+route::group(['middleware' => ['auth','recepcion']],function(){
+
+Route::resource('usuarioshabitaciones','UsuarioHabitacionController'); 
+Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
+Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
+	
+Route::get('usuarioshabitaciones/{id}/destroy', [
+		'uses' => 'UsuarioHabitacionController@destroy',
+		'as' => 'usuarioshabitaciones.destroy'
+]);
+
+Route::get('usuarioshabitaciones/{id}/ticket', [
+		'uses' => 'UsuarioHabitacionController@ticket',
+		'as' => 'usuarioshabitaciones.ticket'
+]);
+
+Route::resource('habitacionesinsumos','HabitacionInsumoController'); 
+
+
+Route::resource('productosusuarios','ProductoUsuarioController');
+Route::get('productosusuarios/{id}/destroy', [
+		'uses' => 'ProductoUsuarioController@destroy',
+		'as' => 'productosusuarios.destroy'	
+	]);
+
+
+Route::resource('controlhorario','ControlHorarioController'); 
+
+Route::get('controlhorario/{id}/destroy', [
+		'uses' => 'ControlHorarioController@destroy',
+		'as' => 'controlhorario.destroy'
+	]);
+
+
+
+});
+
 route::group(['middleware' => ['auth','admin']],function(){
 
 
@@ -24,8 +61,6 @@ Route::resource('users','UserController');
 			'uses' => 'UserController@destroy',
 			'as' => 'users.destroy'
 		]);
-
-});
 
 
 
@@ -50,12 +85,14 @@ Route::resource('tiposervicio','TipoServicioController');
 		'as' => 'pagoservicio.destroy'
 	]);
 
-Route::resource('controlhorario','ControlHorarioController'); 
 
-  Route::get('controlhorario/{id}/destroy', [
-		'uses' => 'ControlHorarioController@destroy',
-		'as' => 'controlhorario.destroy'
+Route::resource('proveedoresproductos','ProveedorProductoController');
+	Route::get('proveedoresproductos/{id}/destroy', [
+		'uses' => 'ProveedorProductoController@destroy',
+		'as' => 'proveedoresproductos.destroy'
 	]);
+
+Route::resource('tarifas','TarifaController');
 
 
  Route::resource('jornadas','JornadaController'); 
@@ -64,6 +101,7 @@ Route::resource('controlhorario','ControlHorarioController');
 		'uses' => 'JornadaController@destroy',
 		'as' => 'jornadas.destroy'
 	]);
+
 
 Route::resource('usersjornadas','UserJornadaController'); 
 
@@ -88,52 +126,6 @@ Route::resource('proveedoresinsumos','ProveedorInsumoController');
 	]);
 
 
-Route::resource('usuarioshabitaciones','UsuarioHabitacionController'); 
-
-	Route::get('usuarioshabitaciones/{id}/destroy', [
-		'uses' => 'UsuarioHabitacionController@destroy',
-		'as' => 'usuarioshabitaciones.destroy'
-	]);
-
-	Route::get('usuarioshabitaciones/{id}/ticket', [
-		'uses' => 'UsuarioHabitacionController@ticket',
-		'as' => 'usuarioshabitaciones.ticket'
-	]);
-
-	Route::resource('productosusuarios','ProductoUsuarioController');
-	Route::get('productosusuarios/{id}/destroy', [
-		'uses' => 'ProductoUsuarioController@destroy',
-		'as' => 'productosusuarios.destroy'	
-	]);
-
-	Route::resource('productosclientes','ProductoClienteController');	
-
-	Route::get('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consulta');
-	Route::post('usuarioshabitaciones/consulta', 'UsuarioHabitacionController@consultaPost');
-
-Route::resource('habitacionesinsumos','HabitacionInsumoController'); 
-
-Route::resource('proveedoresproductos','ProveedorProductoController');
-	Route::get('proveedoresproductos/{id}/destroy', [
-		'uses' => 'ProveedorProductoController@destroy',
-		'as' => 'proveedoresproductos.destroy'
-	]);
-
-Route::resource('tarifas','TarifaController');
-
-
-
-Route::resource('reservaonline','ReservaOnlineController');
-
-	Route::get('reservaonline/consulta', 'ReservaOnlineController@consulta');
-	Route::post('reservaonline/consulta', 'ReservaOnlineController@consultaPost');
-
-	Route::get('/downloadPDF/{id}','ReservaOnlineController@downloadPDF');
-
-	Route::post('reservaonline/consulta/enviar', 'ReservaOnlineController@pdfCorreoPost');
-
-	Route::post('reservaonline/consulta/horas', 'ReservaOnlineController@horasPost');
-
 Route::get('grafico/reservas', 'GraficosController@reserva');   // index de gracifos pruebas
 	Route::get('grafico/grafica_registros/{anio}/{mes}', 'GraficosController@registros_mes');
 	Route::get('grafico/grafica_anio/{anio}', 'GraficosController@registros_anio');
@@ -151,11 +143,6 @@ Route::get('grafico/compraproductos', 'GraficosController@compraProductos');
 	Route::get('grafico/registro_compras_insumos_pie/{inicio}/{fin}', 'GraficosController@registroComprasInsimosPie');
 
 Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
-
-Route::get('consultalogin/{numero}',function(){
-
-    return json_encode((\Auth::check()) ? True : False);
-});
 
 Route::resource('tipoproducto','TipoProductoController');
 
@@ -198,12 +185,52 @@ Route::get('tipohabitacion/{id}/destroy', [
 		'as' => 'estadohabitacion.destroy'
 	]);
 
+
+
+/*fin middleware admin*/
+
+
+});
+
+
+
+
+
+
+	route::group(['middleware' => ['auth','cliente']],function(){
+
+
+    Route::resource('productosclientes','ProductoClienteController');
+
+});
+
+
 Route::resource('habitaciones','HabitacionController');
 
 Route::get('habitaciones/{id}/destroy', [
 	'uses' => 'HabitacionController@destroy',
 	'as' => 'habitaciones.destroy'
 	]);
+
+		
+
+Route::resource('reservaonline','ReservaOnlineController');
+
+	Route::get('reservaonline/consulta', 'ReservaOnlineController@consulta');
+	Route::post('reservaonline/consulta', 'ReservaOnlineController@consultaPost');
+
+	Route::get('/downloadPDF/{id}','ReservaOnlineController@downloadPDF');
+
+	Route::post('reservaonline/consulta/enviar', 'ReservaOnlineController@pdfCorreoPost');
+
+	Route::post('reservaonline/consulta/horas', 'ReservaOnlineController@horasPost');
+
+
+Route::get('consultalogin/{numero}',function(){
+
+    return json_encode((\Auth::check()) ? True : False);
+});
+
 
 // Paypal
 	// Enviamos nuestro pedido a PayPal
