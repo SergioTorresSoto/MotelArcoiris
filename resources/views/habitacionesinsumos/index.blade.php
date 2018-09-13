@@ -12,9 +12,9 @@
 			@endif
 			<div class="panel panel-info">
            		 <div class="panel-heading">  
-					<h3> Compra Productos
+					<h3> Insumos Para Limpieza
 						<div class="btn-group pull-right">
-					        <a href="{{ route('habitacionesinsumos.create') }}" class="btn btn-info">Asignar Proveedor a Producto</a>
+					        <a href="{{ route('habitacionesinsumos.create') }}" class="btn btn-info">Asignar Insumos a Habitacion</a>
 					
 					     </div>  
 					</h3>

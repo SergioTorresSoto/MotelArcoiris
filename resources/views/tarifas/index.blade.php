@@ -13,7 +13,7 @@
 
 			<div class="panel panel-info">
 	            <div class="panel-heading">  
-					<h3> Habitaciones
+					<h3> Tarifas
 						<div class="btn-group pull-right">
 					        <a href="{{ route('tarifas.create') }}" class="btn btn-info" align="right">Agregar Tarifas</a>
 					     </div>  

@@ -2,14 +2,17 @@
 
 @section('content')
 
-
+	<div class = "container">
 	<div class = "col-md-12">
-		<h3> Tipo Productos</h3>
-		<hr/>
+		<div class="panel panel-info">
+       	 <div class="panel-heading"> 
+		<h3> Tipo Productos
 
-		
+		<div class="btn-group pull-right">
 		<a href="{{ route('tipoproducto.create') }}" class="btn btn-info">Registrar nuevo tipo</a>
-	
+			</div> 
+			</h3>
+			  </div>
 
 
 					<div class ="panel-body">
@@ -35,9 +38,11 @@
 				@endforeach
 			</tbody>
 		</table>
+		</div>
 		<div style="text-align: center;">
 			{{ $tipo_producto->links() }}
 		</div>
 	</div>
+</div>
 </div>
 @endsection
