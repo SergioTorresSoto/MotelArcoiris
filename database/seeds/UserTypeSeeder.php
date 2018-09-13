@@ -20,7 +20,7 @@ class UserTypeSeeder extends Seeder
 
         DB::table('users_type')->insert([
 
-       	'type' => 'Ususario'
+       	'type' => 'Usuario'
 
        ]);
 

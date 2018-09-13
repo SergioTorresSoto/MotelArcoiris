@@ -43,11 +43,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
+               @guest
                 <li class="active"><a href="{{ route('reservaonline.create') }}">Reserva</a></li>
-                @guest
+            
                      <li><a href="{{route('habitaciones.index')}}">Habitaciones</a></li>
                 @endguest
-                 <!-- cliente -->   
+
+                @auth
+                @if(Auth::user()->tipo3())
+                 <!-- cliente -->  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -56,9 +60,11 @@
                 
                   </ul>
                 </li>
-
-
-               
+                @endif
+                @endauth
+          
+                @auth
+                @if(Auth::user()->tipo1())
                     <!-- admin -->   
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administracion<span class="caret"></span></a>
@@ -85,7 +91,7 @@
                           
                         </ul>
                     </li>
-                    
+                   
                     
                     <li class="dropdown-submenu">
                         <a class="test" tabindex="-1" >Insumos <span class="caret"></span></a>
@@ -142,13 +148,16 @@
                          
                         </ul>
                     </li>
+                  
                   </ul>
+
                 </li>
-              
-              
+              @endauth
+              @endif
 
+              @auth
+              @if(Auth::user()->tipo2())
               <!-- Recepcion -->
-
              <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recepcion<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -184,10 +193,11 @@
                     <li><a href="{{ route('controlhorario.index') }}">Asistencia</a></li>
                   
                 </ul>
-            </ul>      
-
-
-
+           
+          </li>
+          @endauth
+          @endif
+        </ul>
               <ul class="nav navbar-nav navbar-right">
                 @if (!Auth::guest())
                 <li class="dropdown">

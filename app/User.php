@@ -62,4 +62,23 @@ class User extends Authenticatable
         }
 
     }
+
+    public function tipo1()
+    {
+
+        return $this->id_type === 1;
+    }
+
+
+      public function tipo2()
+    {
+
+        return $this->id_type === 2;
+    }
+
+    public function tipo3()
+    {
+
+        return $this->id_type === 3;
+    }
 }

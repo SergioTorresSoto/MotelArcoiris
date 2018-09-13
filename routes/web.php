@@ -11,13 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () {	
     return view('reservaonline.index');
 });
 
-Route::get('habitacionc', function (){
-	return view('habitacionc/index');
-});
+route::group(['middleware' => ['auth','admin']],function(){
 
 
 Route::resource('users','UserController');
@@ -26,6 +24,10 @@ Route::resource('users','UserController');
 			'uses' => 'UserController@destroy',
 			'as' => 'users.destroy'
 		]);
+
+});
+
+
 
 Route::resource('userstype','UserTypeController');
 
@@ -217,6 +219,10 @@ Route::get('habitaciones/{id}/destroy', [
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
