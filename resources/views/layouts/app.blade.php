@@ -142,8 +142,8 @@
                       <li class="dropdown-submenu">
                         <a class="test" tabindex="-1" href="{{ route('users.index') }}">Graficos<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li><a tabindex="-1" href="{{ url('grafico/comprainsumos') }}">Compra Insumos</a></li>
-                          <li><a tabindex="-1" href="{{ url('grafico/compraproductos') }}">Compra Productos</a></li>
+                          <li><a tabindex="-1" href="{{ url('grafico/ventaproductos') }}">Ventas</a></li>
+                          <li><a tabindex="-1" href="{{ url('grafico/compraproductos') }}">Compras</a></li>
                           <li><a tabindex="-1" href="{{ url('grafico/reservas') }}">Reservas</a></li>
                          
                         </ul>

@@ -12,6 +12,7 @@ use App\ProveedorProducto;
 use App\Insumo;
 use App\Proveedor;
 use App\Producto;
+use DB;
 class GraficosController extends Controller
 {
     /**
@@ -19,287 +20,160 @@ class GraficosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUltimoDiaMes($elAnio,$elMes) {
-     return date("d",(mktime(0,0,0,$elMes+1,1,$elAnio)-1));
-    }
-
-    public function registros_mes($anio,$mes)
+    public function registroReservaBarras()
     {
-        $primer_dia=1;
-        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-// todas las reservas        
-        $reservas=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $ct=count($reservas);
+        $reservaOnline = [];
+        $totalComprasAños =  DB::table('usuarios_habitaciones')
+            ->select(DB::raw('YEAR(created_at) as ano'), 
+                     DB::raw('sum(tarifa) as total, sum(es_online) as online, sum(!es_online) as presencial, count(es_online) as reservas' )
+                    )
 
-        for($d=1;$d<=$ultimo_dia;$d++){
-            $registros[$d]=0;     
-        }
+            ->groupBy(DB::raw('YEAR(created_at)'))
+            ->get();
 
-        foreach($reservas as $reserva){
-            $diasel=intval(date("d",strtotime($reserva->created_at) ) );
-            $registros[$diasel]++;    
-        }
-//fin todas las reservas
+        $totalComprasMeses  = UsuarioHabitacion::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %m') as meses"),
+                                        DB::raw('sum(tarifa) as total,sum(es_online) as online, sum(!es_online) as presencial, count(es_online) as reservas')
+                                        
+                              )
+                              ->groupBy('meses')
+                              ->get();
 
-//si es online
-        $onlines=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->where('es_online',true)
-                        ->get();
-        $ct=count($onlines);
-
-        for($d=1;$d<=$ultimo_dia;$d++){
-            $esOnline[$d]=0;     
-        }
-
-        foreach($onlines as $online){
-            $diasel=intval(date("d",strtotime($online->created_at) ) );
-            $esOnline[$diasel]++;    
-        }
-
-//fin sin es online
-
-//si es presencial
-        $presenciales=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->where('es_online',false)
-                        ->get();
-        $ct=count($presenciales);
-
-        for($d=1;$d<=$ultimo_dia;$d++){
-            $esPresencial[$d]=0;     
-        }
-
-        foreach($presenciales as $presencial){
-            $diasel=intval(date("d",strtotime($presencial->created_at) ) );
-            $esPresencial[$diasel]++;    
-        }
-
-//fin sin presencial
-
-        $data=array("totaldias"=>$ultimo_dia, "registrosdia" =>$registros, "esOnline" =>$esOnline , "esPresencial" =>$esPresencial);
-        return   json_encode($data);
-    }
-    public function registros_anio($anio)
-    {
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-01-01") );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-12-31") );
-
-        $reservas=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $contReservas=count($reservas);
-
-        for($d=1;$d<=12;$d++){
-            $reservaCont[$d]=0;     
-        }
-
-        foreach($reservas as $reserva) {
-            $aniosel=intval(date("m",strtotime($reserva->created_at) ) );
-            $reservaCont[$aniosel]++; 
-        }
-//si es Online
-        $enlinea=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->where('es_online',true)
-                        ->get();
-        $ct=count($enlinea);
-
-        for($d=1;$d<=12;$d++){
-            $esOnline[$d]=0;     
-        }
-
-        foreach($enlinea as $linea){
-            $diasel=intval(date("m",strtotime($linea->created_at) ) );
-            $esOnline[$diasel]++;    
-        }
-
-//si es presencial
-        $presenciales=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->where('es_online',false)
-                        ->get();
-        $ct=count($presenciales);
-
-        for($d=1;$d<=12;$d++){
-            $esPresencial[$d]=0;     
-        }
-
-        foreach($presenciales as $presencial){
-            $diasel=intval(date("m",strtotime($presencial->created_at) ) );
-            $esPresencial[$diasel]++;    
-        }
-
-        $data=array("reservas"=>$reservaCont, "presencial" => $esPresencial, "online" => $esOnline);
-        return   json_encode($data);
-    }
-
-    public function total_publicaciones($anio,$mes){
-
-         $primer_dia=1;
-        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-
-        $habitaciones=Habitacion::all();
-        $ctp=count($habitaciones);
-        $reservas=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->get();
-;
-        $ct =count($reservas);
+        $totalComprasDias  = UsuarioHabitacion::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %d') as dias"),
+                                        DB::raw('sum(tarifa) as total,sum(es_online) as online, sum(!es_online) as presencial, count(es_online) as reservas')
+                                        
+                              )
+                              ->groupBy('dias')
+                              ->get();
         
-        for($i=0;$i<=$ctp-1;$i++){
-         $idTP=$habitaciones[$i]->id;
-         $numeroReservas[$idTP]=0;
-        }
 
-        for($i=0;$i<=$ct-1;$i++){
-         $idTP=$reservas[$i]->id_habitacion;
-         $numeroReservas[$idTP]++;
-           
-        }
+      
+       $reservaOnline[]=$totalComprasAños;
+       $reservaOnline[]=$totalComprasMeses;
+       $reservaOnline[]=$totalComprasDias;
 
-        $data=array("totalHabitaciones"=>$ctp,"habitaciones"=>$habitaciones, "numeroReservas"=>$numeroReservas);
+        $data=array('reservaOnline' => $reservaOnline);
+
         return json_encode($data);
     }
 
-    public function total_publicaciones_anios($anio){
+    public function registroReservaLineas(){
 
-      
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-01-01") );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-12-31") );
+        $productos = Habitacion::all();
+        foreach ($productos as $key => $producto) {
+            $totalComprasAños =  UsuarioHabitacion::where('id_habitacion',$producto->id)
+                ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('count(id) as total'))
 
-        $reservas=UsuarioHabitacion::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $contReservas=count($reservas);
+                ->groupBy(DB::raw('YEAR(created_at)'))
+               
+                ->get();
+            $productos[$key]->años = $totalComprasAños;
 
-        $habitaciones=Habitacion::all();
-        $ctp=count($habitaciones);
+            $totalComprasMeses  = UsuarioHabitacion::where('id_habitacion',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %M') as meses"),
+                                        DB::raw('count(id) as total')
+                                        
+                              )
+                       
+                              ->groupBy('meses')
+                              
+                              ->get();
+            $productos[$key]->meses = $totalComprasMeses;
 
-        $ct =count($reservas);
-        
-        for($i=0;$i<=$ctp-1;$i++){
-         $idTP=$habitaciones[$i]->id;
-         $numeroReservas[$idTP]=0;
+            $totalComprasDias  = UsuarioHabitacion::where('id_habitacion',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
+                                        DB::raw('count(id) as total')
+                                        
+                              )
+                        
+                              ->groupBy('dias')
+                              
+                              ->get();
+            $productos[$key]->dias = $totalComprasDias;
         }
 
-        for($i=0;$i<=$ct-1;$i++){
-         $idTP=$reservas[$i]->id_habitacion;
-         $numeroReservas[$idTP]++;
-           
-        }
 
-        $data=array("totalHabitaciones"=>$ctp,"habitaciones"=>$habitaciones, "numeroReservas"=>$numeroReservas);
+
+        $data=array("productos"=>$productos);
         return json_encode($data);
     }
 
     public function reserva()
     {
-        $anio=date("Y");
-        $mes=date("m");
-        return view('grafico.reservas')
-               ->with("anio",$anio)
-               ->with("mes",$mes);
+   
+        return view('grafico.reservas');
         
     }
-    public function compraInsumosMensual($anio,$mes)
+    public function registroComprasInsumosBarras()
     {
-        $primer_dia=1;
-        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-// todas las reservas        
-        $compras=proveedorInsumo::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $ct=count($compras);
+       $totalComprasAños =  DB::table('proveedores_insumos')
+            ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(precio_total) as total'))
+            ->groupBy(DB::raw('YEAR(created_at)'))
+            ->get();
 
-        for($d=1;$d<=$ultimo_dia;$d++){
-            $registros[$d]=0;     
-        }
+        $totalComprasMeses  = proveedorInsumo::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %m') as meses"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('meses')
+                              ->get();
 
-        foreach($compras as $compra){
-            $diasel=intval(date("d",strtotime($compra->created_at) ) );
-            $registros[$diasel] = $compra->precio_total + $registros[$diasel];   
-        }
-//fin todas las compras
-
-
-
-        $data=array("totaldias"=>$ultimo_dia, "registrosdia" =>$registros);
-        return   json_encode($data);
-    }
-
-    public function numeroComprasMensual($anio,$mes){
-
-         $primer_dia=1;
-        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-
-        $insumos=Insumo::all();
-        $ctp=count($insumos);
-        $compras=proveedorInsumo::whereBetween('created_at', [$fecha_inicial,  $fecha_final])
-                        ->get();
-
-        $ct =count($compras);
+        $totalComprasDias  = proveedorInsumo::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %d') as dias"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('dias')
+                              ->get();
         
-        for($i=0;$i<=$ctp-1;$i++){
-         $idTP=$insumos[$i]->id;
-         $numeroCompras[$idTP]=0;
-        }
-
-        for($i=0;$i<=$ct-1;$i++){
-         $idTP=$compras[$i]->id_insumo;
-         $numeroCompras[$idTP]++;
-           
-        }
-
-        $data=array("totalInsumos"=>$ctp,"insumos"=>$insumos, "numeroCompras"=>$numeroCompras);
-        return json_encode($data);
-    }
-
-     public function compraInsumosAnual($anio)
-    {
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-01-01") );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-12-31") );
-
-        $compras=proveedorInsumo::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $contReservas=count($compras);
-
-        for($d=1;$d<=12;$d++){
-            $compraCont[$d]=0;     
-        }
-
-        foreach($compras as $compra) {
-            $aniosel=intval(date("m",strtotime($compra->created_at) ) );
-            $compraCont[$aniosel]= $compra->precio_total + $compraCont[$aniosel]; 
-        }
-
-
-        $data=array("compras"=>$compraCont);
-        return   json_encode($data);
-    }
-
-    public function numeroComprasAnual($anio){
 
       
-        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-01-01") );
-        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-12-31") );
+       
 
-        $reservas=proveedorInsumo::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $contReservas=count($reservas);
+        $data=array('totalComprasAños' => $totalComprasAños,'totalComprasMeses' => $totalComprasMeses,'totalComprasDias' => $totalComprasDias);
 
-        $habitaciones=Insumo::all();
-        $ctp=count($habitaciones);
+        return json_encode($data);
+    }
+    public function registroComprasInsumosLineas(){
 
-        $ct =count($reservas);
-        
-        for($i=0;$i<=$ctp-1;$i++){
-         $idTP=$habitaciones[$i]->id;
-         $numeroReservas[$idTP]=0;
+        $productos = Insumo::all();
+        foreach ($productos as $key => $producto) {
+            $totalComprasAños =  proveedorInsumo::where('id_insumo',$producto->id)
+                ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(cantidad) as total'))
+
+                ->groupBy(DB::raw('YEAR(created_at)'))
+               
+                ->get();
+            $productos[$key]->años = $totalComprasAños;
+
+            $totalComprasMeses  = proveedorInsumo::where('id_insumo',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %M') as meses"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                       
+                              ->groupBy('meses')
+                              
+                              ->get();
+            $productos[$key]->meses = $totalComprasMeses;
+
+            $totalComprasDias  = proveedorInsumo::where('id_insumo',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                        
+                              ->groupBy('dias')
+                              
+                              ->get();
+            $productos[$key]->dias = $totalComprasDias;
         }
 
-        for($i=0;$i<=$ct-1;$i++){
-         $idTP=$reservas[$i]->id_insumo;
-         $numeroReservas[$idTP]++;
-           
-        }
 
-        $data=array("totalHabitaciones"=>$ctp,"habitaciones"=>$habitaciones, "numeroReservas"=>$numeroReservas);
+
+        $data=array("productos"=>$productos);
         return json_encode($data);
     }
 
@@ -307,99 +181,92 @@ class GraficosController extends Controller
 
 
 
-    public function compraInsumos()
-    {
-        $anio=date("Y");
-        $mes=date("m");
-        return view('grafico.comprainsumos')
-               ->with("anio",$anio)
-               ->with("mes",$mes);
-        
-    }
+
+  
 
     public function compraProductos()
     {
-        $anio=date("Y");
-        $mes=date("m");
-        return view('grafico.compraproductos')
-               ->with("anio",$anio)
-               ->with("mes",$mes);
+        
+        return view('grafico.compraproductos');
         
     }
 
-    public function registroComprasInsimos($inicio,$fin,$opcion)
+    public function registroComprasProductosBarras()
     {
-   //     if($opcion == "semana"){
-            $fechaI = new \DateTime('2017-09-21');
-            $fechaF = new \DateTime('2017-10-21');
-            $semanainicio = (int) $fechaI->format("W"); // Convertimos a entero
-            $semanafin = (int) $fechaF->format("W");// Convertimos a entero
+       $totalComprasAños =  DB::table('proveedores_productos')
+            ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(precio_total) as total'))
+            ->groupBy(DB::raw('YEAR(created_at)'))
+            ->get();
 
-            $nSena = [];
-            while ($semanainicio <=  $semanafin) {
-                $nSena[] = $semanainicio;
-                $semanainicio++;
-            }
-    //    }
+        $totalComprasMeses  = ProveedorProducto::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %m') as meses"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('meses')
+                              ->get();
 
-        $fechas = [];
-        $contador = [];
-        for($i=$inicio;$i<=$fin;$i = date("Y-m-d", strtotime($i ."+ 1 days"))){
-            $qwe = new \DateTime($i);
-            $fechas[] =  $qwe->format('Y-m-d');  
+        $totalComprasDias  = ProveedorProducto::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %d') as dias"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('dias')
+                              ->get();
+        
 
-         //aca puedes comparar $i a una fecha en la bd y guardar el resultado en un arreglo
-        }
-        foreach ($fechas as $key => $fecha) {
-            $total =0;
-            $compras = ProveedorProducto::whereDate('created_at',$fecha)->get();
-            foreach ($compras as $key => $compra) {
-                if($compra->count()>0){
-                     $total = $compra->precio_total+$total;
-                }
-            }
-            
-            
-            $contador[] = $total;
-        }
+      
+       
 
-        $data=array("fechas"=>$fechas,"contador"=>$contador,"semanafin"=>$semanafin);
+        $data=array('totalComprasAños' => $totalComprasAños,'totalComprasMeses' => $totalComprasMeses,'totalComprasDias' => $totalComprasDias);
 
         return json_encode($data);
     }
-    public function registroComprasInsimosPie($inicio,$fin){
+    public function registroCompraProductosLineas(){
 
-        $genetal =[];
-        $nombreProducto = [];       
-        $cantidadProducto =[];
-        $productos=Producto::all();
-        $ctp=count($productos);
-        $compras=ProveedorProducto::whereBetween('created_at', [$inicio,  $fin])
-                        ->get();
-        for ($i=0; $i < $ctp; $i++) { 
-          $cantidadProducto[$i]=0;
-        }
-        foreach ($productos as $key => $producto) {  
+        $productos = Producto::all();
+        foreach ($productos as $key => $producto) {
+            $totalComprasAños =  ProveedorProducto::where('id_producto',$producto->id)
+                ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(cantidad) as total'))
 
-            $nombreProducto[$key]= $producto->nombre;  
-            $sum=0;
-            foreach ($compras as $jey => $compra) {
-
-                if($producto->id==$compra->id_producto){  
-
-                    $sum = $compra->cantidad+$sum;               
-                    $cantidadProducto[$key] = $sum;
-                    
-                }
-                
+                ->groupBy(DB::raw('YEAR(created_at)'))
                
-            }
-            
+                ->get();
+            $productos[$key]->años = $totalComprasAños;
+
+            $totalComprasMeses  = ProveedorProducto::where('id_producto',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %M') as meses"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                       
+                              ->groupBy('meses')
+                              
+                              ->get();
+            $productos[$key]->meses = $totalComprasMeses;
+
+            $totalComprasDias  = ProveedorProducto::where('id_producto',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                        
+                              ->groupBy('dias')
+                              
+                              ->get();
+            $productos[$key]->dias = $totalComprasDias;
         }
 
 
-        $data=array("cantidadProducto"=>$cantidadProducto,"nombreProducto"=>$nombreProducto);
+
+        $data=array("productos"=>$productos);
         return json_encode($data);
+    }
+    public function ventaProductos()
+    {
+        
+        return view('grafico.ventaproductos');
+                     
     }
 
 

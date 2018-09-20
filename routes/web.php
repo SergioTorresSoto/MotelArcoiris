@@ -132,20 +132,20 @@ Route::resource('proveedoresinsumos','ProveedorInsumoController');
 
 
 Route::get('grafico/reservas', 'GraficosController@reserva');   // index de gracifos pruebas
-	Route::get('grafico/grafica_registros/{anio}/{mes}', 'GraficosController@registros_mes');
-	Route::get('grafico/grafica_anio/{anio}', 'GraficosController@registros_anio');
-	Route::get('grafico/grafica_publicaciones/{anio}/{mes}', 'GraficosController@total_publicaciones');
-	Route::get('grafico/grafica_publicaciones_anios/{anio}', 'GraficosController@total_publicaciones_anios');
+	Route::get('grafico/grafica_registros', 'GraficosController@registroReservaBarras');
+	Route::get('grafico/grafica_anio', 'GraficosController@registroReservaLineas');
+	
 
-Route::get('grafico/comprainsumos', 'GraficosController@compraInsumos'); 
-	Route::get('grafico/grafico_compra_insumo_mensual/{anio}/{mes}', 'GraficosController@compraInsumosMensual');
-	Route::get('grafico/grafico_numero_compras_mensual/{anio}/{mes}', 'GraficosController@numeroComprasMensual');
-	Route::get('grafico/grafica_compra_insumos_anual/{anio}', 'GraficosController@compraInsumosAnual');
-	Route::get('grafico/grafica_numero_compras_anual/{anio}', 'GraficosController@numeroComprasAnual');
+
+	Route::get('grafico/registro_compras_insumos', 'GraficosController@registroComprasInsumosBarras');
+	Route::get('grafico/registro_compras_insumos_lineas', 'GraficosController@registroComprasInsumosLineas');
+	
 
 Route::get('grafico/compraproductos', 'GraficosController@compraProductos'); 
-	Route::get('grafico/registro_compras_insumos/{inicio}/{fin}/{opcion}', 'GraficosController@registroComprasInsimos'); 
-	Route::get('grafico/registro_compras_insumos_pie/{inicio}/{fin}', 'GraficosController@registroComprasInsimosPie');
+	Route::get('grafico/registro_compras_productos', 'GraficosController@registroComprasProductosBarras'); 
+	Route::get('grafico/registro_compras_productos_lineas', 'GraficosController@registroCompraProductosLineas');
+
+Route::get('grafico/ventaproductos', 'GraficosController@ventaProductos'); 
 
 Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
 
