@@ -50,7 +50,7 @@
                 @endguest
 
                 @auth
-                @if(Auth::user()->tipo3())
+                @if(Auth::user()->tipo3() || Auth::user()->tipo1())
                  <!-- cliente -->  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente<span class="caret"></span></a>
@@ -156,7 +156,7 @@
               @endif
 
               @auth
-              @if(Auth::user()->tipo2())
+              @if(Auth::user()->tipo2() || Auth::user()->tipo1())
               <!-- Recepcion -->
              <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recepcion<span class="caret"></span></a>
