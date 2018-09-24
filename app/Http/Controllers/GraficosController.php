@@ -12,6 +12,7 @@ use App\ProveedorProducto;
 use App\Insumo;
 use App\Proveedor;
 use App\Producto;
+use App\ProductoUsuario;
 use DB;
 class GraficosController extends Controller
 {
@@ -177,13 +178,6 @@ class GraficosController extends Controller
         return json_encode($data);
     }
 
-
-
-
-
-
-  
-
     public function compraProductos()
     {
         
@@ -262,11 +256,83 @@ class GraficosController extends Controller
         $data=array("productos"=>$productos);
         return json_encode($data);
     }
+
     public function ventaProductos()
     {
         
         return view('grafico.ventaproductos');
                      
+    }
+    public function registroVentasProductosBarras()
+    {
+       $totalComprasAños = ProductoUsuario::select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(precio_total) as total'))
+                                ->groupBy(DB::raw('YEAR(created_at)'))
+                                ->get();
+
+        $totalComprasMeses  = ProductoUsuario::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %m') as meses"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('meses')
+                              ->get();
+
+        $totalComprasDias  = ProductoUsuario::select(
+                                        DB::raw("DATE_FORMAT(created_at,'%M %Y %d') as dias"),
+                                        DB::raw('sum(precio_total) as total')
+                                        
+                              )
+                              ->groupBy('dias')
+                              ->get();
+        
+
+      
+       
+
+        $data=array('totalComprasAños' => $totalComprasAños,'totalComprasMeses' => $totalComprasMeses,'totalComprasDias' => $totalComprasDias);
+
+        return json_encode($data);
+    }
+
+    public function registroVentasProductosLineas(){
+
+        $productos = Producto::all();
+        foreach ($productos as $key => $producto) {
+            $totalComprasAños =  ProductoUsuario::where('id_producto',$producto->id)
+                ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(cantidad) as total'))
+
+                ->groupBy(DB::raw('YEAR(created_at)'))
+               
+                ->get();
+            $productos[$key]->años = $totalComprasAños;
+
+            $totalComprasMeses  = ProductoUsuario::where('id_producto',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %M') as meses"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                       
+                              ->groupBy('meses')
+                              
+                              ->get();
+            $productos[$key]->meses = $totalComprasMeses;
+
+            $totalComprasDias  = ProductoUsuario::where('id_producto',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                        
+                              ->groupBy('dias')
+                              
+                              ->get();
+            $productos[$key]->dias = $totalComprasDias;
+        }
+
+
+
+        $data=array("productos"=>$productos);
+        return json_encode($data);
     }
 
 

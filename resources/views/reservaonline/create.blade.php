@@ -205,7 +205,7 @@
 	           data:{id_tipo:id_tipo},
 
 	           success:function(data){
-
+	           		  
 		          	  $.each(data, function(index, object) {
 					      $("#horas").append('<option value="' + object.id + '">'+object.horas+'</option>');				
 					}); 	           	

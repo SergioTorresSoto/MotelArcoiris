@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"/>
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
 							
 						</thead>
 						<tbody>
-								@foreach($control as $type)
+								@foreach($controlPaginado as $type)
 									<tr>
 										<td>{{ $type->id }}</td>
 										<td>{{ $type->rut }}</td>
@@ -61,7 +61,7 @@
 						</tbody>
 					</table>
 					<div style="text-align: center;">
-						{{ $control->links() }}
+						{{ $controlPaginado->links() }}
 					</div>
 	            </div>
 	        </div>
@@ -85,7 +85,13 @@
 @endsection
 	
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
-{!! $calendar->script() !!}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
+	{!! $calendar->script() !!}
+	<style type="text/css">
+		.fc-widget-header{
+	    background-color:#A9D0F5;	}
+	</style>
+
 @endsection

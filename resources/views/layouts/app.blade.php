@@ -25,8 +25,12 @@
     
      @yield('style')
 </head>
-<body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg('{{!Auth::guest()}}')">
+
+
+
+<body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg('{{ Auth::user() }}')">
     <div id="app">
+
         <nav class="navbar navbar-default navbar-inverse" role="navigation">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -209,7 +213,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             @foreach (Auth::user()->unreadNotifications as $notification)
-                                <a href="{{ route('productosusuarios.index', $notification->data['venta']['id']) }}"><i>Habitacion N°{{ $notification->data["user"]["email"] }}</i> solicita productos por:  <b>${{ $notification->data["venta"]["total"] }} con {{ $notification->data["venta"]["tipo_comprobante"] }}</b></a>
+                                <a href="{{ route('productosusuarios.index', $notification->id) }}"><i>{{ $notification->data["mensaje"] }}</i></a>
                             @endforeach
                         </li>
                     </ul>
@@ -332,7 +336,7 @@
                 <div class = footer-columna>
                     <h3>Redes Sociales</h3>
                     <div class = "footer-redes">
-                        <a href="#" class ="fa fa-facebook"></a>
+                        <a href="https://www.facebook.com/motelarcoiris/?ref=br_rs" class ="fa fa-facebook"></a>
                         <a href="#" class ="fa fa-twitter"></a>
                         <a href="#" class ="fa fa-github"></a>
                         
@@ -341,7 +345,7 @@
                     <div class = footer-columna>
                     <h3>Mapa</h3>
                     <div class = "footer-redes">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3187.004545742546!2d-73.15334218507972!3d-36.98582469489248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9669c7f984ed11ff%3A0x2f1d2cd5c0900016!2sMotel+Arcoiris!5e0!3m2!1ses-419!2scl!4v1536596886968" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3187.004545742546!2d-73.15334218507972!3d-36.98582469489248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9669c7f984ed11ff%3A0x2f1d2cd5c0900016!2sMotel+Arcoiris!5e0!3m2!1ses-419!2scl!4v1536596886968" width="600" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                         
                     </div>
                 </div>
@@ -367,7 +371,7 @@
     
     
 
-     @yield('script')   
+       @yield('script') 
 
 <script type="text/javascript">
 
@@ -379,18 +383,30 @@
           });
         });
 
-        function alertaTras5seg(login) {
-
-        //   console.log(login);
-            if (login == 1) {
-              comienzaReserva();
-              finalizaReserva();
-          
-            }
+        function alertaTras5seg(user) {
+            
+          if (user) {
+            var datos= jQuery.parseJSON(user);
+              if (datos.id_type == 1) {  
+                comienzaReserva();
+                finalizaReserva();
+              }
+          }else{
+            funcionquenohacenada();
+          }
+        return 0;
+        }
+        function funcionquenohacenada(){
+          $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+          return 0;
         }
         function finalizaReserva(){
             
-
+        //  console.log("buscafilaizareserva");
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -408,7 +424,7 @@
                         
                       
                         Push.create("Habitacion #"+aux[i].numero_habitacion+"",{
-                            body:"Esta habitacion esta a 15 minutos de cumplir su horario",
+                            body:"Esta habitacion esta proxima al cumplimiento de su horario",
                             timeout: 40000,
                             onClick: function(){
                                 window.location="http://localhost:8000/usuarioshabitaciones";
@@ -439,17 +455,22 @@
                url:'/usuarioshabitaciones/consulta',
                data:{name:name, password:password, email:email},
                success:function(data){
+                    
                     if(!data){
-                        console.log(data.success);
+                        console.log(data);
                     }else{
-                        Push.create("Reserva proxima a comenzar",{
-                            body: data.success,
-                            timeout: 40000,
-                            onClick: function(){
-                                window.location="http://localhost:8000/usuarioshabitaciones";
-                                this.close();
-                            }
-                        });                      
+                      var aux= jQuery.parseJSON(data);
+                      for (var i = aux.length - 1; i >= 0; i--) {
+    
+                          Push.create("Habitacion #"+aux[i].numero_habitacion+"",{
+                              body:"Esta reserva esta proxima a su comienzo",
+                              timeout: 40000,
+                              onClick: function(){
+                                  window.location="http://localhost:8000/usuarioshabitaciones";
+                                  this.close();
+                              }
+                          }); 
+                      }                     
                     }
                 }
             });
@@ -458,6 +479,7 @@
         }
 
     </script>
+    
 
 
 </body>

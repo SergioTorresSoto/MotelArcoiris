@@ -115,6 +115,10 @@ Route::resource('usersjornadas','UserJornadaController');
 		'as' => 'usersjornadas.destroy'
 	]);
 
+	Route::get('usersjornadas/modificar_horario/{id}/{start}/{end}', 'UserJornadaController@modificarHorario'); 
+	Route::get('modificar_ajax/{id}/{id_user}/{id_jornada}/{fecha_entrada}/{color}', 'UserJornadaController@modificarAjax'); 
+	
+
 Route::resource('proveedores','ProveedorController'); 
 
 	Route::get('proveedores/{id}/destroy', [
@@ -146,6 +150,8 @@ Route::get('grafico/compraproductos', 'GraficosController@compraProductos');
 	Route::get('grafico/registro_compras_productos_lineas', 'GraficosController@registroCompraProductosLineas');
 
 Route::get('grafico/ventaproductos', 'GraficosController@ventaProductos'); 
+	Route::get('grafico/registro_ventas_productos', 'GraficosController@registroVentasProductosBarras'); 
+	Route::get('grafico/registro_ventas_productos_lineas', 'GraficosController@registroVentasProductosLineas');
 
 Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
 

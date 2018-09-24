@@ -6,24 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use App\Producto;
-use App\ProductoUsuario;
-use App\DetalleVenta;
-use App\User;
-use Illuminate\Support\Facades\Auth;
 
-class VentaProducto extends Notification
+class ReservaInicio extends Notification
 {
     use Queueable;
-    protected $venta;
+    protected $reserva;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($venta)
+    public function __construct($reserva)
     {
-        $this->venta = $venta;
+        $this->reserva = $reserva;
     }
 
     /**
@@ -46,9 +41,9 @@ class VentaProducto extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'mensaje' => 'Habitacion #'.User::find(Auth::id())->email.' Solicita productos por '.$this->venta->total.' con '.$this->venta->tipo_comprobante,
+            'mensaje' => 'Reserva de habitacion #'.$this->reserva->numero_habitacion.' Comienza a las: '.$this->reserva->tiempo_inicio,
             
-            'id_venta' => $this->venta->id
+            'id_venta' => $this->reserva->id
         ];
     }
 

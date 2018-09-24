@@ -86,6 +86,7 @@ class ProductoClienteController extends Controller
                   ->orWhere('users.id_type',2)
                   ->orderBy('users.id','ASC')
                   ->get();
+        
         foreach ($users as $key => $user) {
             $user->notify(new VentaProducto($venta));
         }

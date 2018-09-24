@@ -104,6 +104,7 @@
 							<tr>
 								<th>ID</th>
 								<th>Numero Habitacion</th>
+								<th>Contraseña</th>
 								<th>Tipo</th>
 								<th>Acción</th>
 							
@@ -115,6 +116,7 @@
 										
 										
 										<td># {{ $user->email }}</td>
+										<td>{{ decrypt($user->password_cliente) }}</td>
 										<td>{{ $user->type }}</td>
 								
 										<td>

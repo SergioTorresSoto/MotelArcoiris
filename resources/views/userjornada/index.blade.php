@@ -20,7 +20,7 @@
                 		
                 </h3>
             </div>
-                <div class="panel-body">    
+                <div id="calendar" class="panel-body">    
 	            {!! $calendar->calendar() !!}
 	            
 	        	</div>
@@ -80,14 +80,62 @@
 		<div class="modal-dialog">
 		    <div class="modal-content">
 		        <div class="modal-header">
-		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-		            <h4 id="modalTitle" class="modal-title"></h4>
+		            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+				<h3 class="modal-title" id="lineModalLabel">My Modal</h3>
 		        </div>
 		        <div id="modalBody" class="modal-body"> 
+		 <!-- content goes here -->
+					<form>
+						<div class="form-group hidden">
+	                			{!! Form::label('id', 'id',['class' => 'control-label']) !!}
+						 		
+						 		{!! Form::number('id', 0, null, ['class' => 'form-control']) !!}
 
+								
+						</div>
+						<div class="form-group">
+	                			{!! Form::label('id_user', 'Usuario',['class' => 'control-label']) !!}
+						 		
+						 		{!! Form::select('id_user', $users, null, ['class' => 'form-control', 'required']) !!}
+
+								
+						</div>
+		            	
+						<div class="form-group">
+	                		{!! Form::label('id_jornada', 'Jornada',['class' => 'control-label']) !!}						 
+						 	{!! Form::select('id_jornada',$jornadas, null, ['class' => 'form-control', 'required']) !!}
+							
+						</div>
+						<div class="form-group">
+	                			{!! Form::label('fecha_entrada', 'Fecha Entrada',['class' => 'control-label']) !!}
+						 		
+						 			
+									{!! Form::date('fecha_entrada', null, ['class' => 'form-control', 'required']) !!}
+
+							
+						</div>
+						<div class="form-group">
+	                		{!! Form::label('color', 'Color',['class' => 'control-label']) !!}
+							{!! Form::color('color', null, ['class' => 'form-control', 'required']) !!}
+
+								
+						</div>
+
+		             
+		            </form>
 		        </div>
 		        <div class="modal-footer">
-		            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+						</div>
+						<div class="btn-group btn-delete hidden" role="group">
+							<button type="button" id="eliminar" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+						</div>
+						<div class="btn-group" role="group">
+							<button type="button" id="guardar" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
+						</div>
+					</div>
 		        </div>
 		    </div>
 		</div>
@@ -98,13 +146,24 @@
 @endsection
 
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
-{!! $calendar->script() !!}
-<style type="text/css">
-	.fc-widget-header{
-    background-color:#A9D0F5;
-}
-</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/es.js"></script>
+
+	{!! $calendar->script() !!}
+	
+	
+
+
+
+
+
+	<style type="text/css">
+		.fc-widget-header{
+	    background-color:#A9D0F5;
+	}
+	</style>
 @endsection

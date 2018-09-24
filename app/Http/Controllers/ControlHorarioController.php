@@ -24,6 +24,11 @@ class ControlHorarioController extends Controller
                   ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
                   ->select('control_horario.*','users.nombre')
                   ->orderBy('control_horario.id','ASC')
+                  ->get();
+        $controlPaginado =  DB::table('control_horario')
+                  ->leftJoin('users', 'users.rut', '=', 'control_horario.rut' )
+                  ->select('control_horario.*','users.nombre')
+                  ->orderBy('control_horario.id','ASC')
                   ->paginate(5);
 
         // calendario
@@ -58,7 +63,7 @@ class ControlHorarioController extends Controller
                             ]);
         
         
-        return view('controlhorario.index', compact('calendar'))->with('control', $control);
+        return view('controlhorario.index', compact('calendar'))->with('control', $control)->with('controlPaginado', $controlPaginado);
     }
 
     /**

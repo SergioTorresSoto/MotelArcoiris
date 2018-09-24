@@ -120,6 +120,7 @@ class UsuarioHabitacionController extends Controller
      */
     public function store(Request $request)
     {
+
         $reserva = new UsuarioHabitacion($request->all());
 
         $servicio = $reserva->tiempo_reserva.' hours';
@@ -144,7 +145,9 @@ class UsuarioHabitacionController extends Controller
 
         $reserva->save();
 
-        $this->ticket($reserva->id);
+      
+
+      //  $this->ticket($reserva->id);
 
         Session::flash('message', 'La reserva se creo exitosamente.');
         return redirect(route('usuarioshabitaciones.index'));
@@ -243,8 +246,14 @@ class UsuarioHabitacionController extends Controller
                     ->where('usuarios_habitaciones.id',$id)
                     ->select('usuarios_habitaciones.*','users.email','users.password')
                     ->get();
-    
-
+        $random = rand(100000,999999);
+      
+        $user = User::find($reserva[0]->id_usuario);
+        $user->password = bcrypt($random);
+        $user->password_cliente = encrypt($random);
+        $user->save();
+       dd($user);
+                    
         $nombre_impresora = "POS-58";     
                try {
                  $connector = new WindowsPrintConnector($nombre_impresora);
@@ -257,7 +266,7 @@ class UsuarioHabitacionController extends Controller
                   $printer->feed(1);
                   $printer->text("Username : ".$reserva[0]->email);
                   $printer->feed(1);
-              //    $printer->text("Contrasena : ".decrypt($reserva[0]->password));
+                  $printer->text("Contrasena : ".decrypt($user->password_cliente));
                   $printer->feed(3); // saltos de linea
                   $printer -> close();
                 } catch(Exception $e) {
@@ -288,7 +297,7 @@ class UsuarioHabitacionController extends Controller
         $estado= DB::table('estado_habitaciones')
                 ->where('estado_habitaciones.estado',"Ocupado")
                 ->get();
-        foreach ($reservas as $reservacion) {    
+        foreach ($reservas as $key => $reservacion) {    
             $reserva = UsuarioHabitacion::find($reservacion->id);
             $reserva->activa = true ;
         //    $reserva->reservas= false;
@@ -297,9 +306,10 @@ class UsuarioHabitacionController extends Controller
             $habitacion = Habitacion::find($reservacion->id_habitacion);
             $habitacion->id_estado_habitacion = $estado[0]->id;
             $habitacion->save();
+            $reservas[$key]->numero_habitacion = $habitacion->numero_habitacion;
         }
         if(count($reservas)>0){
-            return response()->json(['success'=>'Reserva pronto a comenzar.']);
+            return json_encode($reservas);
         }
     }
 
