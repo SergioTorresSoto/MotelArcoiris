@@ -62,7 +62,7 @@ class ProveedorProductoController extends Controller
         $marca_producto = $request->get('marca_producto');
         $cantidad = $request->get('cantidad');
         $precio_unitario = $request->get('precio_unitario');
-        $contenido = $request->get('contenido');
+
 
         $compra = new DetalleCompra;
         
@@ -91,7 +91,7 @@ class ProveedorProductoController extends Controller
             $proveedorproducto->id_detalle_compra = $compra->id;
             $proveedorproducto->marca_producto=$marca_producto[$cont];
             $proveedorproducto->cantidad=$cantidad[$cont];
-            $proveedorproducto->contenido=$contenido[$cont];
+           
             $proveedorproducto->precio_unitario=$precio_unitario[$cont];
             $proveedorproducto->precio_total=$cantidad[$cont]*$precio_unitario[$cont];
             
@@ -176,7 +176,7 @@ class ProveedorProductoController extends Controller
             $newCompra->id_proveedor = $request->id_proveedor;
             $newCompra->id_producto = $request->id_producto[$key];
             $newCompra->marca_producto = $request->marca_producto[$key];
-            $newCompra->contenido = $request->contenido[$key];
+       
             $newCompra->cantidad = $request->cantidad[$key];
             $newCompra->precio_unitario = $request->precio_unitario[$key];
             $newCompra->precio_total=$request->cantidad[$key]*$request->precio_unitario[$key];

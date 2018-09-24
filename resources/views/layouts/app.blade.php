@@ -295,9 +295,16 @@
             
                         @else
                             <li class="dropdown">
+                              
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                  @if(Auth::user()->id_type == 1 || Auth::user()->id_type == 2)
                                     {{ Auth::user()->nombre }} <span class="caret"></span>
+                                  @else
+                                    Habitacion N°{{ Auth::user()->email }} <span class="caret"></span>
+                                  @endif
                                 </a>
+                              
+
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>

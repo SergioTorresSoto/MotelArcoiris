@@ -59,14 +59,7 @@
 
 											</div>
 										</div>
-										<div class="col-sm-2">
-											<div class="form-group">
-
-									 			{!! Form::label('contenido', 'Contenido',['class' => 'control-label']) !!}
-									 			{!! Form::text('contenido', null, ['class' => 'form-control', 'placeholder' => '1x30x30g']) !!}
-
-											</div>
-										</div>
+							
 										<div class="col-sm-2">
 											<div class="form-group">
 
@@ -95,7 +88,7 @@
 													<th>Opciones</th>
 													<th>Insumo</th>
 													<th>Marca</th>
-													<th>Contenido</th>
+										
 													<th>Cantidad (Unidad)</th>
 													<th>Precio Unidad</th>
 													<th>Subtotal</th>
@@ -105,7 +98,7 @@
 													<th></th>
 													<th></th>
 													<th></th>
-													<th></th>
+												
 													<th></th>
 													<th><input type="hidden" id="nuevoTotal" name="total" value="{{ $detalleCompra->total}}"><h4 id="total">{{ $detalleCompra->total }}</h4></th>
 												</tfoot>
@@ -119,7 +112,7 @@
 			<td><input type="hidden" name="id_insumo[]" value="{{$ins->id}}">{{$ins->nombre}}</td>
 			
 			<td><input type="text" class="form-control" readonly="readonly" name="marca[]" value="{{$ins->marca}}"></td>
-			<td><input type="text" class="form-control" readonly="readonly" name="contenido[]" value="{{$ins->contenido}}"></td>
+	
 			<td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="{{$ins->cantidad}}"></td>
 			<td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="{{$ins->precio_unitario}}"></td>
 		
@@ -184,7 +177,7 @@
 			id_insumo = $("#id_insumo").val();
 			insumo = $("#id_insumo option:selected").text();
 			marca = $("#marca").val();
-			contenido = $("#contenido").val();
+
 			cantidad = $("#cantidad").val();
 			precio_unitario = $("#precio_unitario").val();
 
@@ -192,7 +185,7 @@
 				subtotal[cont] = (cantidad*precio_unitario);
 				total = total+subtotal[cont];
 
-				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button><button type="button" class="btn btn-info editar" onclick="editar(fila'+cont+');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td><td><input type="hidden" name="id_insumo[]" value="'+id_insumo+'">'+insumo+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca[]" value="'+marca+'"></td><td><input type="text" class="form-control" readonly="readonly" name="contenido[]" value="'+contenido+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
+				var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button><button type="button" class="btn btn-info editar" onclick="editar(fila'+cont+');"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></td><td><input type="hidden" name="id_insumo[]" value="'+id_insumo+'">'+insumo+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca[]" value="'+marca+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
 				cont++;
 				limpiar();
@@ -209,7 +202,7 @@
 		function limpiar(){
 		  	$("#marca").val("");
 		  	$("#cantidad").val("");
-		  	$("#contenido").val("");
+		 
 		  	$("#precio_unitario").val("");
 		}
 
@@ -233,12 +226,12 @@
             		var id_insumo = $("#"+key.id).find("td:eq(1) input[type='hidden']").val();
                     var producto = $("#"+key.id).find("td").eq(1).text();
                     var marca = $("#"+key.id).find("td:eq(2) input[type='text']").val();
-      				var contenido = $("#"+key.id).find("td:eq(3) input[type='text']").val();
+      			
                     var cantidad = $("#"+key.id).find("td:eq(4) input[type='text']").val();
                     var precio_unitario = $("#"+key.id).find("td:eq(5) input[type='text']").val();
                     $("#id_insumo").val(id_insumo);
                     $("#marca").val(marca);
-                    $("#contenido").val(contenido);
+             
                     $("#cantidad").val(cantidad);
                     $("#precio_unitario").val(precio_unitario);
                //     alert(cantidad + precio_unitario);

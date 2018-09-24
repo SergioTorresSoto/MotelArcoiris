@@ -75,6 +75,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 @endsection	
 
 @section('script')
@@ -99,7 +100,7 @@
         	$(".telefono").show("fast");
         	$("#telefono").prop('required',true);
         }
-		console.log(insumo);
+		//console.log(insumo);
     });
 
 </script>

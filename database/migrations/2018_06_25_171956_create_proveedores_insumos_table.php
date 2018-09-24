@@ -19,7 +19,7 @@ class CreateProveedoresInsumosTable extends Migration
             $table->integer('id_insumo')->unsigned();
             $table->integer('id_detalle_compra')->nullable();
             $table->string('marca');
-            $table->string('contenido');
+
             $table->integer('cantidad');
             $table->integer('precio_unitario');
             $table->integer('precio_total');

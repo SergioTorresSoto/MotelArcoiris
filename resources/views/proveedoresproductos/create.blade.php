@@ -63,14 +63,7 @@
 											</div>
 										</div>
 
-										<div class="col-sm-2">
-											<div class="form-group">
-
-									 			{!! Form::label('contenido', 'Contenido',['class' => 'control-label']) !!}
-									 			{!! Form::text('contenido', null, ['class' => 'form-control', 'placeholder' => '1x20x200gr']) !!}
-
-											</div>
-										</div>
+					
 										<div class="col-sm-2">
 											<div class="form-group">
 
@@ -91,7 +84,7 @@
 													<th>Eliminar</th>
 													<th>Producto</th>
 													<th>Marca</th>
-													<th>Contenido</th>
+												
 													<th>Cantidad</th>
 													<th>Precio Unidad</th>
 													<th>Subtotal</th>
@@ -100,7 +93,7 @@
 													<th>TOTAL</th>
 													<th></th>
 													<th></th>
-													<th></th>
+												
 													<th></th>
 													<th></th>
 													<th><h4 id="total">S/0.00</h4></th>
@@ -150,16 +143,16 @@
 			id_producto = $("#id_producto").val();
 			producto = $("#id_producto option:selected").text();
 			marca_producto = $("#marca_producto").val();
-			contenido = $("#contenido").val();
+			
 			cantidad = $("#cantidad").val();
 			precio_unitario = $("#precio_unitario").val();
 
 
-			if(id_producto!="" && marca_producto!="" && cantidad!="" && precio_unitario!=""&& contenido!=""){
+			if(id_producto!="" && marca_producto!="" && cantidad!="" && precio_unitario!=""){
 				subtotal[cont] = (cantidad*precio_unitario);
 				total = total+subtotal[cont];
 
-					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca_producto[]" value="'+marca_producto+'"></td><td><input type="text" class="form-control" readonly="readonly" name="contenido[]" value="'+contenido+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
+					var fila = '<tr class="selected" id="fila'+cont+'"><td><button type="button" class="btn btn-warning" onclick="eliminar('+cont+');">X</button></td><td><input type="hidden" name="id_producto[]" value="'+id_producto+'">'+producto+'</td><td><input type="text" class="form-control" readonly="readonly" name="marca_producto[]" value="'+marca_producto+'"></td><td><input type="text" class="form-control" readonly="readonly" name="cantidad[]" value="'+cantidad+'"></td><td><input type="text" class="form-control" name="precio_unitario[]" readonly="readonly" value="'+precio_unitario+'"></td><td>'+subtotal[cont]+'</td></tr>';
 
 				cont++;
 				limpiar();

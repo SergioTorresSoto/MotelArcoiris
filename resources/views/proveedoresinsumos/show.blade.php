@@ -43,7 +43,7 @@
 													<th>ID</th>
 													<th>Insumo</th>
 													<th>Marca</th>
-													<th>Contenido</th>
+												
 													<th>Cantidad</th>
 													<th>Precio Unidad</th>
 													<th>Subtotal</th>
@@ -53,7 +53,7 @@
 													<th></th>
 													<th></th>
 													<th></th>
-													<th></th>
+											
 													<th></th>
 													<th><h4 id="total">${{$insumos[0]->total}}</h4></th>
 												</tfoot>
@@ -62,7 +62,7 @@
 													<td>{{ $type->id }}</td>
 													<td>{{ $type->nombre }}</td>
 													<td>{{ $type->marca }}</td>
-													<td>{{ $type->contenido }}</td>
+											
 													<td>{{ $type->cantidad }}</td>
 													<td>{{ $type->precio_unitario }}</td>
 													<td>{{ $type->precio_total }}</td>
