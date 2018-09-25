@@ -156,7 +156,7 @@ Route::get('grafico/ventaproductos', 'GraficosController@ventaProductos');
 	Route::get('grafico/registro_ventas_productos_lineas', 'GraficosController@registroVentasProductosLineas');
 	Route::get('grafico/registro_ventas_insumos_lineas', 'GraficosController@registroVentasInsumosLineas');
 
-Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
+
 
 Route::resource('tipoproducto','TipoProductoController');
 
@@ -213,7 +213,7 @@ Route::get('tipohabitacion/{id}/destroy', [
 
 	route::group(['middleware' => ['auth','cliente']],function(){
 
-
+	Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
     Route::resource('productosclientes','ProductoClienteController');
 
 });

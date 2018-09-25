@@ -230,12 +230,8 @@
                         <li>
                              <div class="row">
                                     <div class="col-md-12">
-                                        Login via
-                                <div class="social-buttons">
-                                    <a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-                                    <a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-                                </div>
-                                or
+                                        Iniciar Sesion 
+                                        <hr>
                                         <form class="form" id="login-nav" method="POST" action="{{ route('login') }}">
                                               {{ csrf_field() }}
                                                 
