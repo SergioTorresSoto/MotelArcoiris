@@ -92,8 +92,8 @@ class ProductoClienteController extends Controller
         }
         
 
-        Session::flash('message', "Se ha registrado Exitosamente!");
-        return redirect(route('productosclientes.index'));
+        Session::flash('message', "Se ha registrado la solicitud Exitosamente!");
+        return redirect(route('reservaonline.index'));
 
         
     }

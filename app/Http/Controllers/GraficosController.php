@@ -13,6 +13,7 @@ use App\Insumo;
 use App\Proveedor;
 use App\Producto;
 use App\ProductoUsuario;
+use App\HabitacionInsumo;
 use DB;
 class GraficosController extends Controller
 {
@@ -318,6 +319,47 @@ class GraficosController extends Controller
             $productos[$key]->meses = $totalComprasMeses;
 
             $totalComprasDias  = ProductoUsuario::where('id_producto',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                        
+                              ->groupBy('dias')
+                              
+                              ->get();
+            $productos[$key]->dias = $totalComprasDias;
+        }
+
+
+
+        $data=array("productos"=>$productos);
+        return json_encode($data);
+    }
+
+    public function registroVentasInsumosLineas(){
+
+        $productos = Insumo::all();
+        foreach ($productos as $key => $producto) {
+            $totalComprasAños =  HabitacionInsumo::where('id_insumo',$producto->id)
+                ->select(DB::raw('YEAR(created_at) as ano'), DB::raw('sum(cantidad) as total'))
+
+                ->groupBy(DB::raw('YEAR(created_at)'))
+               
+                ->get();
+            $productos[$key]->años = $totalComprasAños;
+
+            $totalComprasMeses  = HabitacionInsumo::where('id_insumo',$producto->id)->select(
+                                        DB::raw("DATE_FORMAT(created_at,'%m %Y %M') as meses"),
+                                        DB::raw('sum(cantidad) as total')
+                                        
+                              )
+                       
+                              ->groupBy('meses')
+                              
+                              ->get();
+            $productos[$key]->meses = $totalComprasMeses;
+
+            $totalComprasDias  = HabitacionInsumo::where('id_insumo',$producto->id)->select(
                                         DB::raw("DATE_FORMAT(created_at,'%m %Y %d %M') as dias"),
                                         DB::raw('sum(cantidad) as total')
                                         

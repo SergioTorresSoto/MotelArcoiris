@@ -37,10 +37,12 @@ Route::resource('habitacionesinsumos','HabitacionInsumoController');
 
 
 Route::resource('productosusuarios','ProductoUsuarioController');
-Route::get('productosusuarios/{id}/destroy', [
-		'uses' => 'ProductoUsuarioController@destroy',
-		'as' => 'productosusuarios.destroy'	
-	]);
+	Route::get('productosusuarios/{id}/destroy', [
+			'uses' => 'ProductoUsuarioController@destroy',
+			'as' => 'productosusuarios.destroy'	
+		]);
+
+	Route::get('estado_compra/{id}', 'ProductoUsuarioController@cambiarEstadoCompra'); 
 
 
 Route::resource('controlhorario','ControlHorarioController'); 
@@ -152,6 +154,7 @@ Route::get('grafico/compraproductos', 'GraficosController@compraProductos');
 Route::get('grafico/ventaproductos', 'GraficosController@ventaProductos'); 
 	Route::get('grafico/registro_ventas_productos', 'GraficosController@registroVentasProductosBarras'); 
 	Route::get('grafico/registro_ventas_productos_lineas', 'GraficosController@registroVentasProductosLineas');
+	Route::get('grafico/registro_ventas_insumos_lineas', 'GraficosController@registroVentasInsumosLineas');
 
 Route::get('productosclientes/filtroproductos/{nombre}','ProductoClienteController@filtroProductos');
 

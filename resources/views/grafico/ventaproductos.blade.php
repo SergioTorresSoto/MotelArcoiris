@@ -53,6 +53,35 @@
 						 </div>	
 					</div>	
 			</div>
+			<div class="panel panel-info">
+	            <div class="panel-heading"> 
+	            	<h3>Grafico Insumos
+	                	
+	            </div>
+               
+	            <div class="panel-body">
+			
+
+					<div  class="row" >
+	
+							
+							
+							<div class="col-md-12">
+							
+								<div class="box box-primary">
+									<div class="box-header">
+									</div>
+
+									<div class="box-body" id="div_grafica_insumos_lineas">
+									</div>
+
+								    <div class="box-footer">
+									</div>
+								</div>
+							</div>
+						 </div>	
+					</div>	
+			</div>
 		</div>
 	
 </div>
@@ -77,11 +106,148 @@
 
 			cargar_grafica_productos_barras();
 			cargar_grafica_productos_lineas();
+			cargar_grafica_insumos_lineas();
 		
 		});
 
 		
+		function cargar_grafica_insumos_lineas(){
+			
 
+			var url = "registro_ventas_insumos_lineas";
+		
+			$.get(url,function(resul){
+				var datos= jQuery.parseJSON(resul);
+				console.log(datos);
+				var productos = datos.productos ;
+				console.log(productos);
+				
+				series = [];
+				drilldownSerie =[];
+				for(i=0;i<productos.length;i++){
+				//	console.log(productos[i].años);
+					años = productos[i].años;
+					meses= productos[i].meses;
+					dias= productos[i].dias;
+					series2 =[];
+
+					for (var j = 0; j < años.length; j++) {
+						series2.push({
+				            y:  parseInt(años[j].total),
+				            x:  años[j].ano,
+				  			drilldown: productos[i].nombre+'año'+j
+					        }
+					    );
+					    drillSeries2 =[];
+					    for (var k = 0; k < meses.length; k++) {
+					   // 	console.log(meses.length);
+					   		año = meses[k].meses.split(" ");
+
+					   		drillSeries3 = [];
+					    	for (var l = 0; l < dias.length; l++) {
+					    		dia = dias[l].dias.split(" ");
+					    		
+					    		if(dia[0]+" "+dia[1] == año[0]+" "+año[1]) {
+					    		//	console.log(dia,meses[k].meses);
+					    			drillSeries3.push({
+								        y:  parseInt(dias[l].total),
+								        x:  parseInt(dia[2]),
+										name:dia[2]+" "+dia[3]+" "+dia[1],
+
+									    }
+									);
+					    		}
+					    	}
+					    	
+					    	drilldownSerie.push({
+								name: productos[i].nombre,
+								id: productos[i].nombre+'mes'+k,
+								data: drillSeries3
+					  		//	drilldown: 'animals'
+							});
+
+					    	
+
+					    	if(año[1] == años[j].ano){
+					    		drillSeries2.push({
+							        y:  parseInt(meses[k].total),
+							        x:parseInt(año[0]),
+									name:año[2]+" "+año[1],
+									drilldown: productos[i].nombre+'mes'+k
+								    }
+								);
+
+					    	}
+					    	
+					    }
+					
+
+					    drilldownSerie.push({
+							name: productos[i].nombre,
+							id: productos[i].nombre+'año'+j,
+								data: drillSeries2,
+							//	colorByPoint: true,
+					  		//	drilldown: 'animals'
+						});					    	
+					    
+						
+					}
+				//	console.log(drillSeries);
+					series.push({
+					            name:productos[i].nombre,
+					        //    colorByPoint: true,
+					            data:series2
+					        }
+					);
+
+
+				}
+			//	console.log(drilldownSerie);
+
+				$('#div_grafica_insumos_lineas').highcharts({
+			        chart: {
+			            type: 'column'
+			        },
+			        title: {
+			            text: 'Cantidad de Productos Comprados'
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Cantidad'
+			            },
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        xAxis: {
+			            type: 'category',
+			            title: {
+			                text: 'Fecha'
+			            },
+			        },
+
+			        tooltip: {
+			            valueSuffix: ' registros'
+			        },
+			        series: series,
+
+			        drilldown: {
+			            series: drilldownSerie
+			        }
+			    })
+
+				
+
+			
+
+			})
+
+
+
+		}
 
 		function cargar_grafica_productos_barras(){
 

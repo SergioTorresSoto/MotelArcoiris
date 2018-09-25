@@ -120,18 +120,18 @@ class UserController extends Controller
         y en este caso, solo valido los campos que necesito*/
         
         $this->validate($request,[
-            'nombre' => 'min:4|max:120|required',
+        //    'nombre' => 'min:4|max:120|required',
             'email' => 'required',
             'id_type' => 'required'
         ]);
         $users->nombre = $request->nombre;
         $users->apellido = $request->apellido;
         $users->rut = $request->rut;
-        $users->color = $request->color;
+     
         $users->telefono = $request->telefono;
         $users->email = $request->email;
-        $users->username = $request->username;
-        $users->password = bcrypt($request->password);
+      
+    //    $users->password = bcrypt($request->password);
         $users->id_type = $request->id_type;
         $users->save();
         

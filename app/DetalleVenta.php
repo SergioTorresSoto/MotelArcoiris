@@ -8,5 +8,5 @@ class DetalleVenta extends Model
 {
     protected $table ="detalles_ventas";
 
-    protected $fillable=['tipo_comprobante','total'];
+    protected $fillable=['tipo_comprobante','activa','total'];
 }

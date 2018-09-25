@@ -2,12 +2,11 @@
 
 
 @section('content')
-  @if(\Session::has('message'))
-           <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" arial-label="Close">×<span aria-      hidden="true">x</span></button>
-                 {{ Session::get('message') }}  
+  
+           <div onload="alerta('{{ Session::get('message') }}')">
+                
             </div>
-  @endif
+ 
 	<div class="slide">
       <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
   <!-- Overlay -->
@@ -59,6 +58,22 @@
 
 @endsection
 
+@section('script')
+  <script type="text/javascript">
+    mensaje = '{{ Session::get('message') }}';
+
+  
+    $.alert(mensaje, {
+                      
+      type: 'success', 
+      position:  ['top-right', [60, 12]],
+    });
+   
+  
+
+
+  </script>
+@endsection
 @section('style')
 <style type="text/css">
 

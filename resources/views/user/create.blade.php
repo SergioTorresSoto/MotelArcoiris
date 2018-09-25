@@ -55,7 +55,7 @@
 									</div>
 
 									<div class="form-group">
-			                			{!! Form::label('email', 'Correo',['class' => 'col-md-4 control-label']) !!}
+			                			{!! Form::label('email', 'Correo',['class' => ' email col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
 								 			{!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'sergio@gmail.com', 'required']) !!}
 										</div>
@@ -106,6 +106,9 @@
         	$(".apellido").hide("fast");
         	$(".rut").hide("fast");
         	$(".telefono").hide("fast");
+        	$('.email').html('Numero Habitacion');
+        	$("#email").val("");
+        	$("#email").attr("placeholder", "1");
     
         }else{
 
@@ -117,6 +120,8 @@
         	$("#rut").prop('required',true);
         	$(".telefono").show("fast");
         	$("#telefono").prop('required',true);
+        	$('.email').html('Correo');
+        	$("#email").attr("placeholder", "sergio@gmail.com");
         }
 		console.log(insumo);
     });

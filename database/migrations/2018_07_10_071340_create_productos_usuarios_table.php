@@ -20,6 +20,7 @@ class CreateProductosUsuariosTable extends Migration
             $table->integer('id_detalle_venta')->nullable();
             $table->integer('cantidad');
             $table->string('marca_producto')->nullable();
+            
             $table->integer('precio_unitario');
             $table->integer('precio_total');
             $table->timestamps();

@@ -30,7 +30,7 @@
 
 <body style="background-image:url('{{ asset('imagen/vintage-concrete.png') }}');" onload="alertaTras5seg('{{ Auth::user() }}')">
     <div id="app">
-
+      <div id="mostrar-nav"></div>
         <nav class="navbar navbar-default navbar-inverse" role="navigation">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -58,7 +58,7 @@
                  <!-- cliente -->  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
+                  <ul class="menu dropdown-menu" role="menu">
                   
                 <li><a href="{{ route('productosclientes.create') }}">Comprar productos</a></li>
                 
@@ -72,7 +72,7 @@
                     <!-- admin -->   
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administracion<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
+                  <ul class="menu dropdown-menu" role="menu">
                    
                     <li><a href="{{ route('tarifas.index') }}">Tarifa</a></li>
 
@@ -131,7 +131,7 @@
                     </li>
                     <li class="divider"></li>
                    
-                    <li class="dropdown-submenu">
+                    <li  class="dropdown-submenu">
                         <a class="test" tabindex="-1" href="{{ route('users.index') }}">Usuarios <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a tabindex="-1" href="{{ route('users.index') }}">Usuarios</a></li>
@@ -164,7 +164,7 @@
               <!-- Recepcion -->
              <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recepcion<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
+                  <ul class="menu dropdown-menu" role="menu">
                    
                     
                     <li><a href="{{ route('usuarioshabitaciones.index') }}">Reservas</a></li>
@@ -210,7 +210,7 @@
                         Notifications <span class="badge">{{count(Auth::user()->unreadNotifications)}}</span>
                     </a>
                  
-                    <ul class="dropdown-menu" role="menu">
+                    <ul class="menu dropdown-menu" role="menu">
                         <li>
                             @foreach (Auth::user()->unreadNotifications as $notification)
                                 <a href="{{ route('productosusuarios.index', $notification->id) }}"><i>{{ $notification->data["mensaje"] }}</i></a>
@@ -375,20 +375,58 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('push.js-master/push.js') }}"></script>
+    <script src="{{ asset('alertas/alert.js') }}"></script>
     
-    
+    <style type="text/css">
+      .menu a{
+        color: #ddd;
+
+        display: block;
+        width: 100%;
+      }
+
+
+      .menu li{
+        box-shadow: 3px 0 rgba(255,255,255,.2) inset;
+        margin-bottom: 5px;
+        padding-left: 1.5em;
+        --webkit-transition: all .5s;
+        -o-transition: all .5s;
+        transition: all .5s;
+      }
+
+      .menu li:hover{
+        box-shadow: 15em 0 rgba(255,255,255,.2) inset;
+      }
+
+      nav{
+        position: absolute;
+        
+        z-index: 20;
+        
+        height: 100%;
+        
+        transition: all .5s;
+        box-sizing: border-box;
+      }
+    </style>
 
        @yield('script') 
 
 <script type="text/javascript">
 
-        $(document).ready(function(){
-          $('.dropdown-submenu a.test').on("click", function(e){
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-          });
-        });
+     $('li').hover(
+        function(){
+            $(this).children('ul').slideDown(250);
+        },
+        function(){
+            $(this).children('ul').slideUp(250);
+        }
+    );
+    
+$('#mostrar-nav').on('click',function(){
+  $('nav').toggleClass('mostrar');
+})
 
         function alertaTras5seg(user) {
             

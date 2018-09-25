@@ -227,8 +227,8 @@
                     var producto = $("#"+key.id).find("td").eq(1).text();
                     var marca = $("#"+key.id).find("td:eq(2) input[type='text']").val();
       			
-                    var cantidad = $("#"+key.id).find("td:eq(4) input[type='text']").val();
-                    var precio_unitario = $("#"+key.id).find("td:eq(5) input[type='text']").val();
+                    var cantidad = $("#"+key.id).find("td:eq(3) input[type='text']").val();
+                    var precio_unitario = $("#"+key.id).find("td:eq(4) input[type='text']").val();
                     $("#id_insumo").val(id_insumo);
                     $("#marca").val(marca);
              

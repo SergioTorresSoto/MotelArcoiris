@@ -27,7 +27,7 @@
 
 							 			{!! Form::label('nombre', 'Nombre', ['class' => 'col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
-											{!! Form::text('nombre', $users->nombre, ['class' => 'form-control', 'required']) !!}
+											{!! Form::text('nombre', $users->nombre, ['class' => 'form-control']) !!}
 
 										</div>
 									</div>
@@ -35,26 +35,26 @@
 									<div class="form-group apellido">
 			                			{!! Form::label('apellido', 'Apellido',['class' => 'col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
-								 			{!! Form::text('apellido', $users->apellido, ['class' => 'form-control', 'required']) !!}
+								 			{!! Form::text('apellido', $users->apellido, ['class' => 'form-control']) !!}
 										</div>
 									</div>
 
 									<div class="form-group rut">
 			                			{!! Form::label('rut', 'RUT',['class' => 'col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
-								 			{!! Form::text('rut', $users->rut, ['class' => 'form-control', 'required']) !!}
+								 			{!! Form::text('rut', $users->rut, ['class' => 'form-control']) !!}
 										</div>
 									</div>
 
 									<div class="form-group telefono">
 			                			{!! Form::label('telefono', 'Telefono',['class' => 'col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
-								 			{!! Form::text('telefono', $users->telefono, ['class' => 'form-control', 'required']) !!}
+								 			{!! Form::text('telefono', $users->telefono, ['class' => 'form-control']) !!}
 										</div>
 									</div>
 
 									<div class="form-group">
-			                			{!! Form::label('email', 'Correo',['class' => 'col-md-4 control-label']) !!}
+			                			{!! Form::label('email', 'Correo',['class' => 'email col-md-4 control-label']) !!}
 								 		<div class="col-md-6">
 								 			{!! Form::text('email', $users->email, ['class' => 'form-control', 'required']) !!}
 										</div>
@@ -81,13 +81,34 @@
 @section('script')
 <script type="text/javascript">
 	
+	$(document).ready(function(){	
+
+    	if({{$users->id_type}} ==3 ){
+    		$(".nombre").hide("fast");
+        	$(".apellido").hide("fast");
+        	$(".rut").hide("fast");
+        	$(".telefono").hide("fast");
+        	$('.email').html('Numero Habitacion');
+        	
+        	$("#email").attr("placeholder", "1");
+
+    	}
+     });
+
 	$('#id_type').change(function(){
         insumo = $("#id_type option:selected").text();
         if(insumo=="Cliente"){
         	$(".nombre").hide("fast");
+        	$("#nombre").prop('required',false);
         	$(".apellido").hide("fast");
+        	$("#apellido").prop('required',false);
         	$(".rut").hide("fast");
+        	$("#rut").prop('required',false);
         	$(".telefono").hide("fast");
+        	$("#telefono").prop('required',false);
+        	$('.email').html('Numero Habitacion');
+        	
+        	$("#email").attr("placeholder", "1");
         	
         }else{
        
@@ -99,6 +120,8 @@
         	$("#rut").prop('required',true);
         	$(".telefono").show("fast");
         	$("#telefono").prop('required',true);
+        	$('.email').html('Correo');
+        	$("#email").attr("placeholder", "sergio@gmail.com");
         }
 		//console.log(insumo);
     });

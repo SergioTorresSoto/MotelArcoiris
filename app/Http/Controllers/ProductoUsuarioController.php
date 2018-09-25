@@ -228,4 +228,13 @@ class ProductoUsuarioController extends Controller
         Session::flash('message', "Se ha eliminado el suministro Exitosamente!");
         return redirect(route('productosusuarios.index'));
     }
+
+    public function cambiarEstadoCompra($id)
+    {
+        $detalle = DetalleVenta::find($id);
+        $detalle->activa = false;
+        $detalle->save();
+        //$data=array("productos"=>$productos);
+        return json_encode($id);
+    }
 }

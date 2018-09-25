@@ -27,7 +27,7 @@ class CreateUsuariosHabitacionesTable extends Migration
             $table->boolean('es_online');
             $table->boolean('activa')->default(false);
             $table->boolean('reserva')->nullable();
-            $table->boolean('notificacion_inicio')->nullable()->default(false);
+            $table->boolean('notificacion_inicio')->default(false);
             $table->string('patente')->nullable();
             $table->string('tipo_pago');
             $table->timestamps();
