@@ -14,6 +14,5 @@ class userJornada extends Model
        		return $this->belongsTo('App\User');
 		}
 
-		
 
 }

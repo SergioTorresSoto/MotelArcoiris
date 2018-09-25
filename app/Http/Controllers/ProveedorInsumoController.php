@@ -16,15 +16,17 @@ class ProveedorInsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $proveedoresinsumos = DB::Table('proveedores_insumos')
+        $proveedoresinsumos = proveedorInsumo::inicio3($request->get('proveedores_insumos.created_at'))
+                    ->nombreprov2($request->get('nombre'))
                     ->join('proveedores','proveedores.id' ,'=', 'proveedores_insumos.id_proveedor')
                     ->join('detalles_compras','detalles_compras.id','=','proveedores_insumos.id_detalle_compra')
                     ->select('proveedores.nombre','detalles_compras.*')
                     ->orderBy('proveedores_insumos.id' ,'ASC')
                     ->distinct() 
                     ->paginate(5, ['detalles_compras.id']);
+
        
         return view('proveedoresinsumos.index')->with('proveedoresinsumos', $proveedoresinsumos);
     }

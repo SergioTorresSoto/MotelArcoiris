@@ -19,4 +19,23 @@ class Insumo extends Model
        return $this->belongsTo('App\Proveedor');
 
 	}
+
+
+
+     public function scopeTipoins($query, $type){
+        
+        if($type !="" || isset($type[$type])){
+            return $query->where('id_tipo_insumo', $type);
+        }
+
+    }
+    public function scopeNombreins($query, $nombre){
+        
+        if(trim($nombre)!=""){
+            return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
+
+
 }

@@ -52,7 +52,7 @@ class UserJornadaController extends Controller
     }
     
 
-    public function index()
+    public function index(Request $request)
     {
         $users = DB::table('users')
                              ->where('id_type',1,2)
@@ -71,7 +71,8 @@ class UserJornadaController extends Controller
                     ->orderBy('id')
                     ->get();
 
-        $horariosPaginados = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
+        $horariosPaginados = Jornada::nombre4($request->get('nombre'))
+                    ->join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
                     ->join('users', 'users.id', '=', 'users_jornadas.id_user')
                     ->select('users_jornadas.*','users.nombre','users.apellido','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto')
                     ->orderBy('id')

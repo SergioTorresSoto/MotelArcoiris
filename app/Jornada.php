@@ -14,4 +14,13 @@ class Jornada extends Model
        	return $this->belongsToMany('App\User','users_jornadas','id_jornada','id_user')
        		->withPivot('fecha_entrada','fecha_salida');
        }
+
+       	   public function scopeNombre4($query, $nombre){
+        
+       if(trim($nombre)!=""){
+       return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
+
 }

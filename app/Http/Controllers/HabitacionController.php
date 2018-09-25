@@ -12,13 +12,13 @@ use DB;
 
 class HabitacionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         
         
 
-        $habitacion =  DB::table('habitaciones')
-
+        $habitacion =  Habitacion::num($request->get('numero_habitacion'))
+                  ->tipohab($request->get('tipo'))
                   ->join('tipo_habitaciones', 'tipo_habitaciones.id', '=', 'habitaciones.id_tipo_habitacion' )
                   ->join('estado_habitaciones', 'estado_habitaciones.id', '=', 'habitaciones.id_estado_habitacion' )
                   
@@ -26,7 +26,9 @@ class HabitacionController extends Controller
                   ->orderBy('habitaciones.id','ASC')
                   ->paginate(5);
 
-             
+        $habitacion->lista_tipo = DB::table('tipo_habitaciones')
+                                  ->orderBy('id')
+                                  ->pluck('tipo','id');  
 
         
         return view('habitaciones.index')->with('habitacion', $habitacion);

@@ -13,12 +13,16 @@ class TarifaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tarifas =DB::table('tarifas')
+        $tarifas = Tarifa::tipohab2($request->get('tipo'))
                         ->join('tipo_habitaciones','tipo_habitaciones.id','=','tarifas.id_tipo')
                         ->select('tipo_habitaciones.tipo','tarifas.*')
                         ->get();
+                        
+        $tarifas->lista_tipo= DB::table('tipo_habitaciones')
+                  ->orderBy('id')
+                  ->pluck('tipo','id');
 
         return view('tarifas.index')->with('tarifas', $tarifas);
     }

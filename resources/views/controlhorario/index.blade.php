@@ -27,6 +27,19 @@
 	                	
                	<div class="panel-body">
 
+               		  {!! Form::open(['route' => 'controlhorario.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+							<div class = "form-group">
+								{!! Form::text('nombre', null ,['class' => 'form-control','placeholder'=>'Nombre Usuario']) !!}
+							</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+					{!! Form::close() !!}
+				
+
+
 					<table class="table table-striped">
 						<thead>
 							<tr>

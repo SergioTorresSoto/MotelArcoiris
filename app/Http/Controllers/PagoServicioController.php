@@ -12,15 +12,21 @@ use DB;
 class PagoServicioController extends Controller
 {
 
-      public function index()
+      public function index(Request $request)
     {
         
-
-        $pago_servicio =  DB::table('pago_servicios')
+        $pago_servicio =  PagoServicio::tiposer($request->get('tipo'))
+                  ->inicio2($request->get('fecha'))
+               //   ->fin2($request->get('fecha'))
                   ->join('tipo_servicios', 'tipo_servicios.id', '=', 'pago_servicios.id_tipo_servicio' )
                   ->select('pago_servicios.*','tipo_servicios.tipo')
                   ->orderBy('pago_servicios.id','ASC')
                   ->paginate(5);
+
+
+        $pago_servicio->lista_tipo= DB::table('tipo_servicios')
+                     ->orderBy('id')
+                     ->pluck('tipo','id');          
 
         
         

@@ -13,9 +13,10 @@ class ProveedorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $proveedores = Proveedor::orderBy('id','ASC')->paginate(5);
+        $proveedores = Proveedor::nombreprov($request->get('nombre'))
+        ->orderBy('id','ASC')->paginate(5);
         
         
         return view('proveedores.index')->with('proveedores', $proveedores);

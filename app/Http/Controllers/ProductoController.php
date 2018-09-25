@@ -15,17 +15,21 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
 
-        $producto =  DB::table('productos')
+        $producto = Producto::nombrepro($request->get('nombre'))
+                  ->tipopro($request->get('tipo'))
                   ->join('tipos_productos', 'tipos_productos.id', '=', 'productos.id_tipo_producto' )
                   ->select('productos.*','tipos_productos.tipo')
                   ->orderBy('productos.id','ASC')
                   ->paginate(5);
 
-        
+        $producto->lista_tipo= DB::table('tipos_productos')
+                     ->orderBy('id')
+                     ->pluck('tipo','id');
+           
         
         return view('productos.index')->with('productos', $producto);
     }

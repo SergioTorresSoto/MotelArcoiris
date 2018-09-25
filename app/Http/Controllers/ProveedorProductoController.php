@@ -12,11 +12,12 @@ use DB;
 
 class ProveedorProductoController extends Controller
 {
-     public function index()
+     public function index(Request $request)
     {
         
 
-        $proveedoresproductos =  DB::table('proveedores_productos')
+        $proveedoresproductos =  ProveedorProducto::inicio3($request->get('proveedores_insumos.created_at'))
+                    ->nombreprov3($request->get('nombre'))
                   ->join('proveedores', 'proveedores.id', '=', 'proveedores_productos.id_proveedor')
                   ->join('detalles_compras','detalles_compras.id','=','proveedores_productos.id_detalle_compra')
                   ->select('proveedores.nombre','detalles_compras.*')

@@ -23,6 +23,23 @@
 				
 					
 						<div class="panel-body">
+
+						{!! Form::open(['route' => 'proveedoresproductos.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+
+						  	<div class = "form-group">
+								{!! Form::text('nombre', null ,['class' => 'form-control','placeholder'=>'Nombre Proveedor']) !!}
+								</div>
+
+						<div class="input-group">
+							<div class="input-group-addon"><span class="glyphicon glyphicon-menu-left"></span></div>
+								{!! Form::date('created_at',null, ['class' => 'form-control']) !!}
+						</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+					{!! Form::close() !!}
 						
 						<table class="table table-striped">
 							<thead>

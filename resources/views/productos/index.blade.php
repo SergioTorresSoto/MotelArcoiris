@@ -18,7 +18,19 @@
 		    	</h3>
 			</div>
 						<div class = "panel-body">
-						
+					
+
+                		      {!! Form::open(['route' => 'productos.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+							<div class = "form-group">
+								{!! Form::text('nombre', null ,['class' => 'form-control','placeholder'=>'Nombre Insumo']) !!}
+								{!! Form::select('tipo', $productos->lista_tipo ,null, ['class' => 'form-control', 'placeholder' => 'Tipo']) !!}
+							</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+									{!! Form::close() !!}
 						<table class="table table-striped">
 							<thead>
 							<tr>

@@ -14,4 +14,12 @@ class controlHorario extends Model
        	return $this->belongsTo('App\User');
        }
 
+       public function scopeNombre3($query, $nombre){
+        
+       if(trim($nombre)!=""){
+       return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
+       
 }

@@ -14,5 +14,20 @@ class Producto extends Model
        return $this->belongsTo('App\tipoProducto');
 
 	}
+
+	 public function scopeTipopro($query, $type){
+        
+        if($type !="" || isset($type[$type])){
+            return $query->where('id_tipo_producto', $type);
+        }
+
+    }
+    public function scopeNombrepro($query, $nombre){
+        
+        if(trim($nombre)!=""){
+            return $query->where('nombre',"LIKE", "%$nombre%");
+        }
+
+    }
 	
 }

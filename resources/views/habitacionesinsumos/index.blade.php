@@ -21,6 +21,16 @@
 				 </div>	
 						<div class="panel-body">
 						
+						{!! Form::open(['route' => 'habitacionesinsumos.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+						<div class = "form-group">
+						{!! Form::text('numero_habitacion', null ,['class' => 'form-control','placeholder'=>'Numero Habitacion']) !!}		</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+					{!! Form::close() !!}
+
 						<table class="table table-striped">
 							<thead>
 							<tr>

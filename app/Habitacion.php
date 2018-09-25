@@ -20,6 +20,23 @@ class Habitacion extends Model
 
 	}
 
+
+     public function scopeTipohab($query, $type){
+        
+        if($type !="" || isset($type[$type])){
+            return $query->where('id_tipo_habitacion', $type);
+        }
+
+    }
+    public function scopeNum($query, $numero_habitacion){
+        
+        if(trim($numero_habitacion)!=""){
+            return $query->where('numero_habitacion',"LIKE", "%$numero_habitacion%");
+        }
+
+    }
+
+
 	public function scopeEstado($query, $estado){
         
         if($estado !="" || isset($estado[$estado])){

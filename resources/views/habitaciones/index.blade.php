@@ -22,10 +22,25 @@
 				</h3>
 				</div>
 
+
 		    
 					
 					<div class="panel-body" >	
-						
+					
+
+	                {!! Form::open(['route' => 'habitaciones.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+							<div class = "form-group">
+								{!! Form::text('numero_habitacion', null ,['class' => 'form-control','placeholder'=>'Nombre Habitacion']) !!}
+								{!! Form::select('tipo', $habitacion->lista_tipo ,null, ['class' => 'form-control', 'placeholder' => 'Tipo']) !!}
+							</div>
+							<div class="form-group">
+			                     
+								{!! Form::submit('Buscar', ['class' => 'btn btn-primary']) !!}
+										
+							</div>
+					{!! Form::close() !!}
+
+
 						<table class="table table-striped">
 							@auth
 							<thead>

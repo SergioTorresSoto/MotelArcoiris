@@ -14,4 +14,21 @@ class PagoServicio extends Model
        return $this->belongsTo('App\TipoServicio');
 }
 
-}
+
+	 public function scopeTiposer($query, $type){
+        
+        if($type !="" || isset($type[$type])){
+            return $query->where('id_tipo_servicio', $type);
+        }
+    }
+
+      public function scopeInicio2($query, $inicio){
+        
+        if($inicio !="" || isset($inicio[$inicio])){
+            return $query->where('fecha','>=', $inicio);
+        }
+
+    }
+
+    }
+

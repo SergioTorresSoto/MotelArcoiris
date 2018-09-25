@@ -11,17 +11,20 @@ use DB;
 
 class InsumoController extends Controller
 {
-     public function index()
+     public function index(Request $request)
     {
         
 
-        $insumos =  DB::table('insumos')
+        $insumos =  Insumo::nombreins($request->get('nombre'))
+                  ->tipoins($request->get('tipo'))
                   ->join('tipo_insumos', 'tipo_insumos.id', '=', 'insumos.id_tipo_insumo' )
                   ->select('insumos.*','tipo_insumos.tipo')
                   ->orderBy('insumos.id','ASC')
                   ->paginate(5);
 
-        
+        $insumos->lista_tipo = DB::table('tipo_insumos')
+                     ->orderBy('id')
+                     ->pluck('tipo','id');
         
         return view('insumos.index')->with('insumos', $insumos);
     }

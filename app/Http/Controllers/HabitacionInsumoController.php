@@ -13,9 +13,9 @@ class HabitacionInsumoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $limpieza = DB::table('habitaciones_insumos')
+        $limpieza = HabitacionInsumo::num2($request->get('numero_habitacion'))
                         ->join('insumos','insumos.id','=','habitaciones_insumos.id_insumo')
                         ->join('habitaciones','habitaciones.id','=','habitaciones_insumos.id_habitacion')
                         ->select('habitaciones_insumos.*','habitaciones.numero_habitacion','insumos.nombre')
