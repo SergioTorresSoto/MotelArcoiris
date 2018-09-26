@@ -77,6 +77,8 @@ class ReservaOnlineController extends Controller
      */
     public function create()
     {
+        $fecha = Carbon::now()->format('Y-m-d');
+     //   dd($date);
         $tipo_habitacion= DB::table('tipo_habitaciones')
                      ->orderBy('id')
                      ->pluck('tipo','id');
@@ -84,7 +86,7 @@ class ReservaOnlineController extends Controller
          $horas = DB::table('tarifas')
                      ->distinct('horas')
                      ->pluck('horas');
-        return view('reservaonline.create')->with('tipo_habitacion', $tipo_habitacion)->with('horas', $horas);
+        return view('reservaonline.create')->with('fecha', $fecha)->with('tipo_habitacion', $tipo_habitacion)->with('horas', $horas);
     }
 
     /**

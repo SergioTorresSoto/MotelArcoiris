@@ -104,8 +104,9 @@ var esPresencial = datos.esPresencial;
 
 var i=0;
 	for(i=1;i<=totaldias;i++){
-	
+//	options.series[0].name =  "hola" ;
 	options.series[0].data.push( registrosdia[i] );
+
     options.series[1].data.push( esOnline[i] );
     options.series[2].data.push( esPresencial[i] );
 	options.xAxis.categories.push(i);

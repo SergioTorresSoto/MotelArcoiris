@@ -44,7 +44,7 @@
 										 			{!! Form::select('id_tipo', $tipo_habitacion, null, ['class' => 'form-control', 'placeholder' => 'Seleccione una opción...', 'required']) !!}
 
 											</div>
-
+											
 											<div class="form-group">
 					                			{!! Form::label('horas', 'Cantidad de Horas',['class' => 'control-label']) !!}
 													<div class='input-group' id='calendar1'>
@@ -59,7 +59,7 @@
 						                			{!! Form::label('tiempo_inicio', 'Fecha') !!}
 
 						                				<div class='input-group' id='calendar1'>
-							                                {!! Form::date('tiempo_inicio',\Carbon\Carbon::now(), ['class' => 'form-control', 'required']) !!}
+							                                {!! Form::date('tiempo_inicio', null, ['class' => 'form-control', 'required']) !!}
 							                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 							                            </div>
 												</div>
@@ -202,6 +202,26 @@
  		}
  	</style>
  	<script type="text/javascript">
+
+ 		$(document).ready(function(){
+
+			var today = new Date();
+			var dd = today.getDate()+1;
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			 if(dd<10){
+			        dd='0'+dd
+			    } 
+			    if(mm<10){
+			        mm='0'+mm
+			    } 
+
+			today = yyyy+'-'+mm+'-'+dd;
+			document.getElementById("tiempo_inicio").setAttribute("min", today);
+
+
+		});
+
  		$(document).on('change','#id_tipo',function(){
  			id_tipo = $("#id_tipo").val();
  			$("#horas option").remove();
@@ -227,6 +247,7 @@
           });
 
  		$(document).on('change','#tiempo_inicio',function(){
+ 		
  			if($("#horas option:selected").text()!=""){
 	 			fecha = $("#tiempo_inicio").val();
 	 			horas = $("#horas option:selected").text();
@@ -236,12 +257,22 @@
 	 			var url = "/reservaonline/disponibles/"+fecha+"/"+horas+"";
 
 				$.get(url,function(resul){
-					console.log(resul);
+				
 				
 						var datos= jQuery.parseJSON(resul);
-						for (var i = 0; i < datos.length; i++) {
-							
-							$("#hora_inicio").append('<option >'+datos[i]+'</option>');	
+						if(datos !=""){
+							for (var i = 0; i < datos.length; i++) {
+								
+								$("#hora_inicio").append('<option >'+datos[i]+'</option>');	
+							}
+						}else{
+							$.alert('Dia sin disponibilidad', {
+                    	 
+			                    	type: 'warning', 
+			                    	position:  ['top-right', [60, 12]],
+							});
+							$("#tiempo_inicio").val("");
+
 						}
 					
 					
@@ -252,6 +283,7 @@
                     	type: 'warning', 
                     	position:  ['top-right', [60, 12]],
 				});
+				$("#tiempo_inicio").val("");
 		    }
 	               
         });
