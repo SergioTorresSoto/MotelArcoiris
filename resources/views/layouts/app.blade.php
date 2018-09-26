@@ -348,7 +348,7 @@
                     <div class = footer-columna>
                     <h3>Mapa</h3>
                     <div class = "footer-redes">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3187.004545742546!2d-73.15334218507972!3d-36.98582469489248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9669c7f984ed11ff%3A0x2f1d2cd5c0900016!2sMotel+Arcoiris!5e0!3m2!1ses-419!2scl!4v1536596886968" width="600" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3187.004545742546!2d-73.15334218507972!3d-36.98582469489248!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9669c7f984ed11ff%3A0x2f1d2cd5c0900016!2sMotel+Arcoiris!5e0!3m2!1ses-419!2scl!4v1536596886968" width="300" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
                         
                     </div>
                 </div>

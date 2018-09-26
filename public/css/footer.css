@@ -25,7 +25,7 @@
  .footer-main .footer-columna
  {
  	width: calc(100% / 3);
- 	text-align: justify;
+ 	text-align: relative;
  }
 
 .footer-main .footer-columna a
@@ -39,15 +39,16 @@
  	background: #fff;
  	color: #000;
  	font-size: 25px ;
- 	text-align: center;
+ 	text-align: relative;
 
  }
 
  .footer-main .footer-columna h3
  {
- 	font-size: 32px;
+ 	font-size: 26px;
  	color: #00c6ee ;
  	margin-bottom: 20px;
+ 	text-align 
 
  }
  .footer-main .footer-columna span p
@@ -89,3 +90,11 @@
 	justify-content: space-between;
 }
 
+.footer-main .footer-columna iframe
+{
+	position: relative;
+    width: 80% !important;
+    height: 30% !important;
+    
+
+}

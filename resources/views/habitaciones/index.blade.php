@@ -27,7 +27,7 @@
 					
 					<div class="panel-body" >	
 					
-
+				@auth
 	                {!! Form::open(['route' => 'habitaciones.index', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
 							<div class = "form-group">
 								{!! Form::text('numero_habitacion', null ,['class' => 'form-control','placeholder'=>'Nombre Habitacion']) !!}
@@ -39,7 +39,7 @@
 										
 							</div>
 					{!! Form::close() !!}
-
+				@endauth
 
 						<table class="table table-striped">
 							@auth

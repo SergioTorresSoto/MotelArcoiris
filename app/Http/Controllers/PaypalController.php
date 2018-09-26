@@ -116,7 +116,7 @@ class PaypalController extends Controller
 		Session::forget('paypal_payment_id');
 		if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
 
-            return \Redirect::route('home')
+            return \Redirect::route('resevaonline.index')
 				->with('message', 'Hubo un problema al intentar pagar con Paypal');
 
         }
