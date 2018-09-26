@@ -9,6 +9,7 @@ use App\UsuarioHabitacion;
 use DB;
 use Carbon\Carbon;
 use PDF;
+use App\Jornada;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 class ReservaOnlineController extends Controller
@@ -18,6 +19,51 @@ class ReservaOnlineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function consultarHorasDisponibles($fecha,$horas){
+
+        $date = Carbon::parse($fecha)->format('N');
+    //    $dia == date("w",strtotime($date));
+        
+        $horarios = Jornada::join('users_jornadas', 'users_jornadas.id_jornada', '=', 'jornadas.id' )
+                    ->join('users', 'users.id', '=', 'users_jornadas.id_user')
+                    ->select('users_jornadas.*','users.nombre','users.apellido','users.id as user_id','jornadas.hora_entrada','jornadas.hora_salida','jornadas.duracion_hora','jornadas.duracion_minuto','jornadas.id as jornada_id')
+                    ->where(DB::raw("DATE_FORMAT(users_jornadas.fecha_salida,'%Y-%m-%d ')"),$fecha)
+                    ->orderBy('id')
+                    ->get();
+
+        if(count($horarios)>0){ 
+
+            if($date == 1 || $date == 2 || $date == 3 || $date == 4 ){
+                if($horas == 4){
+                    $arrayHoras = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
+                }else{
+                     $arrayHoras = ['09:00'];
+                }
+            }
+            if($date == 5){
+             
+                    $arrayHoras = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+
+            }
+            if($date == 6){
+                $arrayHoras = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+            }
+             if($date == 7){
+                if($horas == 4){
+                    $arrayHoras = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'];
+                }else{
+                     $arrayHoras = ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00'];
+                }
+            }
+        }else{
+            $arrayHoras = [''];
+        }
+
+        //$data=array('reservaOnline' => $reservaOnline);
+
+        return json_encode($arrayHoras);
+
+    }
     public function index()
     {
 

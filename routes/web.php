@@ -239,6 +239,8 @@ Route::resource('reservaonline','ReservaOnlineController');
 
 	Route::post('reservaonline/consulta/horas', 'ReservaOnlineController@horasPost');
 
+	Route::get('/reservaonline/disponibles/{fecha}/{horas}', 'ReservaOnlineController@consultarHorasDisponibles');
+
 
 
 

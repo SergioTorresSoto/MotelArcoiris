@@ -48,18 +48,27 @@
 											<div class="form-group">
 					                			{!! Form::label('horas', 'Cantidad de Horas',['class' => 'control-label']) !!}
 													<div class='input-group' id='calendar1'>
-							                               {!! Form::select('horas', ['' => ''] , null, ['class' => 'form-control', 'required']) !!}
+							                               {!! Form::select('horas', [] , null, ['class' => 'form-control', 'required']) !!}
 							                                <div class="input-group-addon">Hrs</div>
 							                         </div>
 										 			
 
 											</div>
+
 											<div class="form-group">	
-						                			{!! Form::label('tiempo_inicio', 'Fecha Y Hora') !!}
+						                			{!! Form::label('tiempo_inicio', 'Fecha') !!}
 
 						                				<div class='input-group' id='calendar1'>
-							                                {!! Form::text('tiempo_inicio', null, ['class' => 'form-control', 'required']) !!}
+							                                {!! Form::date('tiempo_inicio',\Carbon\Carbon::now(), ['class' => 'form-control', 'required']) !!}
 							                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							                            </div>
+												</div>
+											<div class="form-group">	
+						                			{!! Form::label('hora_inicio', 'Hora') !!}
+
+						                				<div class='input-group' id='calendar1'>
+							                                 {!! Form::select('hora_inicio', [] , null, ['class' => 'form-control', 'required']) !!}
+							                                <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
 							                            </div>
 												</div>
 											 <div  style="max-width:400px"align="center">
@@ -112,12 +121,11 @@
 
 	  			@endif	
 		                 	
-		            </div>
-			    </div>
-			</div>
-		</div>
-						<!-- Modal -->
-		<div class="modal fade" id="myModal" role="dialog">
+		    </div>
+	
+
+			<!-- Modal -->
+		<div class="modal fade bs-example-modal-sm" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
 				<div class="panel panel-info">
@@ -127,7 +135,7 @@
                     </div>
                     {!! Form::open(['route' => ['payment'],'method' => 'GET', 'class' => 'form-horizontal']) !!}
 	                    <div class="modal-body" style="padding: 5px;">
-	                          <div class="row">
+	                         
 	                                <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
 	                                    {!! Form::label('fechaHora', 'Fecha Entrada', ['class' => 'control-label']) !!}
 										{!! Form::text('fechaHora', null, ['class' => 'form-control', 'required']) !!}
@@ -136,14 +144,14 @@
 	                                    {!! Form::label('fechaSalida', 'Fecha Salida', ['class' => 'control-label']) !!}
 										{!! Form::text('fechaSalida', null, ['class' => 'form-control', 'required']) !!}
 	                                </div>
-	                            </div>
-	                            <div class="row">
+	                          
+	                           
 	                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
 	                                    {!! Form::label('habitacion', 'Habitacion N°', ['class' => 'control-label']) !!}
 										{!! Form::text('habitacion', null, ['class' => 'form-control', 'required']) !!}
 	                                </div>
-	                            </div>
-	                            <div class="row">
+	                          
+	                          
 	                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
 	                                    {!! Form::label('fecha', 'Servicio', ['class' => 'control-label']) !!}
 											<div class='input-group'>
@@ -151,8 +159,8 @@
 							                        <div class="input-group-addon">Hrs</div>
 							                </div>
 	                                </div>
-	                            </div>
-	                            <div class="row">
+	                     
+	                      
 	                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
 	                                    {!! Form::label('tarifa', 'Valor', ['class' => 'control-label']) !!}
 											 <div class='input-group'>
@@ -161,13 +169,13 @@
 							                           
 							                     </div>
 	                                </div>
-	                            </div>
-	                            <div class="row">
+	                        
+	                      
 	                                <div class="col-lg-12 col-md-12 col-sm-12">   
 	                                    {!! Form::label('comentario', 'Comentario', ['class' => 'control-label']) !!}
 										{!! Form::textarea('comentario', null, ['class' => 'form-control', 'row'=>1]) !!}
 	                                </div>
-	                            </div>
+	                      
 	                    </div>  
 	                    <div class="panel-footer" style="margin-bottom:-14px;">
 	                        	{!! Form::submit('Pagar', ['class' => 'btn btn-success']) !!}
@@ -180,6 +188,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+</div>
+
 
 @endsection
 @section('script')
@@ -194,6 +205,7 @@
  		$(document).on('change','#id_tipo',function(){
  			id_tipo = $("#id_tipo").val();
  			$("#horas option").remove();
+ 			$("#hora_inicio option").remove();
  		//	alert(id_tipo);
 
  			$.ajax({
@@ -214,24 +226,37 @@
                
           });
 
- 	</script>
+ 		$(document).on('change','#tiempo_inicio',function(){
+ 			if($("#horas option:selected").text()!=""){
+	 			fecha = $("#tiempo_inicio").val();
+	 			horas = $("#horas option:selected").text();
+	 			$("#hora_inicio option").remove();
+	 		
 
-    <script>
-	 jQuery(function(){
- 			jQuery('#tiempo_inicio').datetimepicker({
+	 			var url = "/reservaonline/disponibles/"+fecha+"/"+horas+"";
 
-  				format:'Y-m-d H:i',
-  				mask:true,
-  				minDate: new Date().setDate(new Date().getDate() + 1),
-  				
-  				/*onShow:function( ct ){
-  					this.setOptions({
-  						maxDate:jQuery('#checkout').val()?jQuery('#checkout').val():false
-  					})
-  				},*/
- 			});
- 			
-		});
+				$.get(url,function(resul){
+					console.log(resul);
+				
+						var datos= jQuery.parseJSON(resul);
+						for (var i = 0; i < datos.length; i++) {
+							
+							$("#hora_inicio").append('<option >'+datos[i]+'</option>');	
+						}
+					
+					
+		        });
+		    }else{
+		    	$.alert('Primero selecione un tipo de habitacion', {
+                    	 
+                    	type: 'warning', 
+                    	position:  ['top-right', [60, 12]],
+				});
+		    }
+	               
+        });
+
+	
     </script>
     <script type="text/javascript">
     	id_tipo ="";
@@ -250,8 +275,10 @@
     		 id_tipo = $("#id_tipo").val();
 		     tipo = $("#id_tipo option:selected").text();
 		     horas = $("#horas option:selected").text();
-		     fecha = $("#tiempo_inicio").val();
+		     fecha = $("#tiempo_inicio").val()+" "+$("#hora_inicio option:selected").text()+":00";
+		     
 		     menor = new Date(fecha).setDate(new Date(fecha).getDate());
+		     console.log("sadas",menor);
 		     mayor= new Date().setDate(new Date().getDate() + 1);
 		     if (id_tipo!="") {
 			  if(fecha!="" && menor >= mayor){
