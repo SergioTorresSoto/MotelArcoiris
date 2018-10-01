@@ -213,7 +213,7 @@
 		            type: 'column'
 		        },
 		        title: {
-		            text: 'Gastos en Productos Comprados'
+		            text: 'Gastos en Insumos'
 		        },
 		        yAxis: {
 		            title: {
@@ -346,7 +346,7 @@
 			            
 			        },
 			        title: {
-			            text: 'Cantidad de Productos Comprados'
+			            text: 'Cantidad de Insumos'
 			        },
 			        yAxis: {
 			            title: {

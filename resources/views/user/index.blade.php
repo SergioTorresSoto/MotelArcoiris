@@ -128,7 +128,7 @@
 							</tbody>
 						</table>
 						<div style="text-align: center;">
-							{{ $users->links() }}
+							{{ $clientes->links() }}
 						</div>
 	                </div>
 	            </div> 

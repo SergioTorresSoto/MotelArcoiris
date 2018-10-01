@@ -81,13 +81,13 @@
 
 					        </div>
 					        <div  style="padding: 20px;" class="tab-pane" id="tab_b">
-					            <div class="col-md-3">	
+					            	
 					                	<p class="para">Aqui van las intrucciones para tener una reserva exitosa .</p>
 										<p class="para">Seleccione la habitacion de su preferencia .</p>
-								</div>
 								
-									<div class="col-md-9">
-										<table id="habitaciones" class="table table-striped">
+								
+									<div class="table-responsive-sm">
+										<table id="habitaciones" class="table table-striped ">
 											<thead>
 											
 											<tbody>	
@@ -206,7 +206,8 @@
  		$(document).ready(function(){
 
 			var today = new Date();
-			var dd = today.getDate()+1;
+			today.setDate(today.getDate() + 1);
+			var dd = today.getDate();
 			var mm = today.getMonth()+1; //January is 0!
 			var yyyy = today.getFullYear();
 			 if(dd<10){
@@ -337,7 +338,9 @@
 		                $( "#tab_b , #tab_y" ).addClass('active');
 		                $("#habitaciones tr").remove();  //limpia tr de tabla 
 		                for (i = 0; i < data.input.length; i++){
-			                var fila = '<tr class="selected" id="fila'+data.input[i].id+'"><td><img width="100px" name="imagen" src=" {{Storage::url('+data.input[i].imagen+') }}"></td><td><input type="text" class="form-control" readonly="readonly" name="descripcion" value="'+data.input[i].descripcion+'"></td><td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" onclick="detalle('+data.input[i].numero_habitacion+');"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></button></td></tr>';
+		                	split = data.input[i].imagen.split("/");
+		                	
+			                var fila = '<tr class="selected" id="fila'+data.input[i].id+'"><td><img width="100px" class="imagen" name="imagen" src="/storage/'+split[1]+'/'+split[2]+'"></td><td><input type="text" class="hidden form-control" readonly="readonly" name="descripcion" value="'+data.input[i].descripcion+'"><label>'+data.input[i].descripcion+'</label></td><td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" onclick="detalle('+data.input[i].numero_habitacion+');"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></button></td></tr>';
 
 			                $('#habitaciones').append(fila);
 			            }
@@ -422,5 +425,14 @@
 
 
     </script>
+    <style type="text/css">
+    .imagen {
+    	transition: transform .2s;
+	}
+    .imagen:hover {
+  
+    	transform: scale(3.5); 
+	}
+    </style>
 
 @endsection

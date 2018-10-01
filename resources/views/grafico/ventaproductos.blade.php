@@ -206,10 +206,11 @@
 
 				$('#div_grafica_insumos_lineas').highcharts({
 			        chart: {
-			            type: 'column'
+			            type: 'column',
+			            zoomType: 'x'
 			        },
 			        title: {
-			            text: 'Cantidad de Productos Comprados'
+			            text: 'Cantidad de Insumos Utilizados en Limpieza'
 			        },
 			        yAxis: {
 			            title: {

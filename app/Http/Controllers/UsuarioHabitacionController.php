@@ -61,7 +61,7 @@ class UsuarioHabitacionController extends Controller
         //        ->where('usuarios_habitaciones.activa',true)
             //    ->orwhere('usuarios_habitaciones.reserva',true)
                   ->orderBy('usuarios_habitaciones.id','DESC')
-                  ->get();
+                  ->paginate(25);
 
         $habitacionTodas =  Habitacion::
                   estado($request->get('estado'))
@@ -77,7 +77,7 @@ class UsuarioHabitacionController extends Controller
         //        ->where('usuarios_habitaciones.activa',true)
             //    ->orwhere('usuarios_habitaciones.reserva',true)
                   ->orderBy('usuarios_habitaciones.id','DESC')
-                  ->get();
+                  ->paginate(25);
      
         $insumos = DB::table('insumos')
                     ->pluck('nombre','id'); 
@@ -123,33 +123,48 @@ class UsuarioHabitacionController extends Controller
 
         $reserva = new UsuarioHabitacion($request->all());
 
-        $servicio = $reserva->tiempo_reserva.' hours';
-       
-        $fecha1 = new \DateTime($request->tiempo_inicio);
-        $reserva->tiempo_fin = $fecha1;
-        $reserva->tiempo_fin->modify($servicio); 
-        $reserva->tiempo_fin->format('Y-m-d H:i:s');
+        $fecha = $reserva->tiempo_inicio;
+        $fin = new Carbon($fecha);
+        $fin->addHour($reserva->tiempo_reserva);
+        $sinReservas = DB::table('usuarios_habitaciones')
+                //      ->join('habitaciones','habitaciones.id','=','usuarios_habitaciones.id_habitacion')
+                        ->whereBetween('usuarios_habitaciones.tiempo_inicio',[$fecha,$fin])  
+                        ->orWhereBetween('usuarios_habitaciones.tiempo_fin',[$fecha,$fin]) 
+                        
+                //      ->select('habitaciones.*')
+                        ->get();
+        
+        if(count($sinReservas->where('id_habitacion',$reserva->id_habitacion))==0){
+          $servicio = $reserva->tiempo_reserva.' hours';
+         
+          $fecha1 = new \DateTime($request->tiempo_inicio);
+          $reserva->tiempo_fin = $fecha1;
+          $reserva->tiempo_fin->modify($servicio); 
+          $reserva->tiempo_fin->format('Y-m-d H:i:s');
 
-        $now = Carbon::now();
-        $fecha_inicio= Carbon::parse($request->tiempo_inicio);
-        $diferenciaenhoras = $fecha_inicio->diffInHours($now);
+          $now = Carbon::now();
+          $fecha_inicio= Carbon::parse($request->tiempo_inicio);
+          $diferenciaenhoras = $fecha_inicio->diffInHours($now);
 
-        if($now >= $fecha_inicio){
-            $reserva->activa = true ;
-            $reserva->reserva = false;
+          if($now >= $fecha_inicio){
+              $reserva->activa = true ;
+              $reserva->reserva = false;
+          }else{
+              $reserva->activa = false; 
+              $reserva->reserva = true; 
+          }
+          $reserva->es_online=false;
+
+          $reserva->save();
+          Session::flash('message', 'La reserva se creo exitosamente.');
         }else{
-            $reserva->activa = false; 
-            $reserva->reserva = true; 
+          Session::flash('message', 'RESERVA NO PROCESADA. Otra reserva a la misma hora o cerca');
         }
-        $reserva->es_online=false;
-
-        $reserva->save();
-
       
 
       //  $this->ticket($reserva->id);
 
-        Session::flash('message', 'La reserva se creo exitosamente.');
+        
         return redirect(route('usuarioshabitaciones.index'));
     }
 
@@ -252,22 +267,34 @@ class UsuarioHabitacionController extends Controller
         $user->password = bcrypt($random);
         $user->password_cliente = encrypt($random);
         $user->save();
-       dd($user);
-                    
+      
+        $contraseña = decrypt($user->password_cliente);            
         $nombre_impresora = "POS-58";     
                try {
                  $connector = new WindowsPrintConnector($nombre_impresora);
                  $printer = new Printer($connector);
+                  $printer->text("          MOTEL ARCOIRIS ");
+                 $printer->feed(2); // saltos de linea
+                 $printer->text("Telefono: 2830700");
+                 $printer->feed(1); // saltos de linea
+                 $printer->text("Correo: arcoiris@gmail.com");
+                 $printer->feed(3); // saltos de linea
                  $printer->text("ID : ".$reserva[0]->id);
                  $printer->feed(1); // saltos de linea
                   $printer->text("Entrada : ".$reserva[0]->tiempo_inicio);
                   $printer->feed(1); // saltos de linea
                   $printer->text("Salida : ".$reserva[0]->tiempo_fin);
+                  
                   $printer->feed(1);
                   $printer->text("Username : ".$reserva[0]->email);
                   $printer->feed(1);
-                  $printer->text("Contrasena : ".decrypt($user->password_cliente));
+                  $printer->text("Contrasena : ".$contraseña);
+                  $printer->feed(2);
+                  $printer->text("Ingresa a www.motelarcoiris.cl y solicita productos a la habitacion");
+                  $printer->feed(2);
+                  $printer->text("Llamar a la central: 103");
                   $printer->feed(3); // saltos de linea
+
                   $printer -> close();
                 } catch(Exception $e) {
                     

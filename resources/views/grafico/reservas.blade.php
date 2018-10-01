@@ -19,7 +19,7 @@
 		
 
 		<div  class="row" >
-			<div class="col-md-6">
+			<div class="col-md-12">
 		
 				<div class="box box-primary">
 					<div class="box-header">
@@ -37,7 +37,7 @@
 			</div>
 				
 				
-				<div class="col-md-6">
+				<div class="col-md-12">
 				
 					<div class="box box-primary">
 						<div class="box-header">
@@ -169,7 +169,8 @@
 			
 			$('#div_grafica_barras').highcharts({
 		        chart: {
-		            type: 'column'
+		            type: 'column',
+		            zoomType: 'x'
 		        },
 		        title: {
 		            text: 'Ganancias'
@@ -308,7 +309,8 @@
 
 				$('#div_grafica_lineas').highcharts({
 			        chart: {
-			            
+			            type: 'column',
+			            zoomType: 'x'
 			        },
 			        title: {
 			            text: 'Cantidad de reservas por habitacion'

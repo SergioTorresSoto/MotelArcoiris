@@ -188,7 +188,7 @@ class ReservaOnlineController extends Controller
             $mail->Port = 587;                                    // TCP port to connect to
 
             //Recipients
-            $mail->setFrom('keopo.coke017@gmail.com', 'Motel Arcoiris');
+            $mail->setFrom('keopo.coke017@gmail.com', 'Arcoiris');
             $mail->addAddress($correo['correo']);               // Name is optional
       //      $mail->addReplyTo('info@example.com', 'Information');
       //      $mail->addCC('cc@example.com');
@@ -201,7 +201,7 @@ class ReservaOnlineController extends Controller
 
             //Content
             $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = 'Motel Arcoiris Reserva';
+            $mail->Subject = 'Arcoiris Reserva';
             $mail->Body    = 'Presenta este comprobante para hacer valida la reserva';
             $mail->send();
             $mensaje = 'mensaje enviado'; 

@@ -23,5 +23,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductosSeeder::class);
         $this->call(Habitaciones::class);
         $this->call(TipoServicioSeeder::class);
+        $this->call(TarifasSeeder::class);
+        $this->call(ControlHorarioSeeder::class);
+        $this->call(UserJornadaSeeder::class);
+        $this->call(UsuarioHabitacionSeeder::class);
+        $this->call(HabitacionInsumoSeeder::class);
     }
 }

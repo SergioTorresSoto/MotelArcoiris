@@ -106,7 +106,7 @@
 												<td>{{ $hab->patente}}</td>
 												<td>{{ $hab->observacion }}</td>
 												<td>
-													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Desea imprimir? la Contraseña de la cuenta sera reseteada')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
 													
 												</td>
 												<td>{{ $hab->tiempo_fin_real }}</td>
@@ -203,11 +203,9 @@
 										<th>Retirada</th>
 										<th>MedioPago</th>
 										<th>Tarifa</th>
-										<th>Patente</th>
+									
 										<th>Observacion</th>
-										<th>Print</th>
-										<th>RetiradaReal</th>
-										<th>HorasExtras</th>
+					
 										
 										<th>Editar</th>
 										<th>Eliminar</th>
@@ -227,14 +225,9 @@
 												<td>{{ $hab->tiempo_fin}}</td>
 												<td>{{ $hab->tipo_pago}}</td>
 												<td>{{ $hab->tarifa}}</td>
-												<td>{{ $hab->patente}}</td>
+											
 												<td>{{ $hab->observacion }}</td>
-												<td>
-													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
-													
-												</td>
-												<td>{{ $hab->tiempo_fin_real }}</td>
-												<td>{{ $hab->tarifa_horas_extras}}</td>
+
 												
 												
 												<td>
@@ -250,6 +243,9 @@
 										@endforeach
 									</tbody>
 								</table>
+								<div style="text-align: center;">
+							{{ $habitacionReserva->links() }}
+						</div>
 								
 			                </div>
 						</div>
@@ -295,7 +291,7 @@
 												<td>{{ $hab->patente}}</td>
 												<td>{{ $hab->observacion }}</td>
 												<td>
-													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Está seguro de eliminar la habitacion seleccionada?')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+													<a href="{{ route('usuarioshabitaciones.ticket', $hab->id) }}" onclick="return confirm('¿Desea imprimir? la Contraseña de la cuenta sera reseteada')" class="btn btn-info"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
 													
 												</td>
 												<td>{{ $hab->tiempo_fin_real }}</td>
@@ -315,6 +311,9 @@
 										@endforeach
 									</tbody>
 								</table>
+								<div style="text-align: center;">
+							{{ $habitacionTodas->links() }}
+						</div>
 								
 			                </div>
 						</div>

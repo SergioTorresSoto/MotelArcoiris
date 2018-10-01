@@ -22,7 +22,7 @@
         <div><span>PROPOSITO</span> Reserva</div>
         <div><span>DIRECCION</span> Parcela 6B Lagunilla 2, Coronel</div>
         <div><span>EMAIL</span> <a href="mailto:motelArcoiris@gmail.com"> motelArcoiris@gmail.com</a></div>
-        <div><span>FECHA</span> August 17, 2015</div>
+        <div><span>FECHA</span>{{$reserva->created_at}}</div>
         <div><span>ID</span> {{$reserva->id}}</div>
       </div>
     </header>
