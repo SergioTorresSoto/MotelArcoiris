@@ -4,6 +4,18 @@
 
 	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+	   <style>
+.zoom {
+
+    transition: transform .2s; /* Animation */
+
+}
+
+.zoom:hover {
+    transform: scale(3.5);
+    position: relative; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 	 
 <div class = "container-fluid">		   
     <div class="panel panel-info">
@@ -33,7 +45,7 @@
                 @foreach($productocliente as $procliente)               	  
 	                <div class = "eliminarProducto col-sm-5 col-md-3">
 						<div class = "thumbnail">		 			
-							<img id="imagen{{$procliente->id}}" width="100px" src=" {{Storage::url($procliente->imagen) }}">
+							<img id="imagen{{$procliente->id}}" class="zoom" width="100px" src=" {{Storage::url($procliente->imagen) }}">
 							<h4 id="nombre{{$procliente->id}}"> {{$procliente->nombre}} </h4>
 							<p id="descripcion{{$procliente->id}}">Descripcion: {{$procliente->descripcion}}</p>	
 							<p id="precio{{$procliente->id}}">Precio: ${{$procliente->precio}}</p>
