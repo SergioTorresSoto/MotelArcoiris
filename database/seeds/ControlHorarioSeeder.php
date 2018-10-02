@@ -11,6 +11,6 @@ class ControlHorarioSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\controlHorario::class, 1000)->create();
+        factory(App\controlHorario::class, 50)->create();
     }
 }

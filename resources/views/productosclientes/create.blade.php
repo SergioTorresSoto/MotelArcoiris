@@ -31,7 +31,7 @@
             <div id="listaProductos" class = "form-group">
             	<hr>
                 @foreach($productocliente as $procliente)               	  
-	                <div class = "eliminarProducto col-sm-5 col-md-2">
+	                <div class = "eliminarProducto col-sm-5 col-md-3">
 						<div class = "thumbnail">		 			
 							<img id="imagen{{$procliente->id}}" width="100px" src=" {{Storage::url($procliente->imagen) }}">
 							<h4 id="nombre{{$procliente->id}}"> {{$procliente->nombre}} </h4>

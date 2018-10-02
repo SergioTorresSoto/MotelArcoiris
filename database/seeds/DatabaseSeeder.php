@@ -28,5 +28,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserJornadaSeeder::class);
         $this->call(UsuarioHabitacionSeeder::class);
         $this->call(HabitacionInsumoSeeder::class);
+        $this->call(ProveedoresProductosSeeder::class);
+        $this->call(ProveedoresInsumosSeeder::class);
+        $this->call(ProductosUsuariosSeeder::class);
     }
 }

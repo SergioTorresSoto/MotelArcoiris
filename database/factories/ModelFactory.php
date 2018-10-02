@@ -189,4 +189,161 @@ $factory->define(App\HabitacionInsumo::class, function (Faker\Generator $faker) 
     ];
 });
 
+$factory->define(App\DetalleCompra::class, function (Faker\Generator $faker) {
 
+            $year = rand(2016, 2018);
+            if($year == 2018){
+                $month = rand(1, 10);
+            }else{
+                $month = rand(1, 12);    
+            }
+            
+            $day = rand(1, 28);
+            $hour = rand(0,23);
+            $min = rand(0,59);
+
+            $date = Carbon::create($year,$month ,$day , $hour, $min, 0);
+
+         
+            
+ 
+    return [
+        'tipo_comprobante'=> $faker->randomElement($array = array('Boleta', 'Factura')),
+        'total'          =>rand(10000,1000000),
+    
+        'created_at' =>$date,
+      
+        
+    ];
+});
+
+$factory->define(App\ProveedorProducto::class, function (Faker\Generator $faker) {
+
+            $year = rand(2016, 2018);
+            if($year == 2018){
+                $month = rand(1, 10);
+            }else{
+                $month = rand(1, 12);    
+            }
+            
+            $day = rand(1, 28);
+            $hour = rand(0,23);
+            $min = rand(0,59);
+
+            $date = Carbon::create($year,$month ,$day , $hour, $min, 0);
+
+            $id_proveedor = rand(1,3);
+            $id_producto = rand(1,18);
+            $id_detalle_compra = rand(1,25);
+            $cantidad = rand(1,100);
+            $precio_unitario = $faker->randomElement($array = array('1000','3000'));
+            $i = rand(0,1);
+            $precio_total = $cantidad * $precio_unitario[$i];
+   return [
+            'id_proveedor' => $id_proveedor,
+            'id_producto' => $id_producto,
+            'id_detalle_compra' => $id_detalle_compra,
+            'marca_producto' => $faker->randomElement($array = array('PF','Capel','Alto del carmen','kryspo','Unimarc','Eristoff','Cristal','Escudo','Coca-cola Company','Sin marca')),
+            'cantidad' => $cantidad,
+            'precio_unitario'=>$precio_unitario,
+            'precio_total' =>$precio_total,
+            'created_at' => $date,
+       ];
+});
+
+$factory->define(App\ProveedorInsumo::class, function (Faker\Generator $faker) {
+
+            $year = rand(2016, 2018);
+            if($year == 2018){
+                $month = rand(1, 10);
+            }else{
+                $month = rand(1, 12);    
+            }
+            
+            $day = rand(1, 28);
+            $hour = rand(0,23);
+            $min = rand(0,59);
+
+            $date = Carbon::create($year,$month ,$day , $hour, $min, 0);
+
+            $id_proveedor = rand(1,3);
+            $id_insumo = rand(1,11);
+            $id_detalle_compra = rand(26,50);
+            $cantidad = rand(1,100);
+            $precio_unitario = $faker->randomElement($array = array('1000','3000'));
+            $i = rand(0,1);
+            $precio_total = $cantidad * $precio_unitario[$i];
+   return [
+            'id_proveedor' => $id_proveedor,
+            'id_insumo' => $id_insumo,
+            'id_detalle_compra' => $id_detalle_compra,
+            'marca' => $faker->randomElement($array = array('Cif','Quix','Acuenta','Confort','Gilette','Haus','Sin Marca')),
+            'cantidad' => $cantidad,
+            'precio_unitario'=>$precio_unitario,
+            'precio_total' =>$precio_total,
+            'created_at' => $date,
+       ];
+});
+
+$factory->define(App\DetalleVenta::class, function (Faker\Generator $faker) {
+
+            $year = rand(2016, 2018);
+            if($year == 2018){
+                $month = rand(1, 10);
+            }else{
+                $month = rand(1, 12);    
+            }
+            
+            $day = rand(1, 28);
+            $hour = rand(0,23);
+            $min = rand(0,59);
+
+            $date = Carbon::create($year,$month ,$day , $hour, $min, 0);
+
+         
+            
+ 
+    return [
+        'tipo_comprobante'=> $faker->randomElement($array = array('Efectivo', 'Tarjeta')),
+        'activa'=> '0',
+        'total'=>rand(10000,1000000),
+    
+        'created_at' =>$date,
+      
+        
+    ];
+});
+
+$factory->define(App\ProductoUsuario::class, function (Faker\Generator $faker) {
+
+            $year = rand(2016, 2018);
+            if($year == 2018){
+                $month = rand(1, 10);
+            }else{
+                $month = rand(1, 12);    
+            }
+            
+            $day = rand(1, 28);
+            $hour = rand(0,23);
+            $min = rand(0,59);
+
+            $date = Carbon::create($year,$month ,$day , $hour, $min, 0);
+
+            $id_usuario = rand(6,29);
+            $id_producto = rand(1,18);
+            $id_detalle_venta = rand(1,25);
+            $cantidad = rand(1,100);
+            $precio_unitario = $faker->randomElement($array = array('1000','3000'));
+            $i = rand(0,1);
+            $precio_total = $cantidad * $precio_unitario[$i];
+   return [
+            'id_usuario' => $id_usuario,
+            'id_producto' => $id_producto,
+            'id_detalle_venta' => $id_detalle_venta,
+            'marca_producto' => $faker->randomElement($array = array('PF','Capel','Alto del carmen','kryspo','Unimarc','Eristoff','Cristal','Escudo','Coca-cola Company','Sin marca')),
+            'cantidad' => $cantidad,
+            'precio_unitario'=>$precio_unitario,
+            'precio_total' =>$precio_total,
+            'created_at' => $date,
+       ];
+});                       

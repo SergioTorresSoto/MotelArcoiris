@@ -51,8 +51,9 @@
 								<th>Fecha</th>
 								<th>Salida</th>
 								<th>Fecha</th>
+								@if(Auth::user()->tipo1())
 								<th>Acción</th>
-							
+								@endif
 						</thead>
 						<tbody>
 								@foreach($controlPaginado as $type)
@@ -64,11 +65,12 @@
 										<td>{{ $type->fecha_entrada }}</td>
 										<td>{{ $type->hora_salida }}</td>
 										<td>{{ $type->fecha_salida }}</td>
-								
+									  @if(Auth::user()->tipo1())
 										<td>
 											<a href="{{ route('controlhorario.edit', $type->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> 
 											<a href="{{ route('controlhorario.destroy', $type->id) }}" onclick="return confirm('¿Está seguro de eliminar al tipo seleccionado?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
 										</td>
+										@endif
 									</tr>
 								@endforeach
 						</tbody>

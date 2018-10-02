@@ -66,7 +66,7 @@
 										<td>{{ $hab->estado}}</td>
 										<td>{{ $hab->descripcion }}</td>
 										<td>{{ $hab->observacion}}</td>
-										<td><img width="110px" src=" {{Storage::url($hab->imagen) }}"></td>
+										<td><img class="zoom" width="110px" src=" {{Storage::url($hab->imagen) }}"></td>
 
 								
 										<td>
@@ -103,7 +103,7 @@
 									<tr>
 											
 										<td>#{{ $hab->numero_habitacion }}</td>
-										<td><img width="320px" src=" {{Storage::url($hab->imagen) }}"></td>
+										<td><img class="zoom" width="75px" src=" {{Storage::url($hab->imagen) }}"></td>
 										<td>{{ $hab->tipo }}</td>
 										<td>{{ $hab->descripcion }}</td>
 									
@@ -126,5 +126,17 @@
 	            </div>  
 		</div>
 </div>
+
+<style>
+.zoom {
+
+    transition: transform .2s; /* Animation */
+    margin: relative;
+}
+
+.zoom:hover {
+    transform: scale(3.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+</style>
 
 @endsection

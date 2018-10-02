@@ -11,6 +11,6 @@ class UserJornadaSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\userJornada::class, 1000)->create();
+        factory(App\userJornada::class, 50)->create();
     }
 }

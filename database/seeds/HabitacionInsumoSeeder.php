@@ -11,6 +11,6 @@ class HabitacionInsumoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\HabitacionInsumo::class, 6000)->create();
+        factory(App\HabitacionInsumo::class, 20)->create();
     }
 }
